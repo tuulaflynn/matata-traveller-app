@@ -1,0 +1,125 @@
+Matata Traveller- Your Carefree Journey
+By Aalifa designs (Sofia Bilal, Tuula Flynn, Gabriela Patrichi)
+
+Tourist Guide Application
+
+
+Overview
+--------
+
+Welcome to our Travel Guide – your gateway to an exciting world of cities, cultures, and flavors!
+Discover cities anew through our curated blog posts, uncover hidden gems at renowned attractions,
+and savor the essence of local cuisine. Stay informed with up-to-date currency exchange rates for each destination
+and never be caught off guard by the weather, as we provide you with the latest forecasts.
+Your journey begins here – explore the beauty of each city, one click at a time.
+
+Goals / User Requirements:
+--------------------------
+From Users view:
+1. The user can choose a city
+2. The user can view detailed information about a city, including the name,
+    country and a picture as well as specific threads, attractions
+3. The user can enter a thread post
+4. The user can update a thread post
+5. The user can delete a thread post
+6. The user can view all thread post for the city / reviews
+    example categories for the threads: #food, #transport, #hotel, #restaurant, #excursion
+7. The user can view threads posts for city, filtered by thread post category
+8. The user can view the main attractions of the city.
+9. The user can view details of each attraction (including pic)
+10. The user will receive weather forecasts for their travel destination. TUULA
+11. The user will be able to access a currency converter (calculate local currency rates) TUULA
+
+Stretch goal:
+-------------
+The user can download a file containing a packing checklist and travel tips.
+The user can request to add future cities in a form
+The admin user can create, edit, update, delete articles for each destination.
+If time permits, implement a language translator. Basic sentences.
+// The user can fetch all blogs written by a specific user
+The user can view the local cuisine of the city
+
+Maybe create user credentials- log in - if implementing update and delete operations.
+Either choose anonymous user.
+Maybe use cities information API
+
+Technical Specifications
+--------------------------
+Database: MySql (using ORM in java to interact with the database)
+Backend: Java using Spring Data JPA framework
+Frontend: VSCode Live Server plugin (not suitable for production)
+N.B.a future development would be to look into getting the site hosted using AWS free cloud services.
+
+Entities
+---------
+city_details
+> city_id
+> city_name
+> city_country
+// > weather third party done.
+// > currency
+(Optional) City_thread (city_details - thread_details - many to many )
+> city_thread_id
+> city_id
+> thread_id
+thread_details
+> thread_id
+> thread_content
+> thread_category1
+category1_details
+> category_id
+> category_name
+(Optional) thread_category (because thread_details and category_details is a ManyToMany relationship)
+> thread_category_id PK
+> thread_id FK
+> category_id FK
+attraction_details
+> attraction_id
+> attraction_name
+> attraction_description
+> attraction_img
+> attraction_open_time
+> city_id (FK)
+
+
+Third party data
+—---------------------
+weather_details
+> weather_id
+> weather_type
+currency_details
+> currency_id
+> currency_name
+
+Not using
+---------
+Cuisines
+>cuisineId
+>cuisineName
+>cuisineUrl
+>cuisineDish
+Location
+> locationId
+> locationDescription
+> locationLatitude
+> locationLongitude
+>locationAttraction FK
+
+
+
+
+Milestones (Reverse Planning)
+Final Presentation - Friday, 29th of September
+Presentation Completion - Thursday, 28th of September
+System Testing and Code Freeze - Wednesday, 27th of September
+Front End Application Completion - Wednesday, 27th of September
+Back End Application Completion - Tuesday, 26th of September
+Design Completion - Friday, 22th of September
+Design includes:
+- DB: normalization, ERD diagrams,  SQL script file (create and insert data),
+- Identifying the Entities / DTOs,
+- Identifying the User Stories,
+- Project Skeleton (DAO, Service, Controller)
+Approval Completion - Thursday, 21st of September (by noon)
+Project Outline/ Proposal Completion - Wednesday, 20th of September
+
