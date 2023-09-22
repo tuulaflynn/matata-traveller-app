@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.util.List;
 
+//Using Lombok
 @NoArgsConstructor //empty constructor
 @AllArgsConstructor //a constructor using all attributes
 @Getter //for getters
