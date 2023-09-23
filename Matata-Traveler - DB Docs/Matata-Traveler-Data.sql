@@ -1,5 +1,5 @@
 -- insert data in the city_details table
-INSERT INTO city_details (city_name, city_country, city_img, city_currency) VALUES
+INSERT INTO city_details(city_name, city_country, city_img, city_currency) VALUES
 ("Paris", "France" ,"img", "EURO"),
 ("London", "United Kingdom", "img", "GBP"),
 ("New York City", "United States", "img", "USD"),
@@ -70,21 +70,21 @@ INSERT INTO category_details (category_id ,category_name) VALUES
     
 -- Create threads
 INSERT INTO thread_details(thread_content, thread_date, city_id) VALUES
-    ('Visited the Sophia Mosque today. Such a spiritually enriching experience!', "2014-02-01", 1),
-    ('Took a ride on the historic tram, exploring the city with vintage vibes.', "2014-06-11", 3),
+    ('Visited the Sophia Mosque today. Such a spiritually enriching experience!', "2014-02-01", 12),
+    ('Took a ride on the historic tram, exploring the city with vintage vibes.', "2014-06-11", 6),
     ('Staying at the luxurious Grand Hotel during my trip. What a fantastic choice!', "2014-06-30", 4),
     ('Enjoyed a delightful dinner at the Italian restaurant downtown. The pasta was incredible.', "2014-07-04", 2),
     ('Went on a guided tour to explore ancient ruins. History comes alive!', "2014-07-04", 5),
     ('Sunset views from my hotel room are breathtaking. Feeling blessed.', "2022-09-14", 5),
     ('Exploring the local cuisine. Street food is the way to go!', "2022-09-26", 3),
-    ('Took a scenic hike to the mountain peak. Spectacular views all around.', "2022-10-03", 3),
+    ('Took a scenic hike to the mountain peak. Spectacular views all around.', "2022-10-03", 7),
     ('Navigating the city using public transport. Easy and convenient!', "2022-12-02", 2),
     ('Dining at a rooftop restaurant tonight. City lights and good food - perfect combination.', "2022-12-17", 1),
     ('Visited a historic cathedral today. Incredible architecture!', "2023-03-27", 2),
-    ('Took a boat ride along the river. Relaxing and scenic!',"2023-04-07", 3),
+    ('Took a boat ride along the river. Relaxing and scenic!',"2023-04-07", 5),
     ('Checked into a cozy boutique hotel. Loving the ambiance!', "2023-01-05", 4),
     ('Tried some street food specialties. Spicy and delicious!', "2023-06-01", 4),
-    ('Explored ancient temples on a guided tour. Fascinating history!', "2023-09-14", 5);
+    ('Explored ancient temples on a guided tour. Fascinating history!', "2023-09-14", 18);
 
 -- Create thread-category associations
 INSERT INTO thread_category_details (thread_id, category_id) VALUES
@@ -145,6 +145,7 @@ SELECT * FROM city_details;
 SELECT * FROM attraction_details;
 SELECT * FROM category_details;
 SELECT * FROM thread_details;
-SELECT * FROM thread_category;
+SELECT * FROM thread_category_details;
 SELECT * FROM city_thread;
 
+SHOW TABLES;

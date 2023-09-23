@@ -22,6 +22,7 @@ public class ThreadController {
             this.threadService = threadService;
         }
 
+        // http://localhost:8080/api/threads
         @GetMapping("threads")
         public ResponseEntity<List<ThreadDto>> fetchAllThreads() {
             return new ResponseEntity<List<ThreadDto>>(threadService.fetchAllThreads(), HttpStatus.OK);
@@ -32,7 +33,6 @@ public class ThreadController {
         return new ResponseEntity<List<ThreadDto>>(threadService.fetchAllThreads(), HttpStatus.OK);
         }
 
-        // http://localhost:8081/api/threads
         @PostMapping("threads")
         public ResponseEntity<ThreadDto> addThread(@RequestBody ThreadDto newThreadDto) {
             return new ResponseEntity<>(threadService.addThread(newThreadDto), HttpStatus.OK);

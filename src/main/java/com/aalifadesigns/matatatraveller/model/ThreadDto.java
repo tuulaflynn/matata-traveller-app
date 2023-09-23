@@ -14,6 +14,7 @@ public class ThreadDto {
     private int threadId;
     private String threadContent;
     private LocalDate threadDate;
+    private CityDto cityDto;
 
 
 }
