@@ -34,5 +34,10 @@ public class CityEntity {
             joinColumns = @JoinColumn (name = "city_id"),
             inverseJoinColumns = @JoinColumn(name = "thread_id"))
     private List<ThreadEntity> allThreads; //collection of Threads
+
+
+    //OneToMany relationship with Attractions
+    @OneToMany // I need to add mappedBy - after Sofia completes Attraction Entity
+    private List<AttractionEntity> allAttractions;
 }
 
