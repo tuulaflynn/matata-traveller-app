@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ThreadServiceImpl implements ThreadService {
@@ -46,7 +47,25 @@ public class ThreadServiceImpl implements ThreadService {
     }
 
     @Override
+    public ThreadDto fetchAThread(int threadId) {
+        // Store the entity returned by the id search in an optional for if id is invalid it is able to hold the value null.
+        Optional<ThreadEntity> threadEntityOptional = threadDao.findById(threadId);
+        // Store the record, if it exists, in a dto object with its composite entities copied in
+        ThreadDto threadDto = new ThreadDto();
+        if (threadEntityOptional.isPresent()) {
+            CityDto cityDto = new CityDto();        // this is for the composite entity inside the thread entity
+            BeanUtils.copyProperties(threadEntityOptional.get(), threadDto);
+            BeanUtils.copyProperties(threadEntityOptional.get().getCityEntity(), cityDto);
+            threadDto.setCityDto(cityDto);          // set the composite property
+
+            return threadDto;
+        }
+        return null;
+    }
+
+    @Override
     public ThreadDto addThread(ThreadDto newThreadDto) {
+
         return null;
     }
 

@@ -29,8 +29,8 @@ public class ThreadController {
         }
 
         @GetMapping("threads/{threadId}")
-        public ResponseEntity<List<ThreadDto>> fetchAThreads(int threadId) {
-        return new ResponseEntity<List<ThreadDto>>(threadService.fetchAllThreads(), HttpStatus.OK);
+        public ResponseEntity<ThreadDto> fetchAThread(@PathVariable("threadId") int threadId) {
+        return new ResponseEntity<ThreadDto>(threadService.fetchAThread(threadId), HttpStatus.OK);
         }
 
         @PostMapping("threads")
@@ -38,18 +38,18 @@ public class ThreadController {
             return new ResponseEntity<>(threadService.addThread(newThreadDto), HttpStatus.OK);
         }
 
-        // http://localhost:8081/api/threads/2023-05-27       // the path variable can be written like this for a date
-        @GetMapping("threads/{threadDate}")
+        // http://localhost:8080/api/threads/2023-05-27       // the path variable can be written like this for a date
+        @GetMapping("threads/date/{threadDate}")
         public ResponseEntity<List<ThreadDto>> fetchThreadByDate(@PathVariable("threadDate") LocalDate threadDate) {
             return new ResponseEntity<>(threadService.fetchByThreadDate(threadDate), HttpStatus.OK);
         }
 
-        @GetMapping("threads/{categoryId}")
+        @GetMapping("threads/category/{categoryId}")
         public ResponseEntity<List<ThreadDto>> fetchThreadByCategory(@PathVariable("categoryId") int categoryId) {
             return new ResponseEntity<>(threadService.fetchByCategoryId(categoryId), HttpStatus.OK);
         }
 
-        @GetMapping("threads/{cityId}")
+        @GetMapping("threads/city/{cityId}")
         public ResponseEntity<List<ThreadDto>> fetchThreadByCity(@PathVariable("cityId") int cityId) {
             return new ResponseEntity<>(threadService.fetchByCityId(cityId), HttpStatus.OK);
         }
