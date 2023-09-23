@@ -48,5 +48,6 @@ public class CityEntity {
     //OneToMany relationship with Attractions
     @OneToMany // I need to add mappedBy - after Sofia completes Attraction Entity
     private List<AttractionEntity> allAttractions;
+
 }
 
