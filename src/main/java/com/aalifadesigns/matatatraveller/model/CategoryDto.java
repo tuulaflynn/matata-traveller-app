@@ -16,6 +16,6 @@ public class CategoryDto {
     private int categoryId;
     private String categoryName;
 
-    //corresponding to the Threads entity object (ManytoMany- one category has many threads)
+    //corresponding to the Category entity object (ManytoMany- one category has many threads)
     private List<ThreadDto> allThreads;
 }
