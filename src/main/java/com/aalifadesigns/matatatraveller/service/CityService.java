@@ -5,5 +5,5 @@ import java.util.List;
 
 public interface CityService {
     public List<CityDto> fetchAllCities();
-    public CityDto fetchACategory (int cityId);
+    public CityDto fetchACity (int cityId);
 }
