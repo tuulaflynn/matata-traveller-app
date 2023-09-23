@@ -18,6 +18,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -30,19 +31,24 @@ import lombok.ToString;
 public class AttractionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="attraction_id")
+    @Column(name = "attraction_id")
     private int attractionId;
 
-    @Column(name="attraction_name")
+    @Column(name = "attraction_name")
     private String attractionName;
 
-    @Column(name="attraction_description")
+    @Column(name = "attraction_description")
     private String attractionDescription;
 
-    @Column(name="attraction_image")
+    @Column(name = "attraction_image")
     private String attractionImage;
 
     @ManyToOne
     @JoinColumn(name = "city_id")
     private CityEntity cityEntity;
+
+
 }
+
+
+
