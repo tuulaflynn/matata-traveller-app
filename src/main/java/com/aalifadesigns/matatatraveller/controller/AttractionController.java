@@ -40,7 +40,7 @@ public class AttractionController {
     }
 
 
-    // 3. add a book
+    // 3. add a attraction
     // http://localhost:8080/attractions
     // here the new attraction data to be inserted into the DB is sent along with the request body
     // so what we should do is extract the new attraction data from the request body and store in the java method parmameter(newattraction)
@@ -50,14 +50,14 @@ public class AttractionController {
         return new ResponseEntity<AttractionDto>(attractionService.addAttraction(newAttraction), HttpStatus.OK);
     }
 
-    // 4. update a book
+    // 4. update a attraction
     // http://localhost:8080/attractions
     @PutMapping("/attractions")
     public ResponseEntity<AttractionDto> updateBook(@RequestBody AttractionDto updateAttraction) {
         return new ResponseEntity<AttractionDto>(attractionService.updateAttraction(updateAttraction), HttpStatus.OK);
     }
 
-    // 5. delete a book
+    // 5. delete a attraction
     // http://localhost:8080/api/attractions/1
     @DeleteMapping("/attractions/{bid}")
     public ResponseEntity<Void> removeAttraction(@PathVariable("bid") int attractionId) {
