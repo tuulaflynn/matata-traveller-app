@@ -26,4 +26,19 @@ public class CategoryServiceImpl implements CategoryService {
     public CategoryDto fetchACategory(int categoryId) {
         return null;
     }
+
+    @Override
+    public CategoryDto addCategory(CategoryDao newCategory) {
+        return null;
+    }
+
+    @Override
+    public CategoryDto updateCategory(CategoryDto updateCategory) {
+        return null;
+    }
+
+    @Override
+    public void removeCategory(int categoryId) {
+
+    }
 }
