@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -30,5 +31,10 @@ public class ThreadEntity {
     @ManyToOne
     @JoinColumn(name = "city_id")
     private CityEntity cityEntity;
+
+    // I think this bidirectional mapping is unnecessary
+    @ManyToMany(mappedBy = "allThreads")  // As the uni-directional mapping has already been made in CategoryEntity, this annotation makes it bidirectional
+    private List<CategoryEntity> allCategoriesEntity;
+    // this returns a list of all categories for threads
 
 }

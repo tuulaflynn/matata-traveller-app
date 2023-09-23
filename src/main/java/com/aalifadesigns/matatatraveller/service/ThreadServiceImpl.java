@@ -1,8 +1,10 @@
 package com.aalifadesigns.matatatraveller.service;
 
 import com.aalifadesigns.matatatraveller.dao.ThreadDao;
+import com.aalifadesigns.matatatraveller.dao.entities.CategoryEntity;
 import com.aalifadesigns.matatatraveller.dao.entities.CityEntity;
 import com.aalifadesigns.matatatraveller.dao.entities.ThreadEntity;
+import com.aalifadesigns.matatatraveller.model.CategoryDto;
 import com.aalifadesigns.matatatraveller.model.CityDto;
 import com.aalifadesigns.matatatraveller.model.ThreadDto;
 import org.springframework.beans.BeanUtils;
@@ -34,13 +36,25 @@ public class ThreadServiceImpl implements ThreadService {
         // Transferring each record from an entity to a dto (including copying the record's composite entity).
         allThreadsEntity.forEach(eachThreadEntity -> {
             ThreadDto eachThreadDto = new ThreadDto();
-            CityDto eachCityDto = new CityDto();        // this is for the composite entity inside the thread entity
+            // For the composite entity inside the thread entity
+            CityDto eachCityDto = new CityDto();
+            List<CategoryDto> eachCategoryDtoList = new ArrayList<>();
+
             // Copy over everything
             BeanUtils.copyProperties(eachThreadEntity, eachThreadDto);
-            // Copy over the composite property
+            // Copy over the city composite property
             BeanUtils.copyProperties(eachThreadEntity.getCityEntity(), eachCityDto);
-            // Set the composite property
+            // Set the city composite property
             eachThreadDto.setCityDto(eachCityDto);
+            // Copy over the composite categoryEntities (there may be more than one so we need to do this in a loop)
+            eachThreadEntity.getAllCategoriesEntity().forEach(eachCategoryEntity -> {
+                CategoryDto eachCategoryDto = new CategoryDto();
+                BeanUtils.copyProperties(eachCategoryEntity, eachCategoryDto);
+                eachCategoryDtoList.add(eachCategoryDto);
+            });
+            // Set the categories composite property which is a list of categoryDto
+            eachThreadDto.setAllCategoriesDto(eachCategoryDtoList);
+
             // Add the dto to the collection allThreadsDto
             allThreadsDto.add(eachThreadDto);
         });
@@ -55,9 +69,20 @@ public class ThreadServiceImpl implements ThreadService {
         ThreadDto threadDto = new ThreadDto();
         if (threadEntityOptional.isPresent()) {
             CityDto cityDto = new CityDto();        // this is for the composite entity inside the thread entity
+            List<CategoryDto> categoryDtoList = new ArrayList<>();
+
             BeanUtils.copyProperties(threadEntityOptional.get(), threadDto);
             BeanUtils.copyProperties(threadEntityOptional.get().getCityEntity(), cityDto);
             threadDto.setCityDto(cityDto);          // set the composite property
+
+            // Copy over the composite categoryEntities (there may be more than one so we need to do this in a loop)
+            threadEntityOptional.get().getAllCategoriesEntity().forEach(eachCategoryEntity -> {
+                CategoryDto eachCategoryDto = new CategoryDto();
+                BeanUtils.copyProperties(eachCategoryEntity, eachCategoryDto);
+                categoryDtoList.add(eachCategoryDto);
+            });
+            // Set the categories composite property which is a list of categoryDto
+            threadDto.setAllCategoriesDto(categoryDtoList);
 
             return threadDto;
         }
@@ -69,10 +94,20 @@ public class ThreadServiceImpl implements ThreadService {
         // Copy dto into an entity
         ThreadEntity newThreadEntity = new ThreadEntity();
         CityEntity newCityEntity = new CityEntity();
+        List<CategoryEntity> categoryEntityList = new ArrayList<>();
+
         BeanUtils.copyProperties(newThreadDto, newThreadEntity);
-        // Copy in the composite entity too
+        // Copy in the city composite entity too
         BeanUtils.copyProperties(newThreadDto.getCityDto(),newCityEntity);
         newThreadEntity.setCityEntity(newCityEntity);
+        // Copy into a list of category entities
+        newThreadDto.getAllCategoriesDto().forEach(eachCategoryDao -> {
+            CategoryEntity eachCategoryEntity = new CategoryEntity();
+            BeanUtils.copyProperties(eachCategoryDao, eachCategoryEntity);
+            categoryEntityList.add(eachCategoryEntity);
+        });
+        // Set the list of categories entities to the newThreadEntity object
+        newThreadEntity.setAllCategoriesEntity(categoryEntityList);
 
         // Add the entity to the database. N.B. if the primary key is not unique, it will update the existing record with this entity
         threadDao.saveAndFlush(newThreadEntity);
@@ -92,12 +127,23 @@ public class ThreadServiceImpl implements ThreadService {
         allThreadsEntity.forEach(eachThreadEntity -> {
             ThreadDto eachThreadDto = new ThreadDto();
             CityDto eachCityDto = new CityDto();        // this is for the composite entity inside the thread entity
+            List<CategoryDto> eachCategoryDtoList = new ArrayList<>();
+
             // Copy over everything
             BeanUtils.copyProperties(eachThreadEntity, eachThreadDto);
-            // Copy over the composite property
+            // Copy over the city composite property
             BeanUtils.copyProperties(eachThreadEntity.getCityEntity(), eachCityDto);
             // Set the composite property
             eachThreadDto.setCityDto(eachCityDto);
+            // Copy over and set the composite category list
+            eachThreadEntity.getAllCategoriesEntity().forEach(eachCategoryEntity -> {
+                CategoryDto eachCategoryDto = new CategoryDto();
+                BeanUtils.copyProperties(eachCategoryEntity, eachCategoryDto);
+                eachCategoryDtoList.add(eachCategoryDto);
+            });
+            // Set the categories composite property which is a list of categoryDto
+            eachThreadDto.setAllCategoriesDto(eachCategoryDtoList);
+
             // Add the dto to the collection allThreadsDto
             allThreadsDto.add(eachThreadDto);
         });
@@ -105,25 +151,23 @@ public class ThreadServiceImpl implements ThreadService {
     }
 
     @Override
-    public List<ThreadDto> fetchByCategoryId(int categoryId) {
-        // This is going to be achieved in fetch allThreads field of CategoryEntity
-        return null;
-    }
-
-    @Override
-    public List<ThreadDto> fetchByCityId(int cityId) {
-        // This is going to be achieved in fetch allThreads field of CityEntity
-        return null;
-    }
-
-    @Override
     public ThreadDto updateThread(ThreadDto updateThreadDto) {
         ThreadEntity updateThreadEntity = new ThreadEntity();
         CityEntity updateCityEntity = new CityEntity();
+        List<CategoryEntity> updateCategoryEntityList = new ArrayList<>();
+
         BeanUtils.copyProperties(updateThreadDto, updateThreadEntity);
-        // Copy in the composite entity too
+        // Copy and set the city composite entity too
         BeanUtils.copyProperties(updateThreadDto.getCityDto(),updateCityEntity);
         updateThreadEntity.setCityEntity(updateCityEntity);
+        // Copy and set the category list from the entity to the dao
+        updateThreadDto.getAllCategoriesDto().forEach(eachCategoryDao -> {
+            CategoryEntity eachCategoryEntity = new CategoryEntity();
+            BeanUtils.copyProperties(eachCategoryDao, eachCategoryEntity);
+            updateCategoryEntityList.add(eachCategoryEntity);
+        });
+        // Set the list of categories entities to the updateThreadEntity object
+        updateThreadEntity.setAllCategoriesEntity(updateCategoryEntityList);
 
         // update the entity in the database. N.B. if the primary key is unique, it will add a new record with this entity
         threadDao.saveAndFlush(updateThreadEntity);

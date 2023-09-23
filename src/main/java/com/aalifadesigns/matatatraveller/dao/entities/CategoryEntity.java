@@ -31,9 +31,9 @@ public class CategoryEntity {
     //the thread_details is the inverse
     //JoinColumn/ inverseJoinColumn - on the FK column, which connects with the 3rd table
     @ManyToMany
-    @JoinTable (name="thread_category",
+    @JoinTable (name="thread_category_details",
                 joinColumns = @JoinColumn (name = "category_id"),
                 inverseJoinColumns = @JoinColumn(name = "thread_id"))
 
-    private List<ThreadEntity> allThreads; //collection of Threads
+    private List<ThreadEntity> allThreads; //collection of Threads (for each category)
 }

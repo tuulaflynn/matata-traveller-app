@@ -11,8 +11,7 @@ public interface ThreadService {
     ThreadDto fetchAThread(int threadId);
     ThreadDto addThread(ThreadDto newThreadDto);
     List<ThreadDto> fetchByThreadDate(LocalDate threadDate);
-    List<ThreadDto> fetchByCategoryId(int categoryId);
-    List<ThreadDto> fetchByCityId(int cityId);
     ThreadDto updateThread(ThreadDto updateThreadDto);
     void deleteThread(int threadId);
+
 }

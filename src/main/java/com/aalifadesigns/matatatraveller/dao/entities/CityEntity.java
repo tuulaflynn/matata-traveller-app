@@ -45,7 +45,7 @@ public class CityEntity {
     private List<ThreadEntity> allThreads; //collection of Threads*/
 
     @OneToMany(mappedBy = "cityEntity")        // this creates the bidirectional mapping
-    private List<ThreadEntity> allThreads; //collection of Threads
+    private List<ThreadEntity> allThreads;     //collection of Threads for a city can be obtained through this field
 
     //OneToMany relationship with Attractions
     @OneToMany // I need to add mappedBy - after Sofia completes Attraction Entity
