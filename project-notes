@@ -90,6 +90,9 @@ weather_details
 currency_details
 > currency_id
 > currency_name
+language_details
+> language_id
+> language_type
 
 Not using
 ---------
@@ -123,3 +126,17 @@ Design includes:
 Approval Completion - Thursday, 21st of September (by noon)
 Project Outline/ Proposal Completion - Wednesday, 20th of September
 
+
+
+To obtain all threads for a city for a category
+-----------------------------------------------
+> so far we can, obtain all threads for a category (this includes threads from all cities)
+> we can obtain all threads for a city (this includes all categories
+> we need to try and obtain all the threads for a single category and a single city.
+     - I'm not sure which controller/service/dao entity to go through?
+
+My logic so far:
+search for fetchACity()
+the resulting object will have allThreads() as a field
+store this collection as in threadsForCity()
+search in this collection by categoryId

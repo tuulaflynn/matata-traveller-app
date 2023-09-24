@@ -1,5 +1,5 @@
 -- insert data in the city_details table
-INSERT INTO city_details (city_name, city_country, city_img, city_currency) VALUES
+INSERT INTO city_details(city_name, city_country, city_img, city_currency) VALUES
 ("Paris", "France" ,"img", "EURO"),
 ("London", "United Kingdom", "img", "GBP"),
 ("New York City", "United States", "img", "USD"),
@@ -65,82 +65,87 @@ INSERT INTO category_details (category_id ,category_name) VALUES
     (2, 'transport'),
     (3, 'hotel'),
     (4, 'restaurant'),
-    (5, 'excursion');
+    (5, 'excursion'),
+    (6, 'adventure');
     
 -- Create threads
-INSERT INTO thread_details (thread_id, thread_content, thread_category) VALUES
-    (1, 'Visited the Sophia Mosque today. Such a spiritually enriching experience! #Excursion', 5),
-    (2, 'Took a ride on the historic tram, exploring the city with vintage vibes. #TransportAdventures', 2),
-    (3, 'Staying at the luxurious Grand Hotel during my trip. What a fantastic choice! #HotelReview', 3),
-    (4, 'Enjoyed a delightful dinner at the Italian restaurant downtown. The pasta was incredible. #Foodie', 4),
-    (5, 'Went on a guided tour to explore ancient ruins. History comes alive! #Excursion', 5),
-    (6, 'Sunset views from my hotel room are breathtaking. Feeling blessed. #HotelViews', 3),
-    (7, 'Exploring the local cuisine. Street food is the way to go! #FoodAdventures', 1),
-    (8, 'Took a scenic hike to the mountain peak. Spectacular views all around. #Excursion', 5),
-    (9, 'Navigating the city using public transport. Easy and convenient! #Transport', 2),
-    (10, 'Dining at a rooftop restaurant tonight. City lights and good food - perfect combination. #Restaurant', 4),
-    (11, 'Visited a historic cathedral today. Incredible architecture! #Excursion', 5),
-    (12, 'Took a boat ride along the river. Relaxing and scenic! #Transport', 2),
-    (13, 'Checked into a cozy boutique hotel. Loving the ambiance! #HotelReview', 3),
-    (14, 'Tried some street food specialties. Spicy and delicious! #Foodie', 1),
-    (15, 'Explored ancient temples on a guided tour. Fascinating history! #Excursion', 5);
+INSERT INTO thread_details(thread_content, thread_date, city_id) VALUES
+    ('Visited the Sophia Mosque today. Such a spiritually enriching experience!', "2014-02-01", 12),
+    ('Took a ride on the historic tram, exploring the city with vintage vibes.', "2014-06-11", 6),
+    ('Staying at the luxurious Grand Hotel during my trip. What a fantastic choice!', "2014-06-30", 4),
+    ('Enjoyed a delightful dinner at the Italian restaurant downtown. The pasta was incredible.', "2014-07-04", 2),
+    ('Went on a guided tour to explore ancient ruins. History comes alive!', "2014-07-04", 5),
+    ('Sunset views from my hotel room are breathtaking. Feeling blessed.', "2022-09-14", 5),
+    ('Exploring the local cuisine. Street food is the way to go!', "2022-09-26", 3),
+    ('Took a scenic hike to the mountain peak. Spectacular views all around.', "2022-10-03", 7),
+    ('Navigating the city using public transport. Easy and convenient!', "2022-12-02", 2),
+    ('Dining at a rooftop restaurant tonight. City lights and good food - perfect combination.', "2022-12-17", 1),
+    ('Visited a historic cathedral today. Incredible architecture!', "2023-03-27", 2),
+    ('Took a boat ride along the river. Relaxing and scenic!',"2023-04-07", 5),
+    ('Checked into a cozy boutique hotel. Loving the ambiance!', "2023-01-05", 4),
+    ('Tried some street food specialties. Spicy and delicious!', "2023-06-01", 4),
+    ('Explored ancient temples on a guided tour. Fascinating history!', "2023-09-14", 18);
 
 -- Create thread-category associations
-INSERT INTO thread_category (thread_id, category_id) VALUES
-    (1, 5),
-    (2, 2),
-    (3, 3),
-    (4, 1),
-    (5, 5),
-    (6, 3),
-    (7, 1),
-    (8, 5),
-    (9, 2),
-    (10, 4),
-    (11, 5),
-    (12, 2),
-    (13, 3),
-    (14, 1),
-    (15, 5);
+INSERT INTO thread_category_details (thread_id, category_id) VALUES
+	(1, 5),
+	(2, 2),
+	(2, 6),
+	(3, 3),
+	(4, 1),
+	(5, 5),
+	(6, 3),
+	(7, 1),
+	(7, 6),
+	(8, 5),
+	(9, 2),
+	(10, 4),
+	(11, 5),
+	(12, 2),
+	(13, 3),
+	(14, 1),
+	(15, 5);
+
 
 
 -- insert data in the city_thread table
-INSERT INTO city_thread (thread_id, city_id) VALUES
-(1,1),
-(2,2),
-(3,3),
-(4,4),
-(5,5),
-(6,6),
-(7,7),
-(8,8),
-(9,9),
-(10,10),
-(11,11),
-(12,12),
-(13,13),
-(14,14),
-(15,15),
-(1,3),
-(2,4),
-(3,5),
-(4,3),
-(5,1),
-(6,4),
-(7,3),
-(8,1),
-(9,3),
-(10,1),
-(11,1),
-(12,1),
-(13,1),
-(14,1),
-(15,1);
+-- INSERT INTO city_thread (thread_id, city_id) VALUES
+-- (1,1),
+-- (2,2),
+-- (3,3),
+-- (4,4),
+-- (5,5),
+-- (6,6),
+-- (7,7),
+-- (8,8),
+-- (9,9),
+-- (10,10),
+-- (11,11),
+-- (12,12),
+-- (13,13),
+-- (14,14),
+-- (15,15),
+-- (1,3),
+-- (2,4),
+-- (3,5),
+-- (4,3),
+-- (5,1),
+-- (6,4),
+-- (7,3),
+-- (8,1),
+-- (9,3),
+-- (10,1),
+-- (11,1),
+-- (12,1),
+-- (13,1),
+-- (14,1),
+-- (15,1);
 
 SELECT * FROM city_details;
 SELECT * FROM attraction_details;
 SELECT * FROM category_details;
 SELECT * FROM thread_details;
-SELECT * FROM thread_category;
+SELECT * FROM thread_category_details;
 SELECT * FROM city_thread;
 
+SHOW TABLES;

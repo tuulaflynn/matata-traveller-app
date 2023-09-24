@@ -13,14 +13,16 @@ city_currency VARCHAR (30)
 CREATE TABLE thread_details(
 thread_id INT AUTO_INCREMENT PRIMARY KEY,
 thread_content TINYTEXT,
-thread_category INT NOT NULL
+thread_date DATE,
+city_id INT,
+FOREIGN KEY (city_id) REFERENCES city_details(city_id)
 );
 
 CREATE TABLE category_details(
 category_id INT AUTO_INCREMENT PRIMARY KEY,
 category_name VARCHAR (30)); 
 
-CREATE TABLE thread_category(
+CREATE TABLE thread_category_details(
 thread_category_id INT AUTO_INCREMENT PRIMARY KEY,
 thread_id INT,
 category_id INT,
@@ -38,12 +40,13 @@ city_id INT,
 FOREIGN KEY (city_id) REFERENCES city_details(city_id)
 );
 
-CREATE TABLE city_thread(
-city_thread_id INT AUTO_INCREMENT PRIMARY KEY,
-thread_id INT,
-city_id INT,
-FOREIGN KEY (thread_id) REFERENCES thread_details(thread_id),
-FOREIGN KEY (city_id) REFERENCES city_details(city_id)
-);
+
+-- CREATE TABLE city_thread(
+-- city_thread_id INT AUTO_INCREMENT PRIMARY KEY,
+-- thread_id INT,
+-- city_id INT,
+-- FOREIGN KEY (thread_id) REFERENCES thread_details(thread_id),
+-- FOREIGN KEY (city_id) REFERENCES city_details(city_id)
+-- );
 
 
