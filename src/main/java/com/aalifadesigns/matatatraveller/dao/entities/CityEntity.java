@@ -48,7 +48,7 @@ public class CityEntity {
     private List<ThreadEntity> allThreads;     //collection of Threads for a city can be obtained through this field
 
     //OneToMany relationship with Attractions
-    @OneToMany // I need to add mappedBy - after Sofia completes Attraction Entity
+    @OneToMany (mappedBy = "cityEntity")
     private List<AttractionEntity> allAttractions;
 
 }
