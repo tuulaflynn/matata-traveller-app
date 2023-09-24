@@ -85,7 +85,7 @@ public class CityServiceImpl implements CityService {
 
         //call findById(), which returns an Optional<Entity> type
         Optional<CityEntity> optionalCityEntity = cityDao.findById(cityId);
-        // if optionalSightingEntity has data, copy the entity to a corresponding SightingDTO object
+        // if optionalCityEntity has data, copy the entity to a corresponding CityDTO object
         CityDto cityDto = null;
         if (optionalCityEntity.isPresent()) {
             cityDto = new CityDto();
@@ -118,7 +118,7 @@ public class CityServiceImpl implements CityService {
                 allAttractionDto.add(eachAttractionDto);
             }
 
-            //set the ThreadDto collection inside cityDto object
+            //set the AttractionDto collection inside cityDto object
             cityDto.setAllAttractions(allAttractionDto);
         }
         return cityDto;
