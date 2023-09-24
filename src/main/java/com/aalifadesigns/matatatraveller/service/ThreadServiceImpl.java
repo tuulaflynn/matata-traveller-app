@@ -1,5 +1,6 @@
 package com.aalifadesigns.matatatraveller.service;
 
+import com.aalifadesigns.matatatraveller.dao.CategoryDao;
 import com.aalifadesigns.matatatraveller.dao.ThreadDao;
 import com.aalifadesigns.matatatraveller.dao.entities.CategoryEntity;
 import com.aalifadesigns.matatatraveller.dao.entities.CityEntity;
@@ -20,6 +21,8 @@ import java.util.Optional;
 public class ThreadServiceImpl implements ThreadService {
 
     private ThreadDao threadDao;
+
+    private CategoryServiceImpl categoryService;
 
     @Autowired
     public ThreadServiceImpl(ThreadDao threadDao) {
@@ -185,5 +188,90 @@ public class ThreadServiceImpl implements ThreadService {
             // EDIT: add a custom exception here.
             System.out.println("Error. Invalid thread id.");
         }
+    }
+
+    @Override
+    public List<ThreadDto> fetchThreadsByCity(CityDto cityDto) {
+
+        //copy the CityDto into a city entity
+        CityEntity cityEntity = new CityEntity();
+        BeanUtils.copyProperties(cityDto, cityEntity);
+
+        //call the finder method declared in the ThreadDao
+        List<ThreadEntity> allThreadEntity = threadDao.findByCityEntity(cityEntity);
+
+        //the ThreadEntity collection will need to be copied into a DTO collection
+        List<ThreadDto> allThreadDto = new ArrayList<ThreadDto>();
+
+        // traverse the collection and copy each entity into a DTO, also copying the categories collections
+        allThreadEntity.forEach(eachThreadEntity -> {
+            ThreadDto eachThreadDto = new ThreadDto();
+            List<CategoryDto> allCategories = new ArrayList<>();
+            BeanUtils.copyProperties(eachThreadEntity, eachThreadDto);
+
+            // traverse the Categories entities collection, copy each category entity into a CategoryDto object
+            // then add the CategoryDto object to a CategoryDto collection, which will be set inside each ThreadDto
+            eachThreadEntity.getAllCategoriesEntity().forEach(eachCategoryEntity -> {
+                CategoryDto eachCategoryDto = new CategoryDto();
+                BeanUtils.copyProperties(eachCategoryEntity, eachCategoryDto);
+
+                //add each category to the allCategories collection
+                allCategories.add(eachCategoryDto);
+            });
+
+            // set the Categories collection list
+            eachThreadDto.setAllCategoriesDto(allCategories);
+
+            // add each threadDto object (containing the categories) to the collection of ThreadDto
+            allThreadDto.add(eachThreadDto);
+        });
+        //return the collection
+        return allThreadDto;
+    }
+
+    @Override
+    public List<ThreadDto> fetchThreadsByCategory (CategoryDto categoryDto) {
+
+        //copy the DTO into a category entity
+        CategoryEntity categoryEntity = new CategoryEntity();
+        BeanUtils.copyProperties(categoryDto, categoryEntity);
+
+        //call the finder method declared in the ThreadDao
+        List<ThreadEntity> allThreadEntity = threadDao.findByAllCategoriesEntity(categoryEntity);
+
+        //the ThreadEntity collection will need to be copied into a DTO collection
+        List<ThreadDto> allThreadDto = new ArrayList<ThreadDto>();
+
+        // traverse the collection and copy each entity into a DTO, also copying the categories collections
+        allThreadEntity.forEach(eachThreadEntity -> {
+            ThreadDto eachThreadDto = new ThreadDto();
+            List<CategoryDto> allCategories = new ArrayList<>();
+            BeanUtils.copyProperties(eachThreadEntity, eachThreadDto);
+
+            // traverse the Categories entities collection, copy each category entity into a CategoryDto object
+            // then add the CategoryDto object to a CategoryDto collection, which will be set inside each ThreadDto
+            eachThreadEntity.getAllCategoriesEntity().forEach(eachCategoryEntity -> {
+                CategoryDto eachCategoryDto = new CategoryDto();
+                BeanUtils.copyProperties(eachCategoryEntity, eachCategoryDto);
+
+                //add each category to the allCategories collection
+                allCategories.add(eachCategoryDto);
+            });
+
+            // set the Categories collection list
+            eachThreadDto.setAllCategoriesDto(allCategories);
+
+            //also copy the City entity / DTO
+            CityDto cityDto = new CityDto();
+            BeanUtils.copyProperties(eachThreadEntity.getCityEntity(), cityDto);
+
+            //set the CityDto
+            eachThreadDto.setCityDto(cityDto);
+
+            // add each threadDto object (containing the categories collection and the city object) to the collection
+            allThreadDto.add(eachThreadDto);
+        });
+
+        return allThreadDto;
     }
 }
