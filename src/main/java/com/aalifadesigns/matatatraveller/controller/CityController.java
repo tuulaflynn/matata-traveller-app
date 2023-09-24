@@ -24,8 +24,8 @@ public class CityController {
     // 1. fetch all cities
     // http://localhost:7474/api/cities
     @GetMapping("/cities")
-    public ResponseEntity <List<CityDto>> fetchAllCities() {
-        return new ResponseEntity<List<CityDto>>(cityService.fetchAllCities(),HttpStatus.OK);
+    public ResponseEntity<List<CityDto>> fetchAllCities() {
+        return new ResponseEntity<List<CityDto>>(cityService.fetchAllCities(), HttpStatus.OK);
 
     }
 

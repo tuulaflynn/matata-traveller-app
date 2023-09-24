@@ -101,7 +101,7 @@ public class ThreadServiceImpl implements ThreadService {
 
         BeanUtils.copyProperties(newThreadDto, newThreadEntity);
         // Copy in the city composite entity too
-        BeanUtils.copyProperties(newThreadDto.getCityDto(),newCityEntity);
+        BeanUtils.copyProperties(newThreadDto.getCityDto(), newCityEntity);
         newThreadEntity.setCityEntity(newCityEntity);
         // Copy into a list of category entities
         newThreadDto.getAllCategoriesDto().forEach(eachCategoryDao -> {
@@ -161,7 +161,7 @@ public class ThreadServiceImpl implements ThreadService {
 
         BeanUtils.copyProperties(updateThreadDto, updateThreadEntity);
         // Copy and set the city composite entity too
-        BeanUtils.copyProperties(updateThreadDto.getCityDto(),updateCityEntity);
+        BeanUtils.copyProperties(updateThreadDto.getCityDto(), updateCityEntity);
         updateThreadEntity.setCityEntity(updateCityEntity);
         // Copy and set the category list from the entity to the dao
         updateThreadDto.getAllCategoriesDto().forEach(eachCategoryDao -> {
@@ -183,8 +183,7 @@ public class ThreadServiceImpl implements ThreadService {
         Optional<ThreadEntity> deleteThreadEntityOptional = threadDao.findById(threadId);
         if (deleteThreadEntityOptional.isPresent()) {
             threadDao.deleteById(threadId);
-        }
-        else {
+        } else {
             // EDIT: add a custom exception here.
             System.out.println("Error. Invalid thread id.");
         }
@@ -230,7 +229,7 @@ public class ThreadServiceImpl implements ThreadService {
     }
 
     @Override
-    public List<ThreadDto> fetchThreadsByCategory (CategoryDto categoryDto) {
+    public List<ThreadDto> fetchThreadsByCategory(CategoryDto categoryDto) {
 
         //copy the DTO into a category entity
         CategoryEntity categoryEntity = new CategoryEntity();

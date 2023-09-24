@@ -91,8 +91,7 @@ public class CategoryServiceImpl implements CategoryService {
             }
             //set the ThreadDto collection inside categoryDto object
             categoryDto.setAllThreads(allThreadDto);
-        }
-        else{
+        } else {
             throw new ApplicationException();
         }
         return categoryDto;
@@ -151,7 +150,7 @@ public class CategoryServiceImpl implements CategoryService {
             categoryDao.deleteById(categoryId);
         }
         //else throw exception, informing the user there is no such category
-        else{
+        else {
             throw new ApplicationException();
         }
     }

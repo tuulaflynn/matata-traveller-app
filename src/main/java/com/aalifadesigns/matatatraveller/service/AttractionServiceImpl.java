@@ -3,8 +3,11 @@ package com.aalifadesigns.matatatraveller.service;
 import com.aalifadesigns.matatatraveller.dao.AttractionDao;
 import com.aalifadesigns.matatatraveller.dao.entities.AttractionEntity;
 import com.aalifadesigns.matatatraveller.dao.entities.CityEntity;
+import com.aalifadesigns.matatatraveller.dao.entities.ThreadEntity;
 import com.aalifadesigns.matatatraveller.model.AttractionDto;
+import com.aalifadesigns.matatatraveller.model.CategoryDto;
 import com.aalifadesigns.matatatraveller.model.CityDto;
+import com.aalifadesigns.matatatraveller.model.ThreadDto;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class AttractionServiceImpl implements AttractionService{
+public class AttractionServiceImpl implements AttractionService {
 
     AttractionDao attractionDao;
 
@@ -32,7 +35,7 @@ public class AttractionServiceImpl implements AttractionService{
         // we can't return a collection of AttractionEntity, we have to return a collection of AttractionDto
         // so we have to iterate through the collection of AttractionEntity and copy them into a collection of AttractionDto
         List<AttractionDto> allAttractionDto = new ArrayList<AttractionDto>();
-        for(AttractionEntity eachAttractionEntity: allAttractionEntity) {
+        for (AttractionEntity eachAttractionEntity : allAttractionEntity) {
             // now copy eachAttractionEntity into an AttractionDto object
             AttractionDto eachAttractionDto = new AttractionDto();
             BeanUtils.copyProperties(eachAttractionEntity, eachAttractionDto);
@@ -40,7 +43,7 @@ public class AttractionServiceImpl implements AttractionService{
             // copy the collection of city entity(inside eachAttractionEntity) into a collection of city dto
             List<CityDto> allCitiesDto = new ArrayList<CityDto>();
             CityDto eachCityDto = new CityDto();
-            BeanUtils.copyProperties(eachAttractionEntity.getCityEntity(),eachCityDto) ;
+            BeanUtils.copyProperties(eachAttractionEntity.getCityEntity(), eachCityDto);
 
             // Set the city composite property
             eachAttractionDto.setCityDto(eachCityDto);
@@ -102,6 +105,31 @@ public class AttractionServiceImpl implements AttractionService{
 
     @Override
     public void removeAttraction(int attractionId) {
-          attractionDao.deleteById(attractionId);
+        attractionDao.deleteById(attractionId);
+    }
+
+    @Override
+    public List<AttractionDto> fetchAttractionsByCity(CityDto cityDto) {
+
+        //copy the CityDto into a city entity
+        CityEntity cityEntity = new CityEntity();
+        BeanUtils.copyProperties(cityDto, cityEntity);
+
+        //call the finder method declared in the AttractionDao
+        List<AttractionEntity> allAttractionEntity = attractionDao.findByCityEntity(cityEntity);
+
+        //the AttractionEntity collection needs be copied into a DTO collection
+        List<AttractionDto> allAttractionDto = new ArrayList<AttractionDto>();
+
+        // traverse the collection and copy each entity into a AttractionDto object
+        allAttractionEntity.forEach(eachAttractionEntity -> {
+            AttractionDto eachAttractionDto = new AttractionDto();
+            BeanUtils.copyProperties(eachAttractionEntity, eachAttractionDto);
+
+            // add each AttractionDto object to the collection of AttractionDto
+            allAttractionDto.add(eachAttractionDto);
+        });
+        //return the collection
+        return allAttractionDto;
     }
 }

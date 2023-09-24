@@ -23,8 +23,8 @@ public class CategoryController {
     // 1. fetch all categories
     // http://localhost:7474/api/categories
     @GetMapping("/categories")
-    public ResponseEntity <List<CategoryDto>> fetchAllCategories() {
-        return new ResponseEntity<List<CategoryDto>>(categoryService.fetchAllCategories(),HttpStatus.OK);
+    public ResponseEntity<List<CategoryDto>> fetchAllCategories() {
+        return new ResponseEntity<List<CategoryDto>>(categoryService.fetchAllCategories(), HttpStatus.OK);
 
     }
 

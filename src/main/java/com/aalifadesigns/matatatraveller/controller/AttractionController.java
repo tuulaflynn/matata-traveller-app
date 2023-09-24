@@ -1,7 +1,11 @@
 package com.aalifadesigns.matatatraveller.controller;
 
+import com.aalifadesigns.matatatraveller.exception.ApplicationException;
 import com.aalifadesigns.matatatraveller.model.AttractionDto;
+import com.aalifadesigns.matatatraveller.model.CityDto;
+import com.aalifadesigns.matatatraveller.model.ThreadDto;
 import com.aalifadesigns.matatatraveller.service.AttractionService;
+import com.aalifadesigns.matatatraveller.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,15 +20,21 @@ public class AttractionController {
 
     private AttractionService attractionService;
 
+    //will also need cityService dependency
+    private CityService cityService;
+
     @Autowired
-    public AttractionController(AttractionService attractionService) {
+    public AttractionController(AttractionService attractionService, CityService cityService) {
         this.attractionService = attractionService;
+        this.cityService = cityService;
     }
+
+    @Autowired
 
     // 1. fetch all attractions
     // http://localhost:8080/api/attractions
     @GetMapping("/attractions")
-    public ResponseEntity<List<AttractionDto>> fetchAllAttractions(){
+    public ResponseEntity<List<AttractionDto>> fetchAllAttractions() {
         // here ResponseEntity wraps up the response body(1st argument) and the status code(2nd argument)
         ResponseEntity<List<AttractionDto>> responseEntity = new ResponseEntity<List<AttractionDto>>(attractionService.fetchAllAttractions(), HttpStatus.OK);
         //return attractionService.fetchAllAttractions();
@@ -65,4 +75,17 @@ public class AttractionController {
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
+
+    //6. fetch attractions by city
+    @GetMapping("attractions/city/{cid}")
+    public ResponseEntity<List<AttractionDto>> fetchAttractionsByCity(@PathVariable("cid") int cityId) {
+        //fetch CityDto using cityService
+        CityDto cityDto = cityService.fetchACity(cityId);
+        //if the city does not exist throw custom exception referring to DataAccess
+        if (cityDto == null) {
+            throw new ApplicationException();
+        }
+        return new ResponseEntity<>(attractionService.fetchAttractionsByCity(cityDto), HttpStatus.OK);
+    }
 }
+
