@@ -1,11 +1,9 @@
 package com.aalifadesigns.matatatraveller.service;
 
 import com.aalifadesigns.matatatraveller.dao.CategoryDao;
-import com.aalifadesigns.matatatraveller.dao.entities.AttractionEntity;
 import com.aalifadesigns.matatatraveller.dao.entities.CategoryEntity;
-import com.aalifadesigns.matatatraveller.dao.entities.CityEntity;
 import com.aalifadesigns.matatatraveller.dao.entities.ThreadEntity;
-import com.aalifadesigns.matatatraveller.model.AttractionDto;
+import com.aalifadesigns.matatatraveller.exception.ApplicationException;
 import com.aalifadesigns.matatatraveller.model.CategoryDto;
 import com.aalifadesigns.matatatraveller.model.CityDto;
 import com.aalifadesigns.matatatraveller.model.ThreadDto;
@@ -71,7 +69,7 @@ public class CategoryServiceImpl implements CategoryService {
         CategoryDto categoryDto = null;
         if (optionalCategoryEntity.isPresent()) {
             categoryDto = new CategoryDto();
-            BeanUtils.copyProperties(optionalCategoryEntity, categoryDto);
+            BeanUtils.copyProperties(optionalCategoryEntity.get(), categoryDto);
 
             //copy also the collection of threads (many-to-many mapped relationships)
             //traverse the collection,copy each entity into a Dto object, and form a collection of ThreadDto to be set in each CategoryDto
@@ -80,12 +78,22 @@ public class CategoryServiceImpl implements CategoryService {
                 ThreadDto eachThreadDto = new ThreadDto();
                 //copy each ThreadEntity inti ThreadDto object
                 BeanUtils.copyProperties(eachThreadEntity, eachThreadDto);
-                //add the ThreadDto to the collection
+
+                //also copy the City object of each thread
+                CityDto cityDto = new CityDto();
+                BeanUtils.copyProperties(eachThreadEntity.getCityEntity(), cityDto);
+                //set cityDto
+                eachThreadDto.setCityDto(cityDto);
+
+                //add the ThreadDto (containing also the CityDto) to the collection
                 allThreadDto.add(eachThreadDto);
 
             }
             //set the ThreadDto collection inside categoryDto object
             categoryDto.setAllThreads(allThreadDto);
+        }
+        else{
+            throw new ApplicationException();
         }
         return categoryDto;
     }
@@ -109,11 +117,42 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryDto updateCategory(CategoryDto updateCategory) {
-        return null;
+
+        //copy the CategoryDto object into an entity
+        CategoryEntity updateCategoryEntity = new CategoryEntity();
+        BeanUtils.copyProperties(updateCategory, updateCategoryEntity);
+
+        //also copy the Threads collection inside each category
+        List<ThreadEntity> updateAllThreadEntity = new ArrayList<>();
+        //traverse the Threads collection, copy each ThreadDto into An Entity object, and add it to the updateAllThreadEntity collection
+        updateCategory.getAllThreads().forEach(eachThreadDto -> {
+            ThreadEntity eachThreadEntity = new ThreadEntity();
+            BeanUtils.copyProperties(eachThreadDto, eachThreadEntity);
+            updateAllThreadEntity.add(eachThreadEntity);
+        });
+
+        //updateCategoryEntity - set collection of Threads entities
+        updateCategoryEntity.setAllThreads(updateAllThreadEntity);
+
+        //make use of saneAndFlush in-built method
+        CategoryEntity savedCategoryEntity = categoryDao.saveAndFlush(updateCategoryEntity);
+
+        //return the Dto
+        return updateCategory;
     }
 
     @Override
     public void removeCategory(int categoryId) {
-
+        //2 steps : 1. find category and 2.delete category
+        //call findById(), which returns an Optional<Entity> type
+        Optional<CategoryEntity> optionalCategoryEntity = categoryDao.findById(categoryId);
+        // if data exists, delete category
+        if (optionalCategoryEntity.isPresent()) {
+            categoryDao.deleteById(categoryId);
+        }
+        //else throw exception, informing the user there is no such category
+        else{
+            throw new ApplicationException();
+        }
     }
 }

@@ -89,7 +89,7 @@ public class CityServiceImpl implements CityService {
         CityDto cityDto = null;
         if (optionalCityEntity.isPresent()) {
             cityDto = new CityDto();
-            BeanUtils.copyProperties(optionalCityEntity, cityDto);
+            BeanUtils.copyProperties(optionalCityEntity.get(), cityDto);
 
             //however, this will not copy also the lists of threads and attractions (many-to-many mapped relationships)
 

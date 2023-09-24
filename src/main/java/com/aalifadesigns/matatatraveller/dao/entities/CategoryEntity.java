@@ -1,6 +1,5 @@
 package com.aalifadesigns.matatatraveller.dao.entities;
 
-import com.aalifadesigns.matatatraveller.model.ThreadDto;
 import jakarta.persistence.*;
 import lombok.*;
 
