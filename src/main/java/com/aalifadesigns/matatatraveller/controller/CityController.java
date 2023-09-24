@@ -31,9 +31,9 @@ public class CityController {
 
     // 2. fetch a city
     // http://localhost:7474/api/cities/2
-    @GetMapping("/cities/{bid}")
+    @GetMapping("/cities/{cid}")
     // PathVariable with the name bid and should be extracted and store in a java variable/parameter(cityId)
-    public ResponseEntity<CityDto> fetchCity(@PathVariable("bid") int cityId) {
+    public ResponseEntity<CityDto> fetchCity(@PathVariable("cid") int cityId) {
         return new ResponseEntity<CityDto>(cityService.fetchACity(cityId), HttpStatus.OK);
     }
 
