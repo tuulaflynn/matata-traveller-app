@@ -9,7 +9,7 @@ public interface CategoryService {
 
     public List<CategoryDto> fetchAllCategories();
     public CategoryDto fetchACategory (int categoryId);
-    public CategoryDto addCategory(CategoryDao newCategory);
+    public CategoryDto addCategory(CategoryDto newCategory);
     public CategoryDto updateCategory (CategoryDto updateCategory);
     public void removeCategory(int categoryId);
 

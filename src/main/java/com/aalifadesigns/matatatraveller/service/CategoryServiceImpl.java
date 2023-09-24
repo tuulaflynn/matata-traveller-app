@@ -91,8 +91,20 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryDto addCategory(CategoryDao newCategory) {
-        return null;
+    public CategoryDto addCategory(CategoryDto newCategory) {
+
+        //copy the CategoryDto object into an entity
+        CategoryEntity newCategoryEntity = new CategoryEntity();
+        BeanUtils.copyProperties(newCategory, newCategoryEntity);
+
+        //make use of saneAndFlush in-built method
+        CategoryEntity savedCategoryEntity = categoryDao.saveAndFlush(newCategoryEntity);
+
+        // set the type id in the new dto object
+        newCategory.setCategoryId(savedCategoryEntity.getCategoryId());
+
+        //return the Dto (now containing the Id)
+        return newCategory;
     }
 
     @Override
