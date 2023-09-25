@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Service
+@Service //required Spring Annotation -- stereotype
 public class CategoryServiceImpl implements CategoryService {
 
     CategoryDao categoryDao;

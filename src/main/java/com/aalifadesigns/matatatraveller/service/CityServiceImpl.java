@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-@Service
+@Service //required Spring Annotation -- stereotype
 public class CityServiceImpl implements CityService {
 
     CityDao cityDao;

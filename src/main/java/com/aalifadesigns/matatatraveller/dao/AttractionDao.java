@@ -10,5 +10,6 @@ import java.util.List;
 @Repository
 public interface AttractionDao extends JpaRepository<AttractionEntity, Integer> {
 
+    //finder extra method to fetch attractions by city
     List<AttractionEntity> findByCityEntity (CityEntity cityEntity);
 }

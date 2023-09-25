@@ -34,16 +34,7 @@ public class CityEntity {
     @Column(name = "city_currency")
     private String cityCurrency;
 
-    //ManyToMany relationship with Threads
-    //joinTable name specifies the table that connects these 2 tables, and the city_details becomes the owner
-    //the thread_details is the inverse
-    //JoinColumn/ inverseJoinColumn - on the FK column, which connects with the 3rd table
-/*    @ManyToMany
-    @JoinTable(name = "city_thread",
-            joinColumns = @JoinColumn(name = "city_id"),
-            inverseJoinColumns = @JoinColumn(name = "thread_id"))
-    private List<ThreadEntity> allThreads; //collection of Threads*/
-
+    //OneToMany relation with Threads
     @OneToMany(mappedBy = "cityEntity")        // this creates the bidirectional mapping
     private List<ThreadEntity> allThreads;     //collection of Threads for a city can be obtained through this field
 

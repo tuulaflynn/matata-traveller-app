@@ -17,14 +17,12 @@ import java.util.List;
 @RestController
 @RequestMapping("api")
 public class AttractionController {
-
     private AttractionService attractionService;
 
     @Autowired
     public AttractionController(AttractionService attractionService, CityService cityService) {
         this.attractionService = attractionService;
     }
-
 
     // 1. fetch all attractions
     // http://localhost:8080/api/attractions
