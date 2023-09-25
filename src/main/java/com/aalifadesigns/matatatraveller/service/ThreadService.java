@@ -18,11 +18,11 @@ public interface ThreadService {
     void deleteThread(int threadId);
 
     //fetch threads by city
-    public List<ThreadDto> fetchThreadsByCity(int cityId);
+    public List<ThreadDto> fetchByCity(int cityId);
 
     //fetch threads by category
-    public List<ThreadDto> fetchThreadsByCategory (int categoryId);
+    public List<ThreadDto> fetchByCategory (int categoryId);
 
-   public  List<ThreadDto> fetchThreadsByCityAndCategory(int cityId, int categoryId);
+   public  List<ThreadDto> fetchByCityAndCategory(int cityId, int categoryId);
 
 }

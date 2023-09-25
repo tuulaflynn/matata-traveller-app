@@ -22,15 +22,13 @@ import java.util.List;
 public class ThreadController {
 
     private ThreadService threadService;
-    private CityService cityService;
-    private CategoryService categoryService;
 
     @Autowired
-    public ThreadController(ThreadService threadService, CityService cityService, CategoryService categoryService) {
+    public ThreadController(ThreadService threadService) {
         this.threadService = threadService;
-        this.cityService = cityService;
-        this.categoryService = categoryService;
     }
+
+
 
 
     // http://localhost:8080/api/threads
@@ -69,42 +67,19 @@ public class ThreadController {
     //fetch threads by city
     @GetMapping("threads/city/{cid}")
     public ResponseEntity<List<ThreadDto>> fetchThreadsByCity(@PathVariable("cid") int cityId) {
-        return new ResponseEntity<>(threadService.fetchThreadsByCity(cityId), HttpStatus.OK);
+        return new ResponseEntity<>(threadService.fetchByCity(cityId), HttpStatus.OK);
     }
 
     //fetch threads by category
     @GetMapping("threads/category/{cid}")
     public ResponseEntity<List<ThreadDto>> fetchThreadsByCategory(@PathVariable("cid") int categoryId) {
         //call fetchThreadsByCategory, wrap the returned collection of threads in the ResponseEntity which is to be returned
-        return new ResponseEntity<>(threadService.fetchThreadsByCategory(categoryId), HttpStatus.OK);
+        return new ResponseEntity<>(threadService.fetchByCategory(categoryId), HttpStatus.OK);
     }
 
     //fetch threads by city and category, using 2 path variables
     @GetMapping("threads/city/{cid}/category/{categoryId}")
     public ResponseEntity<List<ThreadDto>> fetchThreadsByCityAndCategory(@PathVariable("cid") int cityId, @PathVariable("categoryId") int categoryId) {
-/*
-        //fetch City and Category DTOs corresponding to the int cityId and categoryId
-        CityDto cityDto = cityService.fetchACity(cityId);
-        CategoryDto categoryDto = categoryService.fetchACategory(categoryId);
-
-        //if either the city or the category does not exist, throw custom exception
-        if (cityDto == null || categoryDto == null) {
-            throw new ApplicationException();
-        }
-
-        //call the methods which return the ThreadDto collections and add the common objects into a new Threads collection
-        List<ThreadDto> allThreadsByCity = threadService.fetchThreadsByCity(cityDto);
-        List<ThreadDto> allThreadsByCategory = threadService.fetchThreadsByCategory(categoryDto);
-
-        // traverse one collection and check if the ThreadDto is also present in the other collection
-        // if yes, add the Thread item to the new Thread collection (allThreadsByCityAndCategory)
-        List<ThreadDto> allThreadsByCityAndCategory = new ArrayList<ThreadDto>();
-        for (ThreadDto thread : allThreadsByCity) {
-            if (allThreadsByCategory.contains(thread)) {
-                allThreadsByCityAndCategory.add(thread);
-            }
-        } */
-        //return the Threads collection
-        return new ResponseEntity( threadService.fetchThreadsByCityAndCategory(cityId,categoryId), HttpStatus.OK);
+        return new ResponseEntity( threadService.fetchByCityAndCategory(cityId,categoryId), HttpStatus.OK);
     }
 }
