@@ -1,5 +1,6 @@
 package com.aalifadesigns.matatatraveller.exception;
 
+import com.aalifadesigns.matatatraveller.model.CityDto;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -22,9 +23,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     // here we handle all the exceptions
 
     @ExceptionHandler(value= {ApplicationException.class})
-    public ResponseEntity<ErrorDto> handleApplicationException(ApplicationException ae, WebRequest request) {
-        ErrorDto error = new ErrorDto(ae.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, LocalDateTime.now());
-        return new ResponseEntity<ErrorDto>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<CityDto.ErrorDto> handleApplicationException(ApplicationException ae, WebRequest request) {
+        CityDto.ErrorDto error = new CityDto.ErrorDto(ae.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, LocalDateTime.now());
+        return new ResponseEntity<CityDto.ErrorDto>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 

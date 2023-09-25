@@ -29,8 +29,6 @@ public class ThreadController {
     }
 
 
-
-
     // http://localhost:8080/api/threads
     @GetMapping("threads")
     public ResponseEntity<List<ThreadDto>> fetchAllThreads() {

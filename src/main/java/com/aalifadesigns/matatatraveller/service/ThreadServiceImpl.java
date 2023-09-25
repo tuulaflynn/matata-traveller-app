@@ -1,18 +1,17 @@
 package com.aalifadesigns.matatatraveller.service;
 
-import com.aalifadesigns.matatatraveller.dao.CategoryDao;
 import com.aalifadesigns.matatatraveller.dao.ThreadDao;
 import com.aalifadesigns.matatatraveller.dao.entities.CategoryEntity;
 import com.aalifadesigns.matatatraveller.dao.entities.CityEntity;
 import com.aalifadesigns.matatatraveller.dao.entities.ThreadEntity;
 import com.aalifadesigns.matatatraveller.exception.ApplicationException;
+import com.aalifadesigns.matatatraveller.exception.InvalidIdException;
+import com.aalifadesigns.matatatraveller.exception.NoCompositeEntityException;
 import com.aalifadesigns.matatatraveller.model.CategoryDto;
 import com.aalifadesigns.matatatraveller.model.CityDto;
 import com.aalifadesigns.matatatraveller.model.ThreadDto;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -36,25 +35,25 @@ public class ThreadServiceImpl implements ThreadService {
 
     @Override
     public List<ThreadDto> fetchAllThreads() {
-        // Collection to store all the records (which are each in the form of ThreadEtity objects) fetched from the database.
+        // Collection to store all the records (which are each in the form of ThreadEntity objects) fetched from the database
         List<ThreadEntity> allThreadsEntity = threadDao.findAll();
-        // Collection of records (which have been stored in Dto objects) to be sent to the controller layer.
+        // Collection of records (which have been stored in Dto objects) to be sent to the controller layer
         List<ThreadDto> allThreadsDto = new ArrayList<ThreadDto>();
 
-        // Transferring each record from an entity to a dto (including copying the record's composite entity).
+        // Transferring each record from an entity to a dto (including copying the record's composite entity)
         allThreadsEntity.forEach(eachThreadEntity -> {
             ThreadDto eachThreadDto = new ThreadDto();
             // For the composite entity inside the thread entity
             CityDto eachCityDto = new CityDto();
             List<CategoryDto> eachCategoryDtoList = new ArrayList<>();
 
-            // Copy over everything
+            // Copies over all properties, excluding composite, from a ThreadEntity object to a ThreadDto object
             BeanUtils.copyProperties(eachThreadEntity, eachThreadDto);
             // Copy over the city composite property
             BeanUtils.copyProperties(eachThreadEntity.getCityEntity(), eachCityDto);
             // Set the city composite property
             eachThreadDto.setCityDto(eachCityDto);
-            // Copy over the composite categoryEntities (there may be more than one so we need to do this in a loop)
+            // Copy the composite list of categories entity objects within thread entity into a list of categoryDto objects
             eachThreadEntity.getAllCategoriesEntity().forEach(eachCategoryEntity -> {
                 CategoryDto eachCategoryDto = new CategoryDto();
                 BeanUtils.copyProperties(eachCategoryEntity, eachCategoryDto);
@@ -71,19 +70,24 @@ public class ThreadServiceImpl implements ThreadService {
 
     @Override
     public ThreadDto fetchAThread(int threadId) {
-        // Store the entity returned by the id search in an optional for if id is invalid it is able to hold the value null.
+        // Store the entity returned by the id search in an optional for if id is invalid it is able to hold the value null
         Optional<ThreadEntity> threadEntityOptional = threadDao.findById(threadId);
         // Store the record, if it exists, in a dto object with its composite entities copied in
         ThreadDto threadDto = new ThreadDto();
         if (threadEntityOptional.isPresent()) {
-            CityDto cityDto = new CityDto();        // this is for the composite entity inside the thread entity
+            // cityDto object stores the composite entity from each thread entity
+            CityDto cityDto = new CityDto();
+            // categoryDtoList list stores the list of entities which each thread entity is composed of
             List<CategoryDto> categoryDtoList = new ArrayList<>();
 
+            // Copy the thread entity object into a threadDto object
             BeanUtils.copyProperties(threadEntityOptional.get(), threadDto);
+            // Copy the composite entity within thread entity into cityDot object
             BeanUtils.copyProperties(threadEntityOptional.get().getCityEntity(), cityDto);
-            threadDto.setCityDto(cityDto);          // set the composite property
+            // Set the composite property inside the threadDto object
+            threadDto.setCityDto(cityDto);
 
-            // Copy over the composite categoryEntities (there may be more than one so we need to do this in a loop)
+            // Copy the composite list of categories entity objects within thread entity into a list of categoryDto objects
             threadEntityOptional.get().getAllCategoriesEntity().forEach(eachCategoryEntity -> {
                 CategoryDto eachCategoryDto = new CategoryDto();
                 BeanUtils.copyProperties(eachCategoryEntity, eachCategoryDto);
@@ -93,21 +97,42 @@ public class ThreadServiceImpl implements ThreadService {
             threadDto.setAllCategoriesDto(categoryDtoList);
 
             return threadDto;
+        } else {
+            throw new ApplicationException();
         }
-        return null;
     }
 
     @Override
     public ThreadDto addThread(ThreadDto newThreadDto) {
+        /* This method adds a new thread, stored in newThreadDto object, to the database.
+           newThreadDto object must have a composite CityDto object and CategoryDto object. */
+
+        // Error handling to check the thread will be added and not update an existing thread,
+        // as if the primary key already exists in the database, saveAndFlush method will update the associated record.
+        if (threadDao.existsById(newThreadDto.getThreadId())) {
+            throw new InvalidIdException();
+        }
+        // Error handling to check the thread to be added is associated with at leas one category
+        if (newThreadDto.getAllCategoriesDto().size() == 0) {
+            throw new NoCompositeEntityException();
+        }
+        // Error handling to check the thread to be added is associated to one city
+        if (newThreadDto.getCityDto() == null) {
+            throw new NoCompositeEntityException();
+        }
+
         // Copy dto into an entity
         ThreadEntity newThreadEntity = new ThreadEntity();
         CityEntity newCityEntity = new CityEntity();
         List<CategoryEntity> categoryEntityList = new ArrayList<>();
 
+        // Copy the properties which are not composed of other entities
         BeanUtils.copyProperties(newThreadDto, newThreadEntity);
+
         // Copy in the city composite entity too
         BeanUtils.copyProperties(newThreadDto.getCityDto(), newCityEntity);
         newThreadEntity.setCityEntity(newCityEntity);
+
         // Copy into a list of category entities
         newThreadDto.getAllCategoriesDto().forEach(eachCategoryDao -> {
             CategoryEntity eachCategoryEntity = new CategoryEntity();
@@ -117,7 +142,7 @@ public class ThreadServiceImpl implements ThreadService {
         // Set the list of categories entities to the newThreadEntity object
         newThreadEntity.setAllCategoriesEntity(categoryEntityList);
 
-        // Add the entity to the database. N.B. if the primary key is not unique, it will update the existing record with this entity
+        // Add the entity to the database
         threadDao.saveAndFlush(newThreadEntity);
         newThreadDto.setThreadId(newThreadEntity.getThreadId());
         return newThreadDto;
@@ -125,19 +150,24 @@ public class ThreadServiceImpl implements ThreadService {
 
     @Override
     public List<ThreadDto> fetchByThreadDate(LocalDate threadDate) {
-        // Store the entities returned by the date search in a list of ThreadEntity objects.
-        // This list will be empty if there are no threads on the date 'threadDate'
+        // Store the entities returned by the date search in a list of ThreadEntity objects called allThreadsEntity.
         List<ThreadEntity> allThreadsEntity = threadDao.findByThreadDate(threadDate);
-        // Collection of records (which have been stored in Dto objects) to be sent to the controller layer.
+        // allThreadsEntity will be empty if no threads exist for the date 'threadDate'. This case is handled below:
+        if (allThreadsEntity.size() == 0) {
+            // Need to think how to display this to the use without stopping the program (i.e. using throw keyword)
+            System.out.println("No threads exists for date " + threadDate.toString());
+        }
+
+        // allThreadsDto will be a collection of records which have been stored in Dto objects to be sent to the controller layer
         List<ThreadDto> allThreadsDto = new ArrayList<ThreadDto>();
 
-        // Transferring each record from an entity to a dto (including copying the record's composite entity).
+        // Transferring each record from an entity to a dto (including copying the record's composite entities)
         allThreadsEntity.forEach(eachThreadEntity -> {
             ThreadDto eachThreadDto = new ThreadDto();
-            CityDto eachCityDto = new CityDto();        // this is for the composite entity inside the thread entity
+            CityDto eachCityDto = new CityDto();
             List<CategoryDto> eachCategoryDtoList = new ArrayList<>();
 
-            // Copy over everything
+            // Copies over all properties which are non-composite
             BeanUtils.copyProperties(eachThreadEntity, eachThreadDto);
             // Copy over the city composite property
             BeanUtils.copyProperties(eachThreadEntity.getCityEntity(), eachCityDto);
@@ -164,6 +194,12 @@ public class ThreadServiceImpl implements ThreadService {
         CityEntity updateCityEntity = new CityEntity();
         List<CategoryEntity> updateCategoryEntityList = new ArrayList<>();
 
+        // Error handling to check the thread will be added and not update an existing thread,
+        // as if the primary key does not exist in the database, saveAndFlush method will add updateThreadDto as a record.
+        if (!threadDao.existsById(updateThreadDto.getThreadId())) {
+            throw new InvalidIdException();
+        }
+
         BeanUtils.copyProperties(updateThreadDto, updateThreadEntity);
         // Copy and set the city composite entity too
         BeanUtils.copyProperties(updateThreadDto.getCityDto(), updateCityEntity);
@@ -189,8 +225,7 @@ public class ThreadServiceImpl implements ThreadService {
         if (deleteThreadEntityOptional.isPresent()) {
             threadDao.deleteById(threadId);
         } else {
-            // EDIT: add a custom exception here.
-            System.out.println("Error. Invalid thread id.");
+            throw new InvalidIdException();
         }
     }
 
@@ -212,7 +247,7 @@ public class ThreadServiceImpl implements ThreadService {
         //call the finder method declared in the ThreadDao
         List<ThreadEntity> allThreadEntity = threadDao.findByCityEntity(cityEntity);
 
-        //the ThreadEntity collection will need to be copied into a DTO collection
+        //the allThreadEntity collection will need to be copied into a DTO collection
         List<ThreadDto> allThreadDto = new ArrayList<ThreadDto>();
 
         // traverse the collection and copy each entity into a DTO, also copying the categories collections
@@ -303,14 +338,14 @@ public class ThreadServiceImpl implements ThreadService {
 
         List<ThreadDto> allThreadsByCityAndCategory = new ArrayList<ThreadDto>();
 
-        //identify common threads by using their unique Id
-        //capture each thread's Id from allThreadsByCity and store it in a list
+        //identify common threads by using their unique id
+        //capture each thread's id from allThreadsByCity and store it in a list
         List<Integer> uniqueThreadsId = new ArrayList<>();
         for (ThreadDto thread: allThreadsByCity){
             uniqueThreadsId.add(thread.getThreadId());
         }
 
-        // then, traverse the allThreadsByCategory collection and check the ThreadDto Id
+        // then, traverse the allThreadsByCategory collection and check the ThreadDto id
         // if it is within the uniqueThreads list, then add the Thread item to the allThreadsByCityAndCategory collection
         for(ThreadDto thread: allThreadsByCategory){
             if(uniqueThreadsId.contains(thread.getThreadId())){

@@ -1,7 +1,9 @@
 package com.aalifadesigns.matatatraveller.model;
 
 import lombok.*;
+import org.springframework.http.HttpStatus;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 //Using LOMBOK
@@ -24,4 +26,47 @@ public class CityDto {
 
     //corresponding to the City entity object (One to Many - one city has many attractions)
     private List<AttractionDto> allAttractions;
+
+    public static class ErrorDto {
+        private String errorMessage;
+        private HttpStatus errorCode;
+        private LocalDateTime errorDateTime;
+
+        public ErrorDto(String errorMessage, HttpStatus internalServerError, LocalDateTime errorDateTime) {
+            super();
+            this.errorMessage = errorMessage;
+            this.errorCode = internalServerError;
+            this.errorDateTime = errorDateTime;
+        }
+
+        public String getErrorMessage() {
+            return errorMessage;
+        }
+
+        public void setErrorMessage(String errorMessage) {
+            this.errorMessage = errorMessage;
+        }
+
+        public HttpStatus getErrorCode() {
+            return errorCode;
+        }
+
+        public void setErrorCode(HttpStatus errorCode) {
+            this.errorCode = errorCode;
+        }
+
+        public LocalDateTime getErrorDateTime() {
+            return errorDateTime;
+        }
+
+        public void setErrorDateTime(LocalDateTime errorDateTime) {
+            this.errorDateTime = errorDateTime;
+        }
+
+        @Override
+        public String toString() {
+            return "ErrorDto [errorMessage=" + errorMessage + ", errorCode=" + errorCode + ", errorDateTime="
+                    + errorDateTime + "]";
+        }
+    }
 }
