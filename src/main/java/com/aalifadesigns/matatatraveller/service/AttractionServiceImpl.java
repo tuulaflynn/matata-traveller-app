@@ -4,11 +4,13 @@ import com.aalifadesigns.matatatraveller.dao.AttractionDao;
 import com.aalifadesigns.matatatraveller.dao.entities.AttractionEntity;
 import com.aalifadesigns.matatatraveller.dao.entities.CityEntity;
 import com.aalifadesigns.matatatraveller.dao.entities.ThreadEntity;
+import com.aalifadesigns.matatatraveller.exception.ApplicationException;
 import com.aalifadesigns.matatatraveller.model.AttractionDto;
 import com.aalifadesigns.matatatraveller.model.CategoryDto;
 import com.aalifadesigns.matatatraveller.model.CityDto;
 import com.aalifadesigns.matatatraveller.model.ThreadDto;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,10 +21,14 @@ import java.util.Optional;
 public class AttractionServiceImpl implements AttractionService {
 
     AttractionDao attractionDao;
+    private CityService cityService; // service to service operation needed to fetch attractions by city
 
-    public AttractionServiceImpl(AttractionDao attractionDao) {
+    @Autowired
+    public AttractionServiceImpl(AttractionDao attractionDao, CityService cityService) {
         this.attractionDao = attractionDao;
+        this.cityService = cityService;
     }
+
 
     @Override
     public List<AttractionDto> fetchAllAttractions() {
@@ -109,7 +115,15 @@ public class AttractionServiceImpl implements AttractionService {
     }
 
     @Override
-    public List<AttractionDto> fetchAttractionsByCity(CityDto cityDto) {
+    public List<AttractionDto> fetchByCity(int cityId) {
+
+        //fetch CityDto using cityService
+        CityDto cityDto = cityService.fetchACity(cityId);
+
+        //if the city does not exist, throw custom exception referring to DataAccess
+        if (cityDto == null) {
+            throw new ApplicationException();
+        }
 
         //copy the CityDto into a city entity
         CityEntity cityEntity = new CityEntity();

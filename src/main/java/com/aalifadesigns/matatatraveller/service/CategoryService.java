@@ -1,6 +1,5 @@
 package com.aalifadesigns.matatatraveller.service;
 
-import com.aalifadesigns.matatatraveller.dao.CategoryDao;
 import com.aalifadesigns.matatatraveller.model.CategoryDto;
 
 import java.util.List;
