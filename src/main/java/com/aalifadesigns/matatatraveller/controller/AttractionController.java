@@ -20,16 +20,11 @@ public class AttractionController {
 
     private AttractionService attractionService;
 
-    //will also need cityService dependency
-    private CityService cityService;
-
     @Autowired
     public AttractionController(AttractionService attractionService, CityService cityService) {
         this.attractionService = attractionService;
-        this.cityService = cityService;
     }
 
-    @Autowired
 
     // 1. fetch all attractions
     // http://localhost:8080/api/attractions
@@ -79,13 +74,7 @@ public class AttractionController {
     //6. fetch attractions by city
     @GetMapping("attractions/city/{cid}")
     public ResponseEntity<List<AttractionDto>> fetchAttractionsByCity(@PathVariable("cid") int cityId) {
-        //fetch CityDto using cityService
-        CityDto cityDto = cityService.fetchACity(cityId);
-        //if the city does not exist throw custom exception referring to DataAccess
-        if (cityDto == null) {
-            throw new ApplicationException();
-        }
-        return new ResponseEntity<>(attractionService.fetchAttractionsByCity(cityDto), HttpStatus.OK);
+        return new ResponseEntity<>(attractionService.fetchByCity(cityId), HttpStatus.OK);
     }
 }
 

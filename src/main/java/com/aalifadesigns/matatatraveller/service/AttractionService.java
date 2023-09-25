@@ -13,5 +13,5 @@ public interface AttractionService {
     public void removeAttraction(int attractionId);
 
     //fetch Attractions by city
-    public List<AttractionDto> fetchAttractionsByCity(CityDto cityDto);
+    public List<AttractionDto> fetchByCity(int cityId);
 }
