@@ -24,15 +24,14 @@ import java.util.Optional;
 public class ThreadServiceImpl implements ThreadService {
 
     private ThreadDao threadDao;
-
-    @Autowired
     private CategoryServiceImpl categoryService;
-    @Autowired
     private CityServiceImpl cityService;
 
     @Autowired
-    public ThreadServiceImpl(ThreadDao threadDao) {
+    public ThreadServiceImpl(ThreadDao threadDao, CategoryServiceImpl categoryService, CityServiceImpl cityService) {
         this.threadDao = threadDao;
+        this.categoryService = categoryService;
+        this.cityService = cityService;
     }
 
     @Override
@@ -196,7 +195,7 @@ public class ThreadServiceImpl implements ThreadService {
     }
 
     @Override
-    public List<ThreadDto> fetchThreadsByCity(int cityId) {
+    public List<ThreadDto> fetchByCity(int cityId) {
 
         //fetch CityDto object using cityService, passing the cityId (used path variable) as parameter
         CityDto cityDto = cityService.fetchACity(cityId);
@@ -243,7 +242,7 @@ public class ThreadServiceImpl implements ThreadService {
     }
 
     @Override
-    public List<ThreadDto> fetchThreadsByCategory(int categoryId) {
+    public List<ThreadDto> fetchByCategory(int categoryId) {
 
         //fetch CategoryDto object, passing the categoryId (cid - used path variable) as parameter
         CategoryDto categoryDto = categoryService.fetchACategory(categoryId);
@@ -296,18 +295,25 @@ public class ThreadServiceImpl implements ThreadService {
     }
 
     @Override
-    public List<ThreadDto> fetchThreadsByCityAndCategory(int cityId, int categoryId) {
+    public List<ThreadDto> fetchByCityAndCategory(int cityId, int categoryId) {
 
-        //call the methods which return the ThreadDto collections and add the common objects into a new Threads collection
-        List<ThreadDto> allThreadsByCity = fetchThreadsByCity(cityId);
-        List<ThreadDto> allThreadsByCategory = fetchThreadsByCategory(categoryId);
+        //call the methods which return the ThreadDto collections and add the common objects into a new Threads collection (allThreadsByCityAndCategory)
+        List<ThreadDto> allThreadsByCity = fetchByCity(cityId);
+        List<ThreadDto> allThreadsByCategory = fetchByCategory(categoryId);
 
-        // traverse one collection and check if the ThreadDto is also present in the other collection
-        // if yes, add the Thread item to the new Thread collection (allThreadsByCityAndCategory)
         List<ThreadDto> allThreadsByCityAndCategory = new ArrayList<ThreadDto>();
-        List<ThreadEntity> allThreadsByCityAndCategoryEntity = new ArrayList<ThreadEntity>();
-        for (ThreadDto thread : allThreadsByCity) {
-            if (allThreadsByCategory.contains(thread)) {
+
+        //identify common threads by using their unique Id
+        //capture each thread's Id from allThreadsByCity and store it in a list
+        List<Integer> uniqueThreadsId = new ArrayList<>();
+        for (ThreadDto thread: allThreadsByCity){
+            uniqueThreadsId.add(thread.getThreadId());
+        }
+
+        // then, traverse the allThreadsByCategory collection and check the ThreadDto Id
+        // if it is within the uniqueThreads list, then add the Thread item to the allThreadsByCityAndCategory collection
+        for(ThreadDto thread: allThreadsByCategory){
+            if(uniqueThreadsId.contains(thread.getThreadId())){
                 allThreadsByCityAndCategory.add(thread);
             }
         }
