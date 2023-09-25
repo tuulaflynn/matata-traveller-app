@@ -1,6 +1,5 @@
 package com.aalifadesigns.matatatraveller.model;
 
-import com.aalifadesigns.matatatraveller.dao.entities.CategoryEntity;
 import lombok.*;
 
 import java.time.LocalDate;

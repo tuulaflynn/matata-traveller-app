@@ -1,4 +1,4 @@
-Matata Traveller- Your Carefree Journey
+Matata Traveler- Your Carefree Journey
 By Aalifa designs (Sofia Bilal, Tuula Flynn, Gabriela Patrichi)
 
 Tourist Guide Application
@@ -15,33 +15,29 @@ Your journey begins here – explore the beauty of each city, one click at a tim
 
 Goals / User Requirements:
 --------------------------
-From Users view:
+User Stories:
 1. The user can choose a city
 2. The user can view detailed information about a city, including the name,
     country and a picture as well as specific threads, attractions
 3. The user can enter a thread post
-4. The user can update a thread post
-5. The user can delete a thread post
-6. The user can view all thread post for the city / reviews
-    example categories for the threads: #food, #transport, #hotel, #restaurant, #excursion
+4. [The user can update a thread post] - endpoint made but will not grant access as currently users are anonymous
+5. [The user can delete a thread post] - endpoint made but will not grant access as currently users are anonymous
+6. The user can view all thread post for a city
 7. The user can view threads posts for city, filtered by thread post category
 8. The user can view the main attractions of the city.
 9. The user can view details of each attraction (including pic)
-10. The user will receive weather forecasts for their travel destination. TUULA
-11. The user will be able to access a currency converter (calculate local currency rates) TUULA
+10. The user will receive weather forecasts for their travel destination
+11. The user will be able to access a currency converter (calculate local currency rates)
 
 Stretch goal:
 -------------
 The user can download a file containing a packing checklist and travel tips.
 The user can request to add future cities in a form
-The admin user can create, edit, update, delete articles for each destination.
-If time permits, implement a language translator. Basic sentences.
-// The user can fetch all blogs written by a specific user
+Create user credentials - admin can delete threads, users can update/delete threads written by them
+The user can fetch all blogs written by a specific user
 The user can view the local cuisine of the city
+Implement a language translator. Basic sentences.
 
-Maybe create user credentials- log in - if implementing update and delete operations.
-Either choose anonymous user.
-Maybe use cities information API
 
 Technical Specifications
 --------------------------
@@ -52,66 +48,51 @@ N.B.a future development would be to look into getting the site hosted using AWS
 
 Entities
 ---------
-city_details
-> city_id
-> city_name
-> city_country
-// > weather third party done.
-// > currency
-(Optional) City_thread (city_details - thread_details - many to many )
-> city_thread_id
-> city_id
-> thread_id
-thread_details
-> thread_id
-> thread_content
-> thread_category1
-category1_details
-> category_id
-> category_name
-(Optional) thread_category (because thread_details and category_details is a ManyToMany relationship)
-> thread_category_id PK
-> thread_id FK
-> category_id FK
-attraction_details
-> attraction_id
-> attraction_name
-> attraction_description
-> attraction_img
-> attraction_open_time
-> city_id (FK)
+cityDto
+    > cityId
+    > cityName
+    > cityCountry
+    > cityCurrency
+    city-to-thread is one-to-many
+    city-to-attraction is one-to-many
+threadDto
+    > threadId
+    > threadContent
+    > threadDate
+    thread-to-city is many-to-one
+    thread-to-category is many-to-many
+categoryDto
+    > categoryId
+    > categoryName
+    category-to-thread is many-to-many
+attractionDto
+    > attractionId
+    > attractionName
+    > attractionDescription
+    > attractionImage
+    attraction-to-city is many-to-one
 
 
-Third party data
-—---------------------
-weather_details
-> weather_id
-> weather_type
-currency_details
-> currency_id
-> currency_name
-language_details
-> language_id
-> language_type
+Third party APIs
+—---------------
+weather - OpenWeatherApi
+currency -
+
 
 Not using
 ---------
 Cuisines
->cuisineId
->cuisineName
->cuisineUrl
->cuisineDish
-Location
-> locationId
-> locationDescription
-> locationLatitude
-> locationLongitude
->locationAttraction FK
-
-
+    >cuisineId
+    >cuisineName
+    >cuisineUrl
+    >cuisineDish
+Language
+    > languageId
+    > languageDescription
 
 
 Milestones (Reverse Planning)
+------------------------------
 Final Presentation - Friday, 29th of September
 Presentation Completion - Thursday, 28th of September
 System Testing and Code Freeze - Wednesday, 27th of September
@@ -125,18 +106,3 @@ Design includes:
 - Project Skeleton (DAO, Service, Controller)
 Approval Completion - Thursday, 21st of September (by noon)
 Project Outline/ Proposal Completion - Wednesday, 20th of September
-
-
-
-To obtain all threads for a city for a category
------------------------------------------------
-> so far we can, obtain all threads for a category (this includes threads from all cities)
-> we can obtain all threads for a city (this includes all categories
-> we need to try and obtain all the threads for a single category and a single city.
-     - I'm not sure which controller/service/dao entity to go through?
-
-My logic so far:
-search for fetchACity()
-the resulting object will have allThreads() as a field
-store this collection as in threadsForCity()
-search in this collection by categoryId

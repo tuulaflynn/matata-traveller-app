@@ -1,11 +1,6 @@
 package com.aalifadesigns.matatatraveller.controller;
 
-import com.aalifadesigns.matatatraveller.exception.ApplicationException;
-import com.aalifadesigns.matatatraveller.model.CategoryDto;
-import com.aalifadesigns.matatatraveller.model.CityDto;
 import com.aalifadesigns.matatatraveller.model.ThreadDto;
-import com.aalifadesigns.matatatraveller.service.CategoryService;
-import com.aalifadesigns.matatatraveller.service.CityService;
 import com.aalifadesigns.matatatraveller.service.ThreadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin
