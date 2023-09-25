@@ -5,11 +5,14 @@ import com.aalifadesigns.matatatraveller.dao.ThreadDao;
 import com.aalifadesigns.matatatraveller.dao.entities.CategoryEntity;
 import com.aalifadesigns.matatatraveller.dao.entities.CityEntity;
 import com.aalifadesigns.matatatraveller.dao.entities.ThreadEntity;
+import com.aalifadesigns.matatatraveller.exception.ApplicationException;
 import com.aalifadesigns.matatatraveller.model.CategoryDto;
 import com.aalifadesigns.matatatraveller.model.CityDto;
 import com.aalifadesigns.matatatraveller.model.ThreadDto;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -22,7 +25,10 @@ public class ThreadServiceImpl implements ThreadService {
 
     private ThreadDao threadDao;
 
+    @Autowired
     private CategoryServiceImpl categoryService;
+    @Autowired
+    private CityServiceImpl cityService;
 
     @Autowired
     public ThreadServiceImpl(ThreadDao threadDao) {
@@ -190,7 +196,15 @@ public class ThreadServiceImpl implements ThreadService {
     }
 
     @Override
-    public List<ThreadDto> fetchThreadsByCity(CityDto cityDto) {
+    public List<ThreadDto> fetchThreadsByCity(int cityId) {
+
+        //fetch CityDto object using cityService, passing the cityId (used path variable) as parameter
+        CityDto cityDto = cityService.fetchACity(cityId);
+
+        //if the city does not exist throw custom exception referring to DataAccess
+        if (cityDto == null) {
+            throw new ApplicationException();
+        }
 
         //copy the CityDto into a city entity
         CityEntity cityEntity = new CityEntity();
@@ -229,7 +243,14 @@ public class ThreadServiceImpl implements ThreadService {
     }
 
     @Override
-    public List<ThreadDto> fetchThreadsByCategory(CategoryDto categoryDto) {
+    public List<ThreadDto> fetchThreadsByCategory(int categoryId) {
+
+        //fetch CategoryDto object, passing the categoryId (cid - used path variable) as parameter
+        CategoryDto categoryDto = categoryService.fetchACategory(categoryId);
+        //if the category does not exist throw custom exception referring to DataAccess
+        if (categoryDto == null) {
+            throw new ApplicationException();
+        }
 
         //copy the DTO into a category entity
         CategoryEntity categoryEntity = new CategoryEntity();
@@ -272,5 +293,26 @@ public class ThreadServiceImpl implements ThreadService {
         });
 
         return allThreadDto;
+    }
+
+    @Override
+    public List<ThreadDto> fetchThreadsByCityAndCategory(int cityId, int categoryId) {
+
+        //call the methods which return the ThreadDto collections and add the common objects into a new Threads collection
+        List<ThreadDto> allThreadsByCity = fetchThreadsByCity(cityId);
+        List<ThreadDto> allThreadsByCategory = fetchThreadsByCategory(categoryId);
+
+        // traverse one collection and check if the ThreadDto is also present in the other collection
+        // if yes, add the Thread item to the new Thread collection (allThreadsByCityAndCategory)
+        List<ThreadDto> allThreadsByCityAndCategory = new ArrayList<ThreadDto>();
+        List<ThreadEntity> allThreadsByCityAndCategoryEntity = new ArrayList<ThreadEntity>();
+        for (ThreadDto thread : allThreadsByCity) {
+            if (allThreadsByCategory.contains(thread)) {
+                allThreadsByCityAndCategory.add(thread);
+            }
+        }
+
+        //return the Threads collection
+        return allThreadsByCityAndCategory;
     }
 }

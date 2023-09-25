@@ -69,34 +69,20 @@ public class ThreadController {
     //fetch threads by city
     @GetMapping("threads/city/{cid}")
     public ResponseEntity<List<ThreadDto>> fetchThreadsByCity(@PathVariable("cid") int cityId) {
-
-        //fetch CityDto object using cityService, passing the cityId (used path variable) as parameter
-        CityDto cityDto = cityService.fetchACity(cityId);
-
-        //if the city does not exist throw custom exception referring to DataAccess
-        if (cityDto == null) {
-            throw new ApplicationException();
-        }
-        return new ResponseEntity<>(threadService.fetchThreadsByCity(cityDto), HttpStatus.OK);
+        return new ResponseEntity<>(threadService.fetchThreadsByCity(cityId), HttpStatus.OK);
     }
 
     //fetch threads by category
     @GetMapping("threads/category/{cid}")
     public ResponseEntity<List<ThreadDto>> fetchThreadsByCategory(@PathVariable("cid") int categoryId) {
-        //fetch CategoryDto object, passing the categoryId (cid - used path variable) as parameter
-        CategoryDto categoryDto = categoryService.fetchACategory(categoryId);
-        //if the category does not exist throw custom exception referring to DataAccess
-        if (categoryDto == null) {
-            throw new ApplicationException();
-        }
         //call fetchThreadsByCategory, wrap the returned collection of threads in the ResponseEntity which is to be returned
-        return new ResponseEntity<>(threadService.fetchThreadsByCategory(categoryDto), HttpStatus.OK);
+        return new ResponseEntity<>(threadService.fetchThreadsByCategory(categoryId), HttpStatus.OK);
     }
 
     //fetch threads by city and category, using 2 path variables
     @GetMapping("threads/city/{cid}/category/{categoryId}")
     public ResponseEntity<List<ThreadDto>> fetchThreadsByCityAndCategory(@PathVariable("cid") int cityId, @PathVariable("categoryId") int categoryId) {
-
+/*
         //fetch City and Category DTOs corresponding to the int cityId and categoryId
         CityDto cityDto = cityService.fetchACity(cityId);
         CategoryDto categoryDto = categoryService.fetchACategory(categoryId);
@@ -117,8 +103,8 @@ public class ThreadController {
             if (allThreadsByCategory.contains(thread)) {
                 allThreadsByCityAndCategory.add(thread);
             }
-        }
+        } */
         //return the Threads collection
-        return new ResponseEntity(allThreadsByCityAndCategory, HttpStatus.OK);
+        return new ResponseEntity( threadService.fetchThreadsByCityAndCategory(cityId,categoryId), HttpStatus.OK);
     }
 }
