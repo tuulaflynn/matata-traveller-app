@@ -97,7 +97,7 @@ public class ThreadServiceImpl implements ThreadService {
 
             return threadDto;
         } else {
-            throw new ApplicationException();
+            throw new InvalidIdException();
         }
     }
 
@@ -236,7 +236,7 @@ public class ThreadServiceImpl implements ThreadService {
 
         //if the city does not exist throw custom exception referring to DataAccess
         if (cityDto == null) {
-            throw new ApplicationException();
+            throw new InvalidIdException();
         }
 
         //copy the CityDto into a city entity
@@ -282,7 +282,7 @@ public class ThreadServiceImpl implements ThreadService {
         CategoryDto categoryDto = categoryService.fetchACategory(categoryId);
         //if the category does not exist throw custom exception referring to DataAccess
         if (categoryDto == null) {
-            throw new ApplicationException();
+            throw new InvalidIdException();
         }
 
         //copy the DTO into a category entity

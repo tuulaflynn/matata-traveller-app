@@ -15,12 +15,6 @@ import java.time.LocalDateTime;
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     // here we handle all the exceptions
 
-    @ExceptionHandler(value= {ApplicationException.class})
-    public ResponseEntity<ErrorDto> handleApplicationException(ApplicationException ae, WebRequest request) {
-        ErrorDto error = new ErrorDto(ae.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, LocalDateTime.now());
-        return new ResponseEntity<ErrorDto>(error, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
     @ExceptionHandler(value= {InvalidIdException.class})
     public ResponseEntity<ErrorDto> handleInvalidIdException(InvalidIdException ae, WebRequest request) {
         ErrorDto error = new ErrorDto(ae.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, LocalDateTime.now());

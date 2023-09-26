@@ -3,6 +3,7 @@ package com.aalifadesigns.matatatraveller.service;
 import com.aalifadesigns.matatatraveller.dao.CategoryDao;
 import com.aalifadesigns.matatatraveller.dao.entities.CategoryEntity;
 import com.aalifadesigns.matatatraveller.dao.entities.ThreadEntity;
+import com.aalifadesigns.matatatraveller.exception.InvalidIdException;
 import com.aalifadesigns.matatatraveller.model.CategoryDto;
 import com.aalifadesigns.matatatraveller.model.CityDto;
 import com.aalifadesigns.matatatraveller.model.ThreadDto;
@@ -91,7 +92,7 @@ public class CategoryServiceImpl implements CategoryService {
             //set the ThreadDto collection inside categoryDto object
             categoryDto.setAllThreads(allThreadDto);
         } else {
-            throw new ApplicationException();
+            throw new InvalidIdException();
         }
         return categoryDto;
     }
@@ -150,7 +151,7 @@ public class CategoryServiceImpl implements CategoryService {
         }
         //else throw exception, informing the user there is no such category
         else {
-            throw new ApplicationException();
+            throw new InvalidIdException();
         }
     }
 }

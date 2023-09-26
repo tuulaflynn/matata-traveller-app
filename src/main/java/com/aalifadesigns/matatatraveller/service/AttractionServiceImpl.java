@@ -3,6 +3,7 @@ package com.aalifadesigns.matatatraveller.service;
 import com.aalifadesigns.matatatraveller.dao.AttractionDao;
 import com.aalifadesigns.matatatraveller.dao.entities.AttractionEntity;
 import com.aalifadesigns.matatatraveller.dao.entities.CityEntity;
+import com.aalifadesigns.matatatraveller.exception.InvalidIdException;
 import com.aalifadesigns.matatatraveller.model.AttractionDto;
 import com.aalifadesigns.matatatraveller.model.CityDto;
 import org.springframework.beans.BeanUtils;
@@ -118,7 +119,7 @@ public class AttractionServiceImpl implements AttractionService {
 
         //if the city does not exist, throw custom exception referring to DataAccess
         if (cityDto == null) {
-            throw new ApplicationException();
+            throw new InvalidIdException();
         }
 
         //copy the CityDto into a city entity
