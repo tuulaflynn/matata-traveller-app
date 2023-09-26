@@ -75,8 +75,9 @@ attractionDto
 
 Third party APIs
 —---------------
-weather - OpenWeatherApi
+weather - OpenWeatherApi https://openweathermap.org/api
 currency -
+language - https://libretranslate.de/translate
 
 
 Not using
