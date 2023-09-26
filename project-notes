@@ -16,18 +16,22 @@ Your journey begins here – explore the beauty of each city, one click at a tim
 Goals / User Requirements:
 --------------------------
 User Stories:
-1. The user can choose a city
+1. The user can view a list of all cities available and choose a city he/she is interested in
 2. The user can view detailed information about a city, including the name,
-    country and a picture as well as specific threads, attractions
+    country, picture as well as specific threads (including categories) and attractions
 3. The user can enter a thread post
 4. [The user can update a thread post] - endpoint made but will not grant access as currently users are anonymous
 5. [The user can delete a thread post] - endpoint made but will not grant access as currently users are anonymous
 6. The user can view all thread post for a city
 7. The user can view threads posts for city, filtered by thread post category
-8. The user can view the main attractions of the city.
-9. The user can view details of each attraction (including pic)
-10. The user will receive weather forecasts for their travel destination
-11. The user will be able to access a currency converter (calculate local currency rates)
+8. The user can view all categories of threads available
+9. [The user can add a new category] - endpoint made but will not grant access as currently users are anonymous
+10. [The user can update a category] - endpoint made but will not grant access as currently users are anonymous
+11. [The user can delete a category] - endpoint made but will not grant access as currently users are anonymous
+12. The user can view the main attractions of the city.
+13. The user can view details of each attraction (including pic)
+14. The user will receive weather forecasts for their travel destination
+15. The user will be able to access a currency converter (calculate local currency rates)
 
 Stretch goal:
 -------------
