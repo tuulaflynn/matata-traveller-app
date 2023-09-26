@@ -3,10 +3,15 @@ package com.aalifadesigns.matatatraveller.service;
 import com.aalifadesigns.matatatraveller.dao.CategoryDao;
 import com.aalifadesigns.matatatraveller.dao.entities.CategoryEntity;
 import com.aalifadesigns.matatatraveller.dao.entities.ThreadEntity;
+import com.aalifadesigns.matatatraveller.exception.EntityAlreadyExistsException;
 import com.aalifadesigns.matatatraveller.exception.InvalidIdException;
+import com.aalifadesigns.matatatraveller.exception.NoCompositeEntityException;
+import com.aalifadesigns.matatatraveller.exception.UpdateCategoryException;
 import com.aalifadesigns.matatatraveller.model.CategoryDto;
 import com.aalifadesigns.matatatraveller.model.CityDto;
 import com.aalifadesigns.matatatraveller.model.ThreadDto;
+import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.PersistenceException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -91,7 +96,9 @@ public class CategoryServiceImpl implements CategoryService {
             }
             //set the ThreadDto collection inside categoryDto object
             categoryDto.setAllThreads(allThreadDto);
-        } else {
+        }
+        //if the category does not exist throw exception and inform the user
+        else {
             throw new InvalidIdException();
         }
         return categoryDto;
@@ -104,7 +111,13 @@ public class CategoryServiceImpl implements CategoryService {
         CategoryEntity newCategoryEntity = new CategoryEntity();
         BeanUtils.copyProperties(newCategory, newCategoryEntity);
 
-        //make use of saneAndFlush in-built method
+        //since saveAndFlush is valid for both add and update operations
+        //if the id PK already exist, do not overwrite (update), instead throw custom exception to let the user know the entity already exists
+        if (categoryDao.existsById(newCategoryEntity.getCategoryId())) {
+            throw new EntityAlreadyExistsException();
+        }
+
+        // if the Id is new, go ahead and create new entity
         CategoryEntity savedCategoryEntity = categoryDao.saveAndFlush(newCategoryEntity);
 
         // set the type id in the new dto object
@@ -117,6 +130,13 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryDto updateCategory(CategoryDto updateCategory) {
 
+        //first, check whether the id associated with the object exists
+        //if the id(PK) does not exist, throw exception (as using saveAndFlush will create a new entry instead of updating)
+        if (!categoryDao.existsById(updateCategory.getCategoryId())) {
+            throw new InvalidIdException();
+        }
+
+        // if the Id exists, proceed with ubdating this record
         //copy the CategoryDto object into an entity
         CategoryEntity updateCategoryEntity = new CategoryEntity();
         BeanUtils.copyProperties(updateCategory, updateCategoryEntity);
@@ -124,34 +144,41 @@ public class CategoryServiceImpl implements CategoryService {
         //also copy the Threads collection inside each category
         List<ThreadEntity> updateAllThreadEntity = new ArrayList<>();
         //traverse the Threads collection, copy each ThreadDto into An Entity object, and add it to the updateAllThreadEntity collection
-        updateCategory.getAllThreads().forEach(eachThreadDto -> {
-            ThreadEntity eachThreadEntity = new ThreadEntity();
-            BeanUtils.copyProperties(eachThreadDto, eachThreadEntity);
-            updateAllThreadEntity.add(eachThreadEntity);
-        });
+        try { // error can occur if the user tries to update the category without specifying the threads too
+            updateCategory.getAllThreads().forEach(eachThreadDto -> {
+                ThreadEntity eachThreadEntity = new ThreadEntity();
+                BeanUtils.copyProperties(eachThreadDto, eachThreadEntity);
+                updateAllThreadEntity.add(eachThreadEntity);
+            });
+            //updateCategoryEntity - set collection of Threads entities
+            updateCategoryEntity.setAllThreads(updateAllThreadEntity);
 
-        //updateCategoryEntity - set collection of Threads entities
-        updateCategoryEntity.setAllThreads(updateAllThreadEntity);
-
-        //make use of saneAndFlush in-built method
-        CategoryEntity savedCategoryEntity = categoryDao.saveAndFlush(updateCategoryEntity);
-
+            //make use of saneAndFlush in-built method
+            CategoryEntity savedCategoryEntity = categoryDao.saveAndFlush(updateCategoryEntity);
+        }
+        // if the user tries to update the category without specifying the threads' IDs,
+        // catch NullPointerException and rethrow it as custom exception
+        catch (NullPointerException exception) {
+            throw new UpdateCategoryException();
+        }
         //return the Dto
         return updateCategory;
     }
 
     @Override
     public void removeCategory(int categoryId) {
-        //2 steps : 1. find category and 2.delete category
-        //call findById(), which returns an Optional<Entity> type
-        Optional<CategoryEntity> optionalCategoryEntity = categoryDao.findById(categoryId);
-        // if data exists, delete category
-        if (optionalCategoryEntity.isPresent()) {
+
+        /* this has been commented as the 2-step process of verifying the item exists and then remove it should take place on the front end
+
+        //if Id exists, remove the entity object with that PK
+        if (categoryDao.existsById(categoryId)) {
             categoryDao.deleteById(categoryId);
         }
         //else throw exception, informing the user there is no such category
         else {
             throw new InvalidIdException();
         }
+        */
+        categoryDao.deleteById(categoryId);
     }
 }
