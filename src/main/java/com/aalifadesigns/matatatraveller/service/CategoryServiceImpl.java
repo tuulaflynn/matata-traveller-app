@@ -3,7 +3,6 @@ package com.aalifadesigns.matatatraveller.service;
 import com.aalifadesigns.matatatraveller.dao.CategoryDao;
 import com.aalifadesigns.matatatraveller.dao.entities.CategoryEntity;
 import com.aalifadesigns.matatatraveller.dao.entities.ThreadEntity;
-import com.aalifadesigns.matatatraveller.exception.ApplicationException;
 import com.aalifadesigns.matatatraveller.model.CategoryDto;
 import com.aalifadesigns.matatatraveller.model.CityDto;
 import com.aalifadesigns.matatatraveller.model.ThreadDto;

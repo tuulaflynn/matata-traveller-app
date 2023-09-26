@@ -4,7 +4,6 @@ import com.aalifadesigns.matatatraveller.dao.ThreadDao;
 import com.aalifadesigns.matatatraveller.dao.entities.CategoryEntity;
 import com.aalifadesigns.matatatraveller.dao.entities.CityEntity;
 import com.aalifadesigns.matatatraveller.dao.entities.ThreadEntity;
-import com.aalifadesigns.matatatraveller.exception.ApplicationException;
 import com.aalifadesigns.matatatraveller.exception.InvalidIdException;
 import com.aalifadesigns.matatatraveller.exception.NoCompositeEntityException;
 import com.aalifadesigns.matatatraveller.model.CategoryDto;
