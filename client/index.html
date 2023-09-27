@@ -4,7 +4,7 @@
 <head>
     <title>Matata Traveller</title>
     <!-- Include external stylesheets -->
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href=".//style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 
@@ -37,8 +37,9 @@
             <!-- Container for the dropdown box -->
             <h1>Select a City</h1> <!-- Heading for the dropdown -->
             <div>
-                <select id="cityOption">
+                <select id="cityOption" onChange="navigateToCity()">
                     <!-- Dropdown select element with options -->
+                    <!-- the value of the selected option is assigned to the value property of the select tag -->
                 </select>
             </div>
         </div>

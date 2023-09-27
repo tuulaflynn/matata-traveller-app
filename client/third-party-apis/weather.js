@@ -6,8 +6,6 @@ function getForcast(user_city_name) {
     fetch(`http://api.openweathermap.org/data/2.5/forecast?q=` + user_city_name + `&appid=759b73a7c2fecc7cd9334548c3729254&units=metric`)
         // the endpoint searches for temp in Celsuius due to the added units=metric parameter
         .then(response => {
-            console.log(response);
-            console.log("---------------------");
             return response.json();
         })
         .then(data => {

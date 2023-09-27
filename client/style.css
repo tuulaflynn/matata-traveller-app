@@ -8,14 +8,22 @@ body {
 
 /* Style the header */
 header {
-    background-color: transparent; /* Make the background transparent */
-    color: #FFFFFF; /* Text color */
-    padding: 20px; /* Add padding around the content */
-    display: flex; /* Use flex layout for positioning */
-    justify-content: space-between; /* Space elements evenly */
-    align-items: center; /* Vertically align items */
-    position: relative; /* Enable relative positioning */
-    z-index: 1; /* Set a stacking order for layers */
+    background-color: transparent;
+    /* Make the background transparent */
+    color: #FFFFFF;
+    /* Text color */
+    padding: 20px;
+    /* Add padding around the content */
+    display: flex;
+    /* Use flex layout for positioning */
+    justify-content: space-between;
+    /* Space elements evenly */
+    align-items: center;
+    /* Vertically align items */
+    position: relative;
+    /* Enable relative positioning */
+    z-index: 1;
+    /* Set a stacking order for layers */
 }
 
 /* Style the logo image within the header */
@@ -29,42 +37,55 @@ header img {
 
 /* Style the navigation menu */
 nav {
-    background-color: transparent; /* Make the background transparent */
+    background-color: transparent;
+    /* Make the background transparent */
 }
 
 nav ul {
-    display: flex; /* Use flex layout for positioning */
-    list-style: none; /* Remove default list bullets */
+    display: flex;
+    /* Use flex layout for positioning */
+    list-style: none;
+    /* Remove default list bullets */
     margin: 0;
     padding: 0;
 }
 
 nav li {
-    margin: 0 10px; /* Add margin between menu items */
+    margin: 0 10px;
+    /* Add margin between menu items */
 }
 
 nav li a {
-    color: #FFFFFF; /* Text color for menu links */
-    text-decoration: none; /* Remove underline from links */
-    transition: color 0.3s ease-in-out; /* Smooth color transition */
+    color: #FFFFFF;
+    /* Text color for menu links */
+    text-decoration: none;
+    /* Remove underline from links */
+    transition: color 0.3s ease-in-out;
+    /* Smooth color transition */
 }
 
 /* Change link color on hover */
 nav li a:hover {
-    color: #800000; /* Hover color */
+    color: #800000;
+    /* Hover color */
 }
 
 /* Style the main content area */
 main {
-    max-width: 800px; /* Maximum width of the main content */
-    margin: 0 auto; /* Center the content horizontally */
-    padding: 20px; /* Add padding around the content */
-    padding-top: 80px; /* Add additional top padding */
+    max-width: 800px;
+    /* Maximum width of the main content */
+    margin: 0 auto;
+    /* Center the content horizontally */
+    padding: 20px;
+    /* Add padding around the content */
+    padding-top: 80px;
+    /* Add additional top padding */
 }
 
 /* Style section elements */
 section {
-    margin-bottom: 30px; /* Add margin at the bottom of sections */
+    margin-bottom: 30px;
+    /* Add margin at the bottom of sections */
 }
 
 /* Style h1 headings */
@@ -73,8 +94,10 @@ h1 {
     font-size: 30px;
     color: #FFFFFF;
     margin-bottom: 15px;
-    padding: 9px; /* Add padding around the heading */
-    border-radius: 4px; /* Rounded corners for the heading */
+    padding: 9px;
+    /* Add padding around the heading */
+    border-radius: 4px;
+    /* Rounded corners for the heading */
 }
 
 /* Style h2 headings */
@@ -83,60 +106,97 @@ h2 {
     font-size: 23px;
     color: #800000;
     margin-bottom: 15px;
-    border: 2px solid #2986cc; /* Border around the heading */
-    padding: 9px; /* Add padding around the heading */
-    border-radius: 4px; /* Rounded corners for the heading */
-    background-color: #f2f2f2; /* Background color for the heading */
+    border: 2px solid #2986cc;
+    /* Border around the heading */
+    padding: 9px;
+    /* Add padding around the heading */
+    border-radius: 4px;
+    /* Rounded corners for the heading */
+    background-color: #f2f2f2;
+    /* Background color for the heading */
 }
 
 /* Style the footer */
 footer {
-    font-size: 19px; /* Font size for footer text */
-    background-color: transparent; /* Make the background transparent */
-    color: #FFFFFF; /* Text color */
-    padding: 20px; /* Add padding around the footer */
-    text-align: center; /* Center-align footer text */
-    position: fixed; /* Fix the footer to the bottom */
-    bottom: 0; /* Position at the bottom of the viewport */
-    width: 100%; /* Full width footer */
+    font-size: 19px;
+    /* Font size for footer text */
+    background-color: transparent;
+    /* Make the background transparent */
+    color: #FFFFFF;
+    /* Text color */
+    padding: 20px;
+    /* Add padding around the footer */
+    text-align: center;
+    /* Center-align footer text */
+    position: fixed;
+    /* Fix the footer to the bottom */
+    bottom: 0;
+    /* Position at the bottom of the viewport */
+    width: 100%;
+    /* Full width footer */
 }
 
 /* Style the slideshow container */
 .slideshow-container {
-    position: fixed; /* Fix the slideshow to the viewport */
-    top: 0; /* Position at the top of the viewport */
-    left: 0; /* Position at the left of the viewport */
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    z-index: -1; /* Place behind other elements */
+    position: fixed;
+    /* Fix the slideshow to the viewport */
+    top: 0;
+    /* Position at the top of the viewport */
+    left: 0;
+    /* Position at the left of the viewport */
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    z-index: -1;
+    /* Place behind other elements */
 }
 
 /* Style individual slideshow images */
 .mySlides {
-    display: none; /* Hide slideshow images by default */
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    object-fit: cover; /* Scale images to cover the entire container */
+    display: none;
+    /* Hide slideshow images by default */
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    object-fit: cover;
+    /* Scale images to cover the entire container */
 }
 
 /* Style the dropdown container */
 .container {
-    position: absolute; /* Absolute positioning for centering */
-    top: 50%; /* Position at 50% from the top */
-    left: 50%; /* Position at 50% from the left */
-    transform: translate(-50%, -50%); /* Center the container */
-    text-align: center; /* Center-align text within the container */
+    position: absolute;
+    /* Absolute positioning for centering */
+    top: 50%;
+    /* Position at 50% from the top */
+    left: 50%;
+    /* Position at 50% from the left */
+    transform: translate(-50%, -50%);
+    /* Center the container */
+    text-align: center;
+    /* Center-align text within the container */
 }
 
 /* Style the dropdown box */
 select {
-    padding: 20px; /* Add padding to the dropdown box */
-    font-size: 16px; /* Font size for the dropdown text */
-    border: 1px solid #ccc; /* Border around the dropdown */
-    border-radius: 5px; /* Rounded corners for the dropdown */
+    padding: 20px;
+    /* Add padding to the dropdown box */
+    font-size: 16px;
+    /* Font size for the dropdown text */
+    border: 1px solid #ccc;
+    /* Border around the dropdown */
+    border-radius: 5px;
+    /* Rounded corners for the dropdown */
 }
 
 /* Style for the dropdown options */
 select option {
-    font-size: 20px; /* Font size for dropdown options */
+    font-size: 20px;
+    /* Font size for dropdown options */
+}
+
+/* To give bottom padding for when the row wraps underneath on smaller screens */
+.row>.col-6 {
+    margin-bottom: 2rem;
 }
