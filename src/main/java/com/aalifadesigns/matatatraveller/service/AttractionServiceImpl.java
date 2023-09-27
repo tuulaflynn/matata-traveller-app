@@ -1,5 +1,4 @@
 package com.aalifadesigns.matatatraveller.service;
-
 import com.aalifadesigns.matatatraveller.dao.AttractionDao;
 import com.aalifadesigns.matatatraveller.dao.entities.AttractionEntity;
 import com.aalifadesigns.matatatraveller.dao.entities.CityEntity;
@@ -81,8 +80,10 @@ public class AttractionServiceImpl implements AttractionService {
             attractionDto.setCityDto(cityDto);
 
             return attractionDto;
+        } else {
+            throw new InvalidIdException();
         }
-        return null;
+
     }
 
     @Override
@@ -102,13 +103,48 @@ public class AttractionServiceImpl implements AttractionService {
     }
 
     @Override
-    public AttractionDto updateAttraction(AttractionDto updateAttraction) {
-        return null;
+    public AttractionDto updateAttraction(AttractionDto updateAttractionDto) {
+        //Create new AttractionEntity and CityEntity instances
+        AttractionEntity updateAttractionEntity = new AttractionEntity();
+        CityEntity updateCityEntity = new CityEntity();
+
+        // Check if the attraction with the given ID exists in the database
+        if (!attractionDao.existsById(updateAttractionDto.getAttractionId())) {
+            // If not, throw an InvalidIdException
+            throw new InvalidIdException();
+        }
+
+        //Copy properties from the updateAttractionDto to updateAttractionEntity
+        BeanUtils.copyProperties(updateAttractionDto, updateAttractionEntity);
+        //Copy properties from the updateAttractionDto's CityDto to updateCityEntity
+        BeanUtils.copyProperties(updateAttractionDto.getCityDto(), updateCityEntity);
+        //Set the CityEntity in the updateAttractionEntity
+        updateAttractionEntity.setCityEntity(updateCityEntity);
+
+
+        //Save and flush the updated AttractionEntity to the database
+        // N.B. If the primary key is unique, this will either update the existing record or add a new one
+        attractionDao.saveAndFlush(updateAttractionEntity);
+
+        // Update the attraction ID in the updateAttractionDto
+        updateAttractionDto.setAttractionId(updateAttractionEntity.getAttractionId());
+
+        //Return the updated AttractionDto
+        return updateAttractionDto;
     }
 
     @Override
     public void removeAttraction(int attractionId) {
-        attractionDao.deleteById(attractionId);
+        //Attempt to find the AttractionEntity by its ID in the database
+        Optional<AttractionEntity> deleteAttractionEntityOptional = attractionDao.findById(attractionId);
+        //Check if the AttractionEntity with the given ID exists
+       if (deleteAttractionEntityOptional.isPresent()){
+           //If it exists, delete the AttractionEntity from the database
+           attractionDao.deleteById(attractionId);
+       } else {
+           //If the AttractionEntity does not exist, throw an InvalidIdException
+           throw new InvalidIdException();
+       }
     }
 
     @Override
