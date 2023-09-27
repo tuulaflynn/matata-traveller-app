@@ -4,6 +4,7 @@ import com.aalifadesigns.matatatraveller.dao.CityDao;
 import com.aalifadesigns.matatatraveller.dao.entities.AttractionEntity;
 import com.aalifadesigns.matatatraveller.dao.entities.CityEntity;
 import com.aalifadesigns.matatatraveller.dao.entities.ThreadEntity;
+import com.aalifadesigns.matatatraveller.exception.InvalidIdException;
 import com.aalifadesigns.matatatraveller.model.AttractionDto;
 import com.aalifadesigns.matatatraveller.model.CityDto;
 import com.aalifadesigns.matatatraveller.model.ThreadDto;
@@ -29,7 +30,7 @@ public class CityServiceImpl implements CityService {
     @Override
     public List<CityDto> fetchAllCities() {
 
-        //call findAll(), which will return a collection of entities (CityEntity)
+        //call findAll(), which returns a collection of entities
         List<CityEntity> allCityEntity = cityDao.findAll();
 
         //copy the entities into CityDto objects and store them in a collection(which the method will return)
@@ -40,8 +41,6 @@ public class CityServiceImpl implements CityService {
             //copy each entity into a CityDto, using BeansUtil (copyProperties)
             CityDto eachCityDto = new CityDto();
             BeanUtils.copyProperties(eachCityEntity, eachCityDto);
-
-            //however, this will not copy also the lists of threads and attractions (many-to-many mapped relationships)
 
             //copy (get) the threads collection, traverse the collection,
             //copy each entity into a Dto object, and form a collection of ThreadDto, to be set in the CityDto
@@ -58,12 +57,13 @@ public class CityServiceImpl implements CityService {
             eachCityDto.setAllThreads(allThreadDto);
 
             //similarly, include the collection of Attractions
-            //traverse the collection, copy each entity into a Dto object, and form a collection of AttractionDto, to be set in the CityDto
             List<AttractionDto> allAttractionDto = new ArrayList<AttractionDto>();
             for (AttractionEntity eachAttractionEntity : eachCityEntity.getAllAttractions()) {
                 AttractionDto eachAttractionDto = new AttractionDto();
+
                 //copy each AttractionEntity into a AttractionDto object
                 BeanUtils.copyProperties(eachAttractionEntity, eachAttractionDto);
+
                 //add the DTO to the collection
                 allAttractionDto.add(eachAttractionDto);
             }
@@ -73,7 +73,6 @@ public class CityServiceImpl implements CityService {
 
             //add the CityDto to the collection (containing now also the Threads and Attraction collections too)
             allCityDto.add(eachCityDto);
-
         });
 
         //return the dto collection
@@ -85,20 +84,19 @@ public class CityServiceImpl implements CityService {
 
         //call findById(), which returns an Optional<Entity> type
         Optional<CityEntity> optionalCityEntity = cityDao.findById(cityId);
+
         // if optionalCityEntity has data, copy the entity to a corresponding CityDTO object
         CityDto cityDto = null;
         if (optionalCityEntity.isPresent()) {
             cityDto = new CityDto();
             BeanUtils.copyProperties(optionalCityEntity.get(), cityDto);
 
-            //however, this will not copy also the lists of threads and attractions (many-to-many mapped relationships)
-
-            //copy (get) the threads collection, traverse the collection,
-            //copy each entity into a Dto object, and form a collection of ThreadDto, to be set in the CityDto
+            //copy the threads collection, and form a collection of ThreadDto, to be set in the CityDto
             List<ThreadDto> allThreadDto = new ArrayList<ThreadDto>();
+            // traverse the collection,
             for (ThreadEntity eachThreadEntity : optionalCityEntity.get().getAllThreads()) {
                 ThreadDto eachThreadDto = new ThreadDto();
-                //copy each ThreadEntity inti ThreadDto object
+                //copy each ThreadEntity into a ThreadDto object
                 BeanUtils.copyProperties(eachThreadEntity, eachThreadDto);
                 //add the ThreadDto to the collection
                 allThreadDto.add(eachThreadDto);
@@ -108,7 +106,6 @@ public class CityServiceImpl implements CityService {
             cityDto.setAllThreads(allThreadDto);
 
             //similarly, include the collection of Attractions
-            //traverse the collection, copy each entity into a Dto object, and form a collection of AttractionDto, to be set in the CityDto
             List<AttractionDto> allAttractionDto = new ArrayList<AttractionDto>();
             for (AttractionEntity eachAttractionEntity : optionalCityEntity.get().getAllAttractions()) {
                 AttractionDto eachAttractionDto = new AttractionDto();
@@ -120,6 +117,10 @@ public class CityServiceImpl implements CityService {
 
             //set the AttractionDto collection inside cityDto object
             cityDto.setAllAttractions(allAttractionDto);
+        }
+        //inform the user the record does not exist the database
+        else {
+            throw new InvalidIdException();
         }
         return cityDto;
     }
