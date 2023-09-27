@@ -1,53 +1,54 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>MT</title>
+    <title>Matata Traveller</title>
     <!-- Include external stylesheets -->
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
+
 <body>
-<header>
-    <!-- Header section with the logo and navigation menu -->
-    <img src="MT.jpg" alt="My Logo"> <!-- Logo image -->
-    <h1> Matata Traveller</h1> <!-- Site title -->
-    <nav>
-        <ul>
-            <li><a href="index.html">Home</a></li> <!-- Home link -->
-            <li><a href="city.html">City</a></li> <!-- City link -->
-        </ul>
-    </nav>
-</header>
+    <header>
+        <!-- Header section with the logo and navigation menu -->
+        <img src="resources/MT.jpg" alt="My Logo"> <!-- Logo image -->
+        <h1> Matata Traveller</h1> <!-- Site title -->
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li> <!-- Home link -->
+                <li><a href="city.html">City</a></li> <!-- City link -->
+            </ul>
+        </nav>
+    </header>
 
-<main>
-    <!-- Main content area -->
-    <section>
-        <!-- Slideshow section -->
-        <div class="slideshow-container">
-            <!-- Slideshow images -->
-            <img class="mySlides" src="ve.jpg" style="width:100%">
-            <img class="mySlides" src="cap.jpg" style="width:100%">
-            <img class="mySlides" src="lon.jpg" style="width:100%">
-            <img class="mySlides" src="eg2.jpg" style="width:100%">
+    <main>
+        <!-- Main content area -->
+        <section>
+            <!-- Slideshow section -->
+            <div class="slideshow-container">
+                <!-- Slideshow images -->
+                <img class="mySlides" src="resources/ve.jpg" style="width:100%">
+                <img class="mySlides" src="resources/cap.jpg" style="width:100%">
+                <img class="mySlides" src="resources/lon.jpg" style="width:100%">
+                <img class="mySlides" src="resources/eg2.jpg" style="width:100%">
+            </div>
+        </section>
+        <div class="container">
+            <!-- Container for the dropdown box -->
+            <h1>Select a City</h1> <!-- Heading for the dropdown -->
+            <div>
+                <select id="cityOption">
+                    <!-- Dropdown select element with options -->
+                </select>
+            </div>
         </div>
-    </section>
-    <div class="container">
-        <!-- Container for the dropdown box -->
-        <h1>Select a City</h1> <!-- Heading for the dropdown -->
-        <select>
-            <!-- Dropdown select element with options -->
-            <option value="" disabled selected>Select</option> <!-- Default, disabled option -->
-            <option value="city.html?city=London">London</option> <!-- London option -->
-            <option value="city.html?city=Paris">Paris</option> <!-- Paris option -->
-            <option value="city.html?city=Istanbul">Istanbul</option> <!-- Istanbul option -->
-        </select>
-    </div>
-</main>
+    </main>
 
-<footer>
-    <!-- Footer section -->
-    <p>Copyright © Matata Traveller 2023</p> <!-- Copyright notice -->
-</footer>
-<script src="script.js"></script> <!-- Include JavaScript file -->
+    <footer>
+        <!-- Footer section -->
+        <p>Copyright © Matata Traveller 2023</p> <!-- Copyright notice -->
+    </footer>
+    <script src="script.js"></script> <!-- Include JavaScript file -->
 </body>
+
 </html>

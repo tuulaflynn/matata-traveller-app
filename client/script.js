@@ -1,4 +1,5 @@
 var myIndex = 0;
+let userCityChoiceId = null;
 carousel();
 
 function carousel() {
@@ -14,21 +15,27 @@ function carousel() {
     x[myIndex - 1].style.display = "block";
     setTimeout(carousel, 3500); // Change image every 3.5 seconds
 }
-function getQueryParam(param) {
-        const urlParams = new URLSearchParams(window.location.search);
-        return urlParams.get(param);
-    }
 
-    document.addEventListener('DOMContentLoaded', function() {
-        // Get the value of the "city" query parameter
-        const city = getQueryParam('city');
 
-        // Use the value to determine which city's information to display
-        if (city) {
-            // Display content for the selected city
-            document.getElementById('cityName').textContent = city;
-            // Add more logic to display city-specific content here
-        } else {
-            // Handle the case where no city is selected
-        }
-});
+document.addEventListener('DOMContentLoaded', function loadCitys() {
+    let content = `<option value="" disabled selected>Select</option> `
+    fetch('http://localhost:8080/api/cities').then(response => response.json())
+        .then(data => {
+            console.log(data);
+            for (let eachData of data) {
+                console.log(eachData.cityName)
+                content += `<option value=${eachData.cityName}>${eachData.cityName}</option>`;
+            }
+            console.log(content);
+            document.getElementById("cityOption").innerHTML = content;
+        });
+})
+
+
+function storeUserCityChoice(userCityChoice) {
+    userCityChoiceId = userCityChoice;
+}
+
+function returnUserCityChoice() {
+    return userCityChoiceId
+}
