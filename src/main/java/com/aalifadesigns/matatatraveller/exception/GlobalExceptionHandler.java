@@ -27,7 +27,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<ErrorDto>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    
+
     @ExceptionHandler(value= {UpdateCategoryException.class})
     public ResponseEntity<ErrorDto> handleNoCompositeEntityException(UpdateCategoryException ex, WebRequest request) {
         ErrorDto error = new ErrorDto(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, LocalDateTime.now());

@@ -11,6 +11,8 @@ function getForcast(user_city_name) {
             return response.json();
         })
         .then(data => {
+            /*
+            ----------- populating the data manually for todays date only ------------------------
             let currentTemp1 = data.list[0].main.temp + "°C";
             document.getElementById("current-temp-1").innerHTML = currentTemp1;
 
@@ -25,41 +27,22 @@ function getForcast(user_city_name) {
             let date1 = new Date(isoTimestamp1);
             let forecastDate1 = `${date1.toLocaleDateString()}`;
             document.getElementById("forecast-date-1").innerHTML = forecastDate1;
+            */
 
+            // Loop to populate 5 days of weather including todays weather 
+            for (let i = 0, y = 1; i <= 16; i = i + 8, y = y + 1) {
+                document.getElementById("current-temp-" + y).innerHTML = data.list[i].main.temp + "°C";
 
-            let currentTemp2 = data.list[8].main.temp + "°C";
-            document.getElementById("current-temp-2").innerHTML = currentTemp2;
+                document.getElementById("weather-desc-" + y).innerHTML = data.list[i].weather[0].description;
 
-            let weatherDesc2 = data.list[8].weather[0].description;
-            document.getElementById("weather-desc-2").innerHTML = weatherDesc2;
+                document.getElementById("weather-icon-url-" + y).src = `http://openweathermap.org/img/w/` + data.list[i].weather[0].icon + `.png`;
 
-            let weatherIconName2 = data.list[8].weather[0].icon;
-            let weatherIconUrl2 = `http://openweathermap.org/img/w/` + weatherIconName2 + `.png`
-            document.getElementById("weather-icon-url-2").src = weatherIconUrl2;
+                document.getElementById("forecast-date-" + y).innerHTML = `${new Date(data.list[i].dt_txt).toLocaleDateString()}`;
+            }
 
-            let isoTimestamp2 = data.list[8].dt_txt;
-            let date2 = new Date(isoTimestamp2);
-            let forecastDate2 = `${date2.toLocaleDateString()}`;
-            document.getElementById("forecast-date-2").innerHTML = forecastDate2;
-
-
-            let currentTemp3 = data.list[16].main.temp + "°C";
-            document.getElementById("current-temp-3").innerHTML = currentTemp3;
-
-            let weatherDesc3 = data.list[16].weather[0].description;
-            document.getElementById("weather-desc-3").innerHTML = weatherDesc3;
-
-            let weatherIconName3 = data.list[16].weather[0].icon;
-            let weatherIconUrl3 = `http://openweathermap.org/img/w/` + weatherIconName3 + `.png`
-            document.getElementById("weather-icon-url-3").src = weatherIconUrl3;
-
-            let isoTimestamp3 = data.list[16].dt_txt;
-            let date3 = new Date(isoTimestamp3);
-            let forecastDate3 = `${date3.toLocaleDateString()}`;
-            document.getElementById("forecast-date-3").innerHTML = forecastDate3;
         });
 }
-getForcast("Cardiff");
+getForcast("Eindhoven");
 
 /*
 // Event Listeners or Initialisers 
