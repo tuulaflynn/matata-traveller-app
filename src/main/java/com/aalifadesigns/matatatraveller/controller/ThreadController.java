@@ -66,7 +66,6 @@ public class ThreadController {
     //fetch threads by category
     @GetMapping("/threads/category/{cid}")
     public ResponseEntity<List<ThreadDto>> fetchThreadsByCategory(@PathVariable("cid") int categoryId) {
-        //call fetchThreadsByCategory, wrap the returned collection of threads in the ResponseEntity which is to be returned
         return new ResponseEntity<>(threadService.fetchByCategory(categoryId), HttpStatus.OK);
     }
 

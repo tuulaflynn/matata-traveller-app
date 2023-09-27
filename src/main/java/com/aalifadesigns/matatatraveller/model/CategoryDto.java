@@ -1,5 +1,6 @@
 package com.aalifadesigns.matatatraveller.model;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.List;
@@ -14,6 +15,8 @@ import java.util.List;
 
 public class CategoryDto {
     private int categoryId;
+
+    @NotNull
     private String categoryName;
 
     //corresponding to the Category entity object (ManytoMany- one category has many threads)

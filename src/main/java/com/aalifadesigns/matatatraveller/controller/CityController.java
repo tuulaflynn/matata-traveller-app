@@ -24,8 +24,6 @@ public class CityController {
     // http://localhost:8080/api/cities
     @GetMapping("/cities")
     public ResponseEntity<List<CityDto>> fetchAllCities() {
-
-        //wrap the response body returned by fetchAllCities into a new ResponseEntity of type of List<CityDto>
         return new ResponseEntity<List<CityDto>>(cityService.fetchAllCities(), HttpStatus.OK);
     }
 
@@ -33,9 +31,6 @@ public class CityController {
     // http://localhost:7474/api/cities/2
     @GetMapping("/cities/{cid}")
     public ResponseEntity<CityDto> fetchCity(@PathVariable("cid") int cityId) {
-
-        // PathVariable cid will be extracted and stored in a java variable/parameter(cityId)
-        //which will be passed as arg for fetchACity(), which will return a CityDto object in the Response Body , wrapped by the ResponseEntity
         return new ResponseEntity<CityDto>(cityService.fetchACity(cityId), HttpStatus.OK);
     }
 
