@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.aalifa-designs</groupId>
-	<artifactId>matata-traveler</artifactId>
+	<artifactId>matata-traveller</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>matata-traveller</name>
 	<description>A tourist application guide</description>
@@ -39,6 +39,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
     </dependencies>
 

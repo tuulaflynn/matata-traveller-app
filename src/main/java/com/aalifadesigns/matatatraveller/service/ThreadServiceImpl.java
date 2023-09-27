@@ -5,7 +5,7 @@ import com.aalifadesigns.matatatraveller.dao.entities.CategoryEntity;
 import com.aalifadesigns.matatatraveller.dao.entities.CityEntity;
 import com.aalifadesigns.matatatraveller.dao.entities.ThreadEntity;
 import com.aalifadesigns.matatatraveller.exception.InvalidIdException;
-import com.aalifadesigns.matatatraveller.exception.NoCompositeEntityException;
+import com.aalifadesigns.matatatraveller.exception.InvalidThreadDateException;
 import com.aalifadesigns.matatatraveller.model.CategoryDto;
 import com.aalifadesigns.matatatraveller.model.CityDto;
 import com.aalifadesigns.matatatraveller.model.ThreadDto;
@@ -97,6 +97,8 @@ public class ThreadServiceImpl implements ThreadService {
 
             return threadDto;
         } else {
+            // I have not used a try-catch block as an optional does not throw an error, it is null if the entity is not wrapped by it
+            // Hence the Http status is 200 even if the id entered is invalid.
             throw new InvalidIdException();
         }
     }
@@ -105,20 +107,6 @@ public class ThreadServiceImpl implements ThreadService {
     public ThreadDto addThread(ThreadDto newThreadDto) {
         /* This method adds a new thread, stored in newThreadDto object, to the database.
            newThreadDto object must have a composite CityDto object and CategoryDto object. */
-
-        // Error handling to check the thread will be added and not update an existing thread,
-        // as if the primary key already exists in the database, saveAndFlush method will update the associated record.
-        if (threadDao.existsById(newThreadDto.getThreadId())) {
-            throw new InvalidIdException();
-        }
-        // Error handling to check the thread to be added is associated with at leas one category
-        if (newThreadDto.getAllCategoriesDto().size() == 0) {
-            throw new NoCompositeEntityException();
-        }
-        // Error handling to check the thread to be added is associated to one city
-        if (newThreadDto.getCityDto() == null) {
-            throw new NoCompositeEntityException();
-        }
 
         // Copy dto into an entity
         ThreadEntity newThreadEntity = new ThreadEntity();
@@ -141,6 +129,11 @@ public class ThreadServiceImpl implements ThreadService {
         // Set the list of categories entities to the newThreadEntity object
         newThreadEntity.setAllCategoriesEntity(categoryEntityList);
 
+        // Error handling to set the id of the thread being added to the DB to an unused id.
+        // This ensures the thread entity will be added and not update an existing thread entity,
+        // as if the primary key already exists in the DB the saveAndFlush method will update the associated record.
+        newThreadEntity.setThreadId(0);
+
         // Add the entity to the database
         threadDao.saveAndFlush(newThreadEntity);
         newThreadDto.setThreadId(newThreadEntity.getThreadId());
@@ -153,8 +146,7 @@ public class ThreadServiceImpl implements ThreadService {
         List<ThreadEntity> allThreadsEntity = threadDao.findByThreadDate(threadDate);
         // allThreadsEntity will be empty if no threads exist for the date 'threadDate'. This case is handled below:
         if (allThreadsEntity.size() == 0) {
-            // Need to think how to display this to the use without stopping the program (i.e. using throw keyword)
-            System.out.println("No threads exists for date " + threadDate.toString());
+            throw new InvalidThreadDateException();
         }
 
         // allThreadsDto will be a collection of records which have been stored in Dto objects to be sent to the controller layer
@@ -193,8 +185,9 @@ public class ThreadServiceImpl implements ThreadService {
         CityEntity updateCityEntity = new CityEntity();
         List<CategoryEntity> updateCategoryEntityList = new ArrayList<>();
 
-        // Error handling to check the thread will be added and not update an existing thread,
-        // as if the primary key does not exist in the database, saveAndFlush method will add updateThreadDto as a record.
+        // Error handling to check the thread will be added and not update an existing thread is done in the
+        // front end, by calling fetchAThread() method and then updating this thread using updateThread().
+        // (If the primary key does not exist in the database, saveAndFlush method will add updateThreadDto as a record.)
         if (!threadDao.existsById(updateThreadDto.getThreadId())) {
             throw new InvalidIdException();
         }
@@ -351,6 +344,9 @@ public class ThreadServiceImpl implements ThreadService {
                 allThreadsByCityAndCategory.add(thread);
             }
         }
+
+        // message to be sent to the user if no threads exist for a city
+
 
         //return the Threads collection
         return allThreadsByCityAndCategory;
