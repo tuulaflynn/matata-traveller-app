@@ -29,7 +29,7 @@ User Stories:
 10. [The user can update a category] - endpoint made but will not grant access as currently users are anonymous
 11. [The user can delete a category] - endpoint made but will not grant access as currently users are anonymous
 12. The user can view the main attractions of the city.
-13. The user can view details of each attraction (including pic)
+13. The user can view details of each attraction (front end)
 14. The user will receive weather forecasts for their travel destination
 15. The user will be able to access a currency converter (calculate local currency rates)
 
