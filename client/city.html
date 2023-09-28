@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
-<body>
 <body class="page-background">
 <header>
     <div class="header-content">
@@ -16,19 +15,16 @@
         <h2 class="test1">Explore London</h2> <!-- Site title -->
         <nav>
             <ul>
-
                 <li><a href="index.html">Home</a></li> <!-- Home link -->
                 <li><a href="city.html">City</a></li> <!-- City link -->
-
             </ul>
         </nav>
     </div>
 </header>
 
-
 <main>
     <section>
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-3 col-md-6 col-12">
                     <div class="card">
@@ -48,7 +44,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-lg-3 col-md-6 col-12">
                     <div class="card">
                         <img src="tb.jpg" class="card-img-top" alt="Attraction 3">
@@ -58,7 +53,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-lg-3 col-md-6 col-12">
                     <div class="card">
                         <img src="nh.jpg" class="card-img-top" alt="Attraction 4">
@@ -68,33 +62,46 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
+
+
     <!-- Threads iframe section -->
     <section>
-        <iframe src="https://your-threads-website.com" frameborder="0" width="100%" height="500"></iframe>
+        <iframe src="thread.html" frameborder="0" width="100%" height="500"></iframe>
     </section>
 
-    <table>
-        <tr>
-            <td>
-                <!-- Weather iframe -->
-                <iframe src="weather.html" frameborder="0" width="100%" height="500"></iframe>
-            </td>
-            <td>
-                <!-- Currency iframe -->
-                <iframe src="currency.html" frameborder="0" width="100%" height="500"></iframe>
-            </td>
-        </tr>
-    </table>
+
+
+
+    <section>
+        <!-- Centered Table -->
+        <table width="100%">
+            <tr>
+                <td>
+
+                    <!-- Weather iframe -->
+
+                    <iframe src="weather.html" frameborder="1" width="100%" height="400px"></iframe>
+
+                </td>
+                <td>
+                    <!-- Currency iframe -->
+
+                    <iframe src="currency.html" frameborder="1" width="100%" height="400px"></iframe>
+                </td>
+            </tr>
+        </table>
+    </section>
+
 
     <!-- Language iframe section -->
     <section>
         <iframe src="language.html" frameborder="0" width="100%" height="500"></iframe>
     </section>
 </main>
+
 
 <footer>
     <p>Copyright © Matata Traveller 2023</p>
