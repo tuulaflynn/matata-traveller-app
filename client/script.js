@@ -1,6 +1,6 @@
 var myIndex = 0;
-let userCityChoiceId = null;
-carousel();
+userCityChoiceId = null;
+
 
 function carousel() {
     var i;
@@ -16,25 +16,38 @@ function carousel() {
     setTimeout(carousel, 3500); // Change image every 3.5 seconds
 }
 
-
-document.addEventListener('DOMContentLoaded', function loadCitys() {
+function loadCitys() {
     let content = `<option value="" disabled selected>Select</option> `
     fetch('http://localhost:8080/api/cities').then(response => response.json())
         .then(data => {
-            console.log(data);
             for (let eachData of data) {
-                console.log(eachData.cityName)
-                content += `<option value=${eachData.cityName}>${eachData.cityName}</option>`;
+                content += `<option value=${eachData.cityId}>${eachData.cityName}</option>`;
             }
-            console.log(content);
             document.getElementById("cityOption").innerHTML = content;
         });
+}
+
+function navigateToCity() {
+    // Set the global variable to the value of the selected option (which is assigned to the value property of the select tag)
+    userCityChoiceId = document.getElementById("cityOption").value;
+    sessionStorage.setItem("userCityChoiceId", userCityChoiceId);
+    console.log(userCityChoiceId);
+    window.location.href = "city.html";
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    if (window.location.pathname.includes('index.html')) {
+        carousel();
+        loadCitys();
+    }
+    if (window.location.pathname.includes('city.html')) {
+        console.log("---------------")
+        console.log(userCityChoiceId) // this is currently undefined. The global variable setting isn't working 
+        console.log(sessionStorage.getItem("userCityChoiceId"));
+        returnUserCityChoice();
+    }
 })
 
-
-function storeUserCityChoice(userCityChoice) {
-    userCityChoiceId = userCityChoice;
-}
 
 function returnUserCityChoice() {
     return userCityChoiceId
