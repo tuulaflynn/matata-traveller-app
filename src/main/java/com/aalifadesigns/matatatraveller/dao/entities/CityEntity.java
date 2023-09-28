@@ -28,9 +28,6 @@ public class CityEntity {
     @Column(name = "city_country")
     private String cityCountry;
 
-    @Column(name = "city_img")
-    private String cityImg;
-
     @Column(name = "city_currency")
     private String cityCurrency;
 
