@@ -64,6 +64,23 @@ function fetchAttractionCards() {
         });
 }
 
+function loadCategories() {
+    fetch('http://localhost:8080/api/categories').then(response => response.json())
+        .then(data => {
+            let content = ``;
+            for (let i = 0; i < data.length; i++) {
+                let category = data[i]
+                console.log(category);
+                content += `<div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="category`+ i + `">
+                    <label class="form-check-label" for="category` + i + `">`
+                    + category.categoryName +
+                    `</label>
+            </div>`
+            }
+            document.getElementById("categoriesDropDown").innerHTML = content;
+        });
+}
 
 // Event which calls the functions needs for each page after the DOM has loaded
 document.addEventListener('DOMContentLoaded', function () {
@@ -79,5 +96,6 @@ document.addEventListener('DOMContentLoaded', function () {
         // Set the header to include the city name
         document.getElementById("cityExplore").innerHTML = `Explore ` + userCityName;
         fetchAttractionCards();
+        loadCategories();
     }
 })
