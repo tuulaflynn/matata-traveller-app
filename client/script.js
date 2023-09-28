@@ -64,13 +64,13 @@ function fetchAttractionCards() {
         });
 }
 
+// Function to load the categories from the database into a checkbox form
 function loadCategories() {
     fetch('http://localhost:8080/api/categories').then(response => response.json())
         .then(data => {
             let content = ``;
             for (let i = 0; i < data.length; i++) {
                 let category = data[i]
-                console.log(category);
                 content += `<div class="form-check">
                 <input class="form-check-input" type="checkbox" value="" id="category`+ i + `">
                     <label class="form-check-label" for="category` + i + `">`
@@ -81,6 +81,42 @@ function loadCategories() {
             document.getElementById("categoriesDropDown").innerHTML = content;
         });
 }
+
+// Function to load the threads from the database for a city with id 'userCityChoiceId'
+function loadThreads() {
+    fetch('http://localhost:8080/api/threads/city/' + userCityChoiceId)
+        .then(response => response.json())
+        .then(data => {
+            let content = ``;
+            for (let i = 0; i < data.length; i++) {
+                let thread = data[i];
+                let threadCategories = ``;
+
+                // Loop to obtains all the category names for a single thread
+                thread.allCategoriesDto.forEach(category => {
+                    threadCategories += category.categoryName + `    `;
+                });
+
+                // Display each thread in a card with its category as a label
+                content += `<div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">`+ thread.threadDate + `</h5>
+                    <p class="card-text"> ` + thread.threadContent + `</p>
+                    <div class="form-check">
+                        <input id="thread"` + thread.threadId + `class="form-check-input" type="checkbox" value="thread"` + thread.threadId + `" id="category` + i + `">
+                        <label class="form-check-label" for="thread` + thread.threadId + `">`
+                    + threadCategories +
+                    `</label>
+                    </div>
+                </div>
+            </div>`
+            }
+            // Set the element in city.html
+            document.getElementById("allThreads").innerHTML = content;
+
+        });
+}
+
 
 // Event which calls the functions needs for each page after the DOM has loaded
 document.addEventListener('DOMContentLoaded', function () {
@@ -97,5 +133,6 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById("cityExplore").innerHTML = `Explore ` + userCityName;
         fetchAttractionCards();
         loadCategories();
+        loadThreads();
     }
 })
