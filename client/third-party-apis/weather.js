@@ -6,9 +6,6 @@ function getForcast() {
             return response.json();
         })
         .then(data => {
-            console.log("HEERER");
-            console.log(data.list[0].main.temp + "°C");
-            console.log("----------------")
             // Loop to populate 5 days of weather including todays weather 
             for (let i = 0, y = 1; i <= 16, y < [4]; i = i + 8, y = y + 1) {
                 document.getElementById("current-temp-" + y).innerHTML = data.list[i].main.temp + "°C";
@@ -22,6 +19,7 @@ function getForcast() {
         });
 }
 getForcast();
+
 /*
 ----------- populating the data manually for todays date only ------------------------
 let currentTemp1 = data.list[0].main.temp + "°C";
