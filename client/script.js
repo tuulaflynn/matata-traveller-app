@@ -31,8 +31,17 @@ function navigateToCity() {
     // Set the global variable to the value of the selected option (which is assigned to the value property of the select tag)
     userCityChoiceId = document.getElementById("cityOption").value;
     sessionStorage.setItem("userCityChoiceId", userCityChoiceId);
-    console.log(userCityChoiceId);
-    window.location.href = "city.html";
+    window.location.href = "city.html"
+}
+
+
+function fetchCityName() {
+    return fetch(`http://localhost:8080/api/cities/` + sessionStorage.getItem("userCityChoiceId"))
+        .then(respnose => respnose.json())
+        .then(data => {
+            sessionStorage.setItem("userCityName", data.cityName);
+            return data.cityName;
+        });
 }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -41,14 +50,12 @@ document.addEventListener('DOMContentLoaded', function () {
         loadCitys();
     }
     if (window.location.pathname.includes('city.html')) {
-        console.log("---------------")
-        console.log(userCityChoiceId) // this is currently undefined. The global variable setting isn't working 
-        console.log(sessionStorage.getItem("userCityChoiceId"));
-        returnUserCityChoice();
+        // calling the function to get the city name by handling the promise it returns
+        fetchCityName()
+            .then(cityName => { document.getElementById("cityExplore").innerHTML = `Explore ` + cityName });
     }
 })
 
-
 function returnUserCityChoice() {
-    return userCityChoiceId
+    return sessionStorage.getItem("userCityChoiceId");
 }
