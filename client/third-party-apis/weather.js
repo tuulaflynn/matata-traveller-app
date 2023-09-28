@@ -1,12 +1,14 @@
 // Function Definitions
-function getForcast(user_city_name) {
-    fetch(`http://api.openweathermap.org/data/2.5/forecast?q=` + user_city_name + `&appid=759b73a7c2fecc7cd9334548c3729254&units=metric`)
+function getForcast() {
+    fetch(`http://api.openweathermap.org/data/2.5/forecast?q=` + sessionStorage.getItem("userCityName") + `&appid=759b73a7c2fecc7cd9334548c3729254&units=metric`)
         // the endpoint searches for temp in Celsuius due to the added units=metric parameter
         .then(response => {
             return response.json();
         })
         .then(data => {
-
+            console.log("HEERER");
+            console.log(data.list[0].main.temp + "°C");
+            console.log("----------------")
             // Loop to populate 5 days of weather including todays weather 
             for (let i = 0, y = 1; i <= 16, y < [4]; i = i + 8, y = y + 1) {
                 document.getElementById("current-temp-" + y).innerHTML = data.list[i].main.temp + "°C";
@@ -19,7 +21,7 @@ function getForcast(user_city_name) {
             }
         });
 }
-
+getForcast();
 /*
 ----------- populating the data manually for todays date only ------------------------
 let currentTemp1 = data.list[0].main.temp + "°C";
