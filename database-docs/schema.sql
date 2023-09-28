@@ -6,7 +6,6 @@ CREATE TABLE city_details(
 city_id INT AUTO_INCREMENT PRIMARY KEY,
 city_name VARCHAR (30) NOT NULL,
 city_country VARCHAR (30) NOT NULL,
-city_img VARCHAR (255) NOT NULL,
 city_currency VARCHAR (30) NOT NULL
 );
 
@@ -33,10 +32,8 @@ FOREIGN KEY (category_id) REFERENCES category_details(category_id)
 CREATE TABLE attraction_details(
 attraction_id INT AUTO_INCREMENT PRIMARY KEY,
 attraction_name VARCHAR (50) NOT NULL,
-attraction_description TINYTEXT NOT NULL,
+attraction_description MEDIUMTEXT NOT NULL,
 attraction_image VARCHAR(255) NOT NULL,
 city_id INT NOT NULL,
 FOREIGN KEY (city_id) REFERENCES city_details(city_id)
 );
-
-
