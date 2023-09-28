@@ -44,6 +44,22 @@ function fetchCityName() {
         });
 }
 
+function fetchAttractionCards() {
+    return fetch(`http://localhost:8080/api/attractions/city/` + sessionStorage.getItem("userCityChoiceId"))
+        .then(response => { return response.json() })
+        .then(attractionList => {
+            console.log(attractionList);
+            console.log(attractionList[0]);
+            for (let i = 0, y = 1; i < 4; i++, y++) {
+                console.log(attractionList[i].attractionName)
+                document.getElementById("attractionImg" + y).src = attractionList[i].attrationImage;
+                document.getElementById("attractionName" + y).innerHTML = attractionList[i].attractionName;
+                document.getElementById("attractionDesc" + y).innerHTML = attractionList[i].attractionDescription;
+
+            };
+        });
+}
+
 document.addEventListener('DOMContentLoaded', function () {
     if (window.location.pathname.includes('index.html')) {
         carousel();
@@ -53,9 +69,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // calling the function to get the city name by handling the promise it returns
         fetchCityName()
             .then(cityName => { document.getElementById("cityExplore").innerHTML = `Explore ` + cityName });
+        getForcast(sessionStorage.getItem("userCityName"));
+        fetchAttractionCards();
     }
 })
-
-function returnUserCityChoice() {
-    return sessionStorage.getItem("userCityChoiceId");
-}

@@ -1,5 +1,5 @@
 // Define the URL of the translation API
-const apiUrl = 'https://libretranslate.de/translate';
+//const apiUrl = 'https://libretranslate.de/translate';
 
 // Get references to the HTML elements
 const sourceLanguageSelect = document.getElementById('sourceLanguage');
@@ -18,7 +18,7 @@ translateButton.addEventListener('click', () => {
     const textToTranslate = sourceTextArea.value;
 
     // Make a POST request to the translation API
-    fetch(apiUrl, {
+    fetch("https://libretranslate.de/translate", {
         method: 'POST',
         body: JSON.stringify({
             q: textToTranslate,

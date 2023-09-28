@@ -13,299 +13,303 @@
 
 <body class="page-background">
 
-<header class="header">
-    <!-- Header section with the logo and navigation menu -->
-    <img src="resources/MT.jpg" alt="My Logo"> <!-- Logo image -->
-    <h2 id=cityExplore class="cityh2"> <!-- js dynmaically fills this eliment once the DOM is loaded-->
-    </h2> <!-- Site title -->
-    <nav>
-        <ul class="cityNavUl">
-            <li><a href="index.html" class="homeLinkCity">Home</a></li> <!-- Home link -->
-        </ul>
-    </nav>
-</header>
-
-<main>
-    <section>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-3 col-md-6 col-12">
-                    <div class="card">
-                        <img src="resources/eye.jpg" class="card-img-top" alt="Attraction 1">
-                        <div class="card-body">
-                            <h5 class="card-title">London Eye</h5>
-                            <p class="card-text">Description of Attraction 1.</p>
+    <header class="header">
+        <!-- Header section with the logo and navigation menu -->
+        <img src="resources/MT.jpg" alt="My Logo"> <!-- Logo image -->
+        <h2 id=cityExplore class="cityh2"> <!-- js dynmaically fills this eliment once the DOM is loaded-->
+        </h2> <!-- Site title -->
+        <nav>
+            <ul class="cityNavUl">
+                <li><a href="index.html" class="homeLinkCity">Home</a></li> <!-- Home link -->
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <div class="card">
+                            <img id="attractionImg1" src="" class="card-img-top" alt="Attraction 1">
+                            <div class="card-body">
+                                <h5 id="attractionName1" class="card-title">London Eye</h5>
+                                <p id="attractionDesc1" class="card-text">Description of Attraction 1.</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <div class="card">
-                        <img src="resources/bb.jpg" class="card-img-top" alt="Attraction 3">
-                        <div class="card-body">
-                            <h5 class="card-title">Big Ben</h5>
-                            <p class="card-text">Description of Attraction 2.</p>
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <div class="card">
+                            <img id="attractionImg2" src="" class="card-img-top" alt="Attraction 3">
+                            <div class="card-body">
+                                <h5 id="attractionName2" class="card-title">Big Ben</h5>
+                                <p id="attractionDesc2" class="card-text">Description of Attraction 2.</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <div class="card">
-                        <img src="resources/tb.jpg" class="card-img-top" alt="Attraction 3">
-                        <div class="card-body">
-                            <h5 class="card-title">Tower Bridge</h5>
-                            <p class="card-text">Description of Attraction 3.</p>
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <div class="card">
+                            <img id="attractionImg3" src="" class="card-img-top" alt="Attraction 3">
+                            <div class="card-body">
+                                <h5 id="attractionName3" class="card-title">Tower Bridge</h5>
+                                <p id="attractionDesc3" class="card-text">Description of Attraction 3.</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <div class="card">
-                        <img src="resources/nh.jpg" class="card-img-top" alt="Attraction 4">
-                        <div class="card-body">
-                            <h5 class="card-title">National Gallery</h5>
-                            <p class="card-text">Description of Attraction 4.</p>
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <div class="card">
+                            <img id="attractionImg4" src="" class="card-img-top" alt="Attraction 4">
+                            <div class="card-body">
+                                <h5 id="attractionName4" class="card-title">National Gallery</h5>
+                                <p id="attractionDesc4" class="card-text">Description of Attraction 4.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+            </div>
+        </section>
 
-    <section>
-        <!-- Centered Table -->
-        <table width="100%">
-            <tr>
-                <td>
+        <section>
+            <!-- Centered Table -->
+            <table width="100%">
+                <tr>
+                    <td>
 
-                    <!-- Weather iframe -->
+                        <!-- Weather iframe -->
 
-                    <iframe src="third-party-apis/weather.html" frameborder="0" width="100%" height="400px"></iframe>
+                        <iframe src="third-party-apis/weather.html" frameborder="0" width="100%"
+                            height="400px"></iframe>
 
-                </td>
-                <td>
-                    <!-- Currency iframe -->
+                    </td>
+                    <td>
+                        <!-- Currency iframe -->
 
-                    <iframe src="third-party-apis/currency.html" frameborder="0" width="100%" height="400px"></iframe>
-                </td>
-            </tr>
-        </table>
-    </section>
+                        <iframe src="third-party-apis/currency.html" frameborder="0" width="100%"
+                            height="400px"></iframe>
+                    </td>
+                </tr>
+            </table>
+        </section>
 
+        <!-- Language iframe section -->
+        <section>
+            <iframe src="third-party-apis/language.html" frameborder="0" width="100%" height="500"></iframe>
+        </section>
 
-    <!-- Language iframe section -->
-    <section>
-        <iframe src="third-party-apis/language.html" frameborder="0" width="100%" height="500"></iframe>
-    </section>
+        <div class="container2">
+            <h2>Threads</h2>
+            <div class="row">
+                <!-- Main content area -->
+                <div class="col-md-8">
+                    <section>
+                        <!-- Thread 1 -->
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Thread Title 1</h5>
+                                <p class="card-text">Thread content goes here.</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="category1">
+                                    <label class="form-check-label" for="category1">
+                                        Food
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
 
-    <div class="container2">
-        <h2>Threads</h2>
-        <div class="row">
-            <!-- Main content area -->
-            <div class="col-md-8">
-                <section>
-                    <!-- Thread 1 -->
-                    <div class="card mb-3">
+                        <!-- Thread 2 -->
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Thread Title 2</h5>
+                                <p class="card-text">Thread content goes here.</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="category2">
+                                    <label class="form-check-label" for="category2">
+                                        Transport
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Thread Title 3</h5>
+                                <p class="card-text">Thread content goes here.</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="category3">
+                                    <label class="form-check-label" for="category3">
+                                        Hotel
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Thread Title 4</h5>
+                                <p class="card-text">Thread content goes here.</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="category4">
+                                    <label class="form-check-label" for="category4">
+                                        Restaurant
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Thread Title 5</h5>
+                                <p class="card-text">Thread content goes here.</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="category4">
+                                    <label class="form-check-label" for="category4">
+                                        Excursion
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Thread Title 6</h5>
+                                <p class="card-text">Thread content goes here.</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="category4">
+                                    <label class="form-check-label" for="category4">
+                                        Adventure
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Sidebar with categories -->
+                <div class="col-md-4">
+                    <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Thread Title 1</h5>
-                            <p class="card-text">Thread content goes here.</p>
+                            <h5 class="card-title">Categories</h5>
+
+                            <!-- Category checkboxes -->
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" value="" id="category1">
                                 <label class="form-check-label" for="category1">
                                     Food
                                 </label>
                             </div>
-                        </div>
-                    </div>
 
-                    <!-- Thread 2 -->
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">Thread Title 2</h5>
-                            <p class="card-text">Thread content goes here.</p>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" value="" id="category2">
                                 <label class="form-check-label" for="category2">
                                     Transport
                                 </label>
                             </div>
-                        </div>
-                    </div>
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">Thread Title 3</h5>
-                            <p class="card-text">Thread content goes here.</p>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" value="" id="category3">
                                 <label class="form-check-label" for="category3">
                                     Hotel
                                 </label>
                             </div>
-                        </div>
-                    </div>
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">Thread Title 4</h5>
-                            <p class="card-text">Thread content goes here.</p>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" value="" id="category4">
                                 <label class="form-check-label" for="category4">
                                     Restaurant
                                 </label>
                             </div>
-                        </div>
-                    </div>
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">Thread Title 5</h5>
-                            <p class="card-text">Thread content goes here.</p>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="category4">
-                                <label class="form-check-label" for="category4">
+                                <input class="form-check-input" type="checkbox" value="" id="category5">
+                                <label class="form-check-label" for="category5">
                                     Excursion
                                 </label>
                             </div>
-                        </div>
-                    </div>
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">Thread Title 6</h5>
-                            <p class="card-text">Thread content goes here.</p>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="category4">
-                                <label class="form-check-label" for="category4">
+                                <input class="form-check-input" type="checkbox" value="" id="category6">
+                                <label class="form-check-label" for="category6">
                                     Adventure
                                 </label>
                             </div>
+                            <!-- Add more categories as needed -->
                         </div>
                     </div>
-                </section>
-            </div>
-
-            <!-- Sidebar with categories -->
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Categories</h5>
-
-                        <!-- Category checkboxes -->
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="category1">
-                            <label class="form-check-label" for="category1">
-                                Food
-                            </label>
-                        </div>
-
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="category2">
-                            <label class="form-check-label" for="category2">
-                                Transport
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="category3">
-                            <label class="form-check-label" for="category3">
-                                Hotel
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="category4">
-                            <label class="form-check-label" for="category4">
-                                Restaurant
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="category5">
-                            <label class="form-check-label" for="category5">
-                                Excursion
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="category6">
-                            <label class="form-check-label" for="category6">
-                                Adventure
-                            </label>
-                        </div>
-                        <!-- Add more categories as needed -->
-                    </div>
+                    <button type="button" class="btn btn-primary mt-3" data-toggle="modal"
+                        data-target="#addThreadModal">
+                        Add Thread
+                    </button>
                 </div>
-                <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#addThreadModal">
-                    Add Thread
-                </button>
+            </div>
+        </div>
+    </main>
+    <!-- Add Thread Modal -->
+    <div class="modal fade" id="addThreadModal" tabindex="-1" role="dialog" aria-labelledby="addThreadModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addThreadModalLabel">Add Thread</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Thread creation form with formatting options -->
+                    <form id="threadForm">
+                        <div class="form-group">
+                            <label for="threadTitle">Thread Title</label>
+                            <input type="text" class="form-control" id="threadTitle" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="threadContent">Thread Content</label>
+                            <textarea class="form-control" id="threadContent" rows="4"></textarea>
+                        </div>
+                        <div class="form-group mt-3">
+                            <label>Select Categories</label><br>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="categoryFood" value="Food">
+                                <label class="form-check-label" for="categoryFood">Food</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="categoryTransport"
+                                    value="Transport">
+                                <label class="form-check-label" for="categoryTransport">Transport</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="categoryHotel" value="Hotel">
+                                <label class="form-check-label" for="categoryHotel">Hotel</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="categoryRestaurant"
+                                    value="Restaurant">
+                                <label class="form-check-label" for="categoryRestaurant">Restaurant</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="categoryExcursion"
+                                    value="Excursion">
+                                <label class="form-check-label" for="categoryExcursion">Excursion</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="categoryAdventure"
+                                    value="Adventure">
+                                <label class="form-check-label" for="categoryAdventure">Adventure</label>
+                            </div>
+                        </div>
+                        <iframe src="third-party-apis/weather.html" frameborder="1" width="100%"
+                            height="400px"></iframe>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="addThread()">Add Thread</button>
+                </div>
             </div>
         </div>
     </div>
-</main>
-<!-- Add Thread Modal -->
-<div class="modal fade" id="addThreadModal" tabindex="-1" role="dialog" aria-labelledby="addThreadModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addThreadModalLabel">Add Thread</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- Thread creation form with formatting options -->
-                <form id="threadForm">
-                    <div class="form-group">
-                        <label for="threadTitle">Thread Title</label>
-                        <input type="text" class="form-control" id="threadTitle" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="threadContent">Thread Content</label>
-                        <textarea class="form-control" id="threadContent" rows="4"></textarea>
-                    </div>
+    <footer class="city-footer">
+        <p>Copyright © Matata Traveller 2023</p>
+    </footer>
 
-                    <div class="form-group mt-3">
-                        <label>Select Categories</label><br>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="categoryFood" value="Food">
-                            <label class="form-check-label" for="categoryFood">Food</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="categoryTransport" value="Transport">
-                            <label class="form-check-label" for="categoryTransport">Transport</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="categoryHotel" value="Hotel">
-                            <label class="form-check-label" for="categoryHotel">Hotel</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="categoryRestaurant" value="Restaurant">
-                            <label class="form-check-label" for="categoryRestaurant">Restaurant</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="categoryExcursion" value="Excursion">
-                            <label class="form-check-label" for="categoryExcursion">Excursion</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="categoryAdventure" value="Adventure">
-                            <label class="form-check-label" for="categoryAdventure">Adventure</label>
-                        </div>
-                    </div>
-
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="addThread()">Add Thread</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<footer class="city-footer">
-    <p>Copyright © Matata Traveller 2023</p>
-</footer>
-
-<!-- Bootstrap and custom scripts -->
-<script src ="third-party-apis/weather.js"></script>
-<script src ="third-party-apis/currency.js"></script>
-<script src ="third-party-apis/language.js"></script>
-<script src ="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src ="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-<script src ="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-</body>
+    <!-- Bootstrap and custom scripts -->
+    <script src="third-party-apis/weather.js"></script>
+    <script src="third-party-apis/currency.js"></script>
+    <script src="third-party-apis/language.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </html>
