@@ -118,6 +118,7 @@ public class CityServiceImpl implements CityService {
             //set the AttractionDto collection inside cityDto object
             cityDto.setAllAttractions(allAttractionDto);
         }
+
         //inform the user the record does not exist the database
         else {
             throw new InvalidIdException();
