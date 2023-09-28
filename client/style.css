@@ -7,7 +7,7 @@ body {
 }
 
 /* Style the header */
-header {
+.header {
     background-color: transparent;
     /* Make the background transparent */
     color: #FFFFFF;
@@ -41,6 +41,10 @@ nav {
     /* Make the background transparent */
 }
 
+.cityNav {
+    margin-left: auto;
+}
+
 nav ul {
     display: flex;
     /* Use flex layout for positioning */
@@ -50,18 +54,34 @@ nav ul {
     padding: 0;
 }
 
+.cityNavUl {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex-direction: row;
+}
+
 nav li {
     margin: 0 10px;
     /* Add margin between menu items */
 }
 
-nav li a {
+.homeLinkIndex {
     color: #FFFFFF;
     /* Text color for menu links */
     text-decoration: none;
     /* Remove underline from links */
     transition: color 0.3s ease-in-out;
     /* Smooth color transition */
+}
+
+.homeLinkCity {
+    color: black;
+    /* Text color for menu links */
+    text-decoration: none;
+    /* Remove underline from links */
+    transition: color 0.3s ease-in-out;
 }
 
 /* Change link color on hover */
@@ -89,7 +109,7 @@ section {
 }
 
 /* Style h1 headings */
-h1 {
+.indexh1 {
     margin-top: 0;
     font-size: 30px;
     color: #FFFFFF;
@@ -100,20 +120,22 @@ h1 {
     /* Rounded corners for the heading */
 }
 
-/* Style h2 headings */
 h2 {
     margin-top: 0;
-    font-size: 23px;
-    color: #800000;
+    font-size: 30px;
+    color: #6495ED;
     margin-bottom: 15px;
-    border: 2px solid #2986cc;
-    /* Border around the heading */
+    border: none;
     padding: 9px;
-    /* Add padding around the heading */
     border-radius: 4px;
-    /* Rounded corners for the heading */
-    background-color: #f2f2f2;
-    /* Background color for the heading */
+}
+
+.cityh2 {
+    text-align: center;
+    margin: 0;
+    /* Remove margin to prevent spacing */
+    flex-grow: 1;
+    /* Allow h2 to take available space */
 }
 
 /* Style the footer */
@@ -199,4 +221,36 @@ select option {
 /* To give bottom padding for when the row wraps underneath on smaller screens */
 .row>.col-6 {
     margin-bottom: 2rem;
+}
+
+.card {
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.card-img-top {
+    object-fit: cover;
+    height: 200px;
+}
+
+.card-text {
+    display: none;
+}
+
+.card:hover .card-text {
+    display: block;
+}
+
+.page-background {
+    background-color: #f2f2f2;
+    /* Replace with your desired background color */
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }

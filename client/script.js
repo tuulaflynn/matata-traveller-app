@@ -1,5 +1,5 @@
 var myIndex = 0;
-var userCityChoiceId;
+userCityChoiceId = null;
 
 
 function carousel() {
@@ -30,6 +30,7 @@ function loadCitys() {
 function navigateToCity() {
     // Set the global variable to the value of the selected option (which is assigned to the value property of the select tag)
     userCityChoiceId = document.getElementById("cityOption").value;
+    sessionStorage.setItem("userCityChoiceId", userCityChoiceId);
     console.log(userCityChoiceId);
     window.location.href = "city.html";
 }
@@ -42,6 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (window.location.pathname.includes('city.html')) {
         console.log("---------------")
         console.log(userCityChoiceId) // this is currently undefined. The global variable setting isn't working 
+        console.log(sessionStorage.getItem("userCityChoiceId"));
         returnUserCityChoice();
     }
 })
