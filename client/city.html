@@ -4,15 +4,20 @@
 <head>
     <title>Matata Traveller</title>
     <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="script.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <script src="script.js"></script> <!-- Include JavaScript file -->
 </head>
 
 <body class="page-background">
+
     <header class="header">
         <!-- Header section with the logo and navigation menu -->
         <img src="resources/MT.jpg" alt="My Logo"> <!-- Logo image -->
-        <h2 class="cityh2">Explore London</h2> <!-- Site title -->
+        <h2 id=cityExplore class="cityh2"> <!-- js dynmaically fills this eliment once the DOM is loaded-->
+        </h2> <!-- Site title -->
         <nav>
             <ul class="cityNavUl">
                 <li><a href="index.html" class="homeLinkCity">Home</a></li> <!-- Home link -->
@@ -20,14 +25,13 @@
         </nav>
     </header>
 
-
     <main>
         <section>
-            <div class="container">
+            <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-3 col-md-6 col-12">
                         <div class="card">
-                            <img src="" class="card-img-top" alt="Attraction 1">
+                            <img src="eye.jpg" class="card-img-top" alt="Attraction 1">
                             <div class="card-body">
                                 <h5 class="card-title">London Eye</h5>
                                 <p class="card-text">Description of Attraction 1.</p>
@@ -36,66 +40,79 @@
                     </div>
                     <div class="col-lg-3 col-md-6 col-12">
                         <div class="card">
-                            <img src="" class="card-img-top" alt="Attraction 3">
+                            <img src="bb.jpg" class="card-img-top" alt="Attraction 3">
                             <div class="card-body">
                                 <h5 class="card-title">Big Ben</h5>
                                 <p class="card-text">Description of Attraction 2.</p>
                             </div>
                         </div>
                     </div>
-
                     <div class="col-lg-3 col-md-6 col-12">
                         <div class="card">
-                            <img src="" class="card-img-top" alt="Attraction 3">
+                            <img src="tb.jpg" class="card-img-top" alt="Attraction 3">
                             <div class="card-body">
                                 <h5 class="card-title">Tower Bridge</h5>
                                 <p class="card-text">Description of Attraction 3.</p>
                             </div>
                         </div>
                     </div>
-
                     <div class="col-lg-3 col-md-6 col-12">
                         <div class="card">
-                            <img src="" class="card-img-top" alt="Attraction 4">
+                            <img src="nh.jpg" class="card-img-top" alt="Attraction 4">
                             <div class="card-body">
                                 <h5 class="card-title">National Gallery</h5>
                                 <p class="card-text">Description of Attraction 4.</p>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </section>
+
+
         <!-- Threads iframe section -->
         <section>
-            <iframe src="https://your-threads-website.com" frameborder="0" width="100%" height="500"></iframe>
+            <iframe src="thread.html" frameborder="0" width="100%" height="500"></iframe>
         </section>
 
-        <table>
-            <tr>
-                <td>
-                    <!-- Weather iframe -->
-                    <iframe src="third-party-apis/weather.html" frameborder="0" width="100%" height="500"></iframe>
-                </td>
-                <td>
-                    <!-- Currency iframe -->
-                    <iframe src="third-party-apis/currency.html" frameborder="0" width="100%" height="500"></iframe>
-                </td>
-            </tr>
-        </table>
+
+
+
+        <section>
+            <!-- Centered Table -->
+            <table width="100%">
+                <tr>
+                    <td>
+
+                        <!-- Weather iframe -->
+
+                        <iframe src="weather.html" frameborder="1" width="100%" height="400px"></iframe>
+
+                    </td>
+                    <td>
+                        <!-- Currency iframe -->
+
+                        <iframe src="currency.html" frameborder="1" width="100%" height="400px"></iframe>
+                    </td>
+                </tr>
+            </table>
+        </section>
+
 
         <!-- Language iframe section -->
         <section>
-            <iframe src="third-party-apis/language.html" frameborder="0" width="100%" height="500"></iframe>
+            <iframe src="language.html" frameborder="0" width="100%" height="500"></iframe>
         </section>
     </main>
+
 
     <footer>
         <p>Copyright © Matata Traveller 2023</p>
     </footer>
-
-    <script src="script.js"></script> <!-- Include JavaScript file -->
+    </script>
+    <script src="weather.js"></script>
+    <script src="currency.js"></script>
+    <script src="language.js"></script>
 </body>
 
 </html>
