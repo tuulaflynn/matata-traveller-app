@@ -37,7 +37,7 @@ function navigateToCity() {
 
 function fetchCityName() {
     return fetch(`http://localhost:8080/api/cities/` + sessionStorage.getItem("userCityChoiceId"))
-        .then(respnose => respnose.json())
+        .then(response => { return response.json() })
         .then(data => {
             sessionStorage.setItem("userCityName", data.cityName);
             return data.cityName;
