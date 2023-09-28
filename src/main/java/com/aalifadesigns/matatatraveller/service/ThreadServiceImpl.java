@@ -344,10 +344,6 @@ public class ThreadServiceImpl implements ThreadService {
                 allThreadsByCityAndCategory.add(thread);
             }
         }
-
-        // message to be sent to the user if no threads exist for a city
-
-
         //return the Threads collection
         return allThreadsByCityAndCategory;
     }

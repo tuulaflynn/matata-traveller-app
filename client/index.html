@@ -4,19 +4,18 @@
 <head>
     <title>Matata Traveller</title>
     <!-- Include external stylesheets -->
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href=".//style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 
 <body>
-    <header>
+    <header class="header">
         <!-- Header section with the logo and navigation menu -->
         <img src="resources/MT.jpg" alt="My Logo"> <!-- Logo image -->
         <h1> Matata Traveller</h1> <!-- Site title -->
         <nav>
             <ul>
-                <li><a href="index.html">Home</a></li> <!-- Home link -->
-                <li><a href="city.html">City</a></li> <!-- City link -->
+                <li><a href="index.html" class="homeLinkIndex">Home</a></li> <!-- Home link -->
             </ul>
         </nav>
     </header>
@@ -35,10 +34,11 @@
         </section>
         <div class="container">
             <!-- Container for the dropdown box -->
-            <h1>Select a City</h1> <!-- Heading for the dropdown -->
+            <h1 class="indexh1">Select a City</h1> <!-- Heading for the dropdown -->
             <div>
-                <select id="cityOption">
+                <select id="cityOption" onChange="navigateToCity()">
                     <!-- Dropdown select element with options -->
+                    <!-- the value of the selected option is assigned to the value property of the select tag -->
                 </select>
             </div>
         </div>

@@ -57,19 +57,22 @@ public class ThreadController {
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
-    //fetch threads by city
+
+    //http://localhost:8080/api/threads/city/4
     @GetMapping("/threads/city/{cid}")
     public ResponseEntity<List<ThreadDto>> fetchThreadsByCity(@PathVariable("cid") int cityId) {
         return new ResponseEntity<>(threadService.fetchByCity(cityId), HttpStatus.OK);
     }
 
-    //fetch threads by category
+
+    //http://localhost:8080/api/threads/categories/3
     @GetMapping("/threads/category/{cid}")
     public ResponseEntity<List<ThreadDto>> fetchThreadsByCategory(@PathVariable("cid") int categoryId) {
         return new ResponseEntity<>(threadService.fetchByCategory(categoryId), HttpStatus.OK);
     }
 
     //fetch threads by city and category, using 2 path variables
+    //http://localhost:8080/api/threads/city/4/category/3
     @GetMapping("/threads/city/{cid}/category/{categoryId}")
     public ResponseEntity<List<ThreadDto>> fetchThreadsByCityAndCategory(@PathVariable("cid") int cityId, @PathVariable("categoryId") int categoryId) {
         return new ResponseEntity( threadService.fetchByCityAndCategory(cityId,categoryId), HttpStatus.OK);
