@@ -70,17 +70,24 @@ function loadCategories() {
         .then(data => {
             let content = ``;
             for (let i = 0; i < data.length; i++) {
-                let category = data[i]
+                let categoryId = data[i].categoryId;
+                let categoryName = data[i].categoryName;
                 content += `<div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="category`+ i + `">
+                <input class="form-check-input" type="checkbox" value="`+ categoryId + `" id="category` + i + `">
                     <label class="form-check-label" for="category` + i + `">`
-                    + category.categoryName +
+                    + categoryName +
                     `</label>
             </div>`
             }
-            document.getElementById("categoriesDropDown").innerHTML = content;
+
+            // Loop to set innerHtml to content as there are multiple places to load the categories 
+            var elements = document.getElementsByClassName("loadCategories");
+            for (var i = 0; i < elements.length; i++) {
+                elements[i].innerHTML = content;
+            }
         });
 }
+
 
 // Function to load the threads from the database for a city with id 'userCityChoiceId'
 function loadThreads() {
@@ -113,9 +120,63 @@ function loadThreads() {
             }
             // Set the element in city.html
             document.getElementById("allThreads").innerHTML = content;
-
         });
 }
+
+/* 
+Functional to add a thread, not currently working so commented out for now
+function addThread() {
+    // Code taken from the internet to get the current date
+    let today = new Date();
+    let year = today.getFullYear();
+    let month = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed, so we add 1
+    let day = String(today.getDate()).padStart(2, '0');
+    let formattedDate = year + '-' + month + '-' + day;
+
+    let cityDtoFromCurrentCity = null;
+    let categoriesDtoList = [];
+    let checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+
+
+    fetch("http://localhost:8080/api/cities/" + userCityChoiceId)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            cityDtoFromCurrentCity = data
+        })
+        .then(() => {
+            var selectedValues = Array.from(checkboxes).map(function (checkbox) {
+                fetch("http://localhost:8080/api/categories/" + checkbox.value)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                        categoriesDtoList.push(data)
+                    });
+            })
+        });
+
+    console.log("cityDtoFromCurrentCity:  " + cityDtoFromCurrentCity);
+    console.log("categoriesDtoList:  " + categoriesDtoList);
+
+    // Construct the javascript object for the request body as the object goes through to the backend it will get copied into a java object.
+    let newThread = {
+        threadId: 0,
+        threadContent: document.getElementById("addThreadTitle").value,
+        threadDate: formattedDate,
+        cityDto: cityDtoFromCurrentCity,
+        allCategoriesDto: categoriesDtoList,
+    }
+
+    // Use fetch api with post method to add the book
+    fetch('http://localhost:8080/api/threads', {
+        method: 'POST',
+        body: JSON.stringify(newThread),   // JSON.stringify() will convert javascript object to JSON, which is the needed format for requests and responses
+        headers: { "Content-type": "application/json; charset=UTF-8" }
+    })
+        .then((response) => { response.json })
+        .then((data) => console.log(data));
+}
+*/
 
 
 // Event which calls the functions needs for each page after the DOM has loaded

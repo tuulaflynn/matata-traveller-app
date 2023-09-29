@@ -112,7 +112,7 @@
                             <h5 class="card-title">Categories</h5>
 
                             <!-- Category checkboxes -->
-                            <div id="categoriesDropDown">
+                            <div class="loadCategories">
                                 <!-- This is dynamically filled by loadCategories() function in script.js -->
                             </div>
                             <!-- Add more categories as needed -->
@@ -126,6 +126,7 @@
             </div>
         </div>
     </main>
+
     <!-- Add Thread Modal -->
     <div class="modal fade" id="addThreadModal" tabindex="-1" role="dialog" aria-labelledby="addThreadModalLabel"
         aria-hidden="true">
@@ -141,52 +142,24 @@
                     <!-- Thread creation form with formatting options -->
                     <form id="threadForm">
                         <div class="form-group">
-                            <label for="threadTitle">Thread Title</label>
-                            <input type="text" class="form-control" id="threadTitle" required>
+                            <label for="addThreadTitle">Thread Title</label>
+                            <input type="text" class="form-control" id="addThreadTitle" required>
                         </div>
                         <div class="form-group">
-                            <label for="threadContent">Thread Content</label>
-                            <textarea class="form-control" id="threadContent" rows="4"></textarea>
+                            <label for="addThreadContent">Thread Content</label>
+                            <textarea class="form-control" id="addThreadContent" rows="4"></textarea>
                         </div>
                         <div class="form-group mt-3">
                             <label>Select Categories</label><br>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="categoryFood" value="Food">
-                                <label class="form-check-label" for="categoryFood">Food</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="categoryTransport"
-                                    value="Transport">
-                                <label class="form-check-label" for="categoryTransport">Transport</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="categoryHotel" value="Hotel">
-                                <label class="form-check-label" for="categoryHotel">Hotel</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="categoryRestaurant"
-                                    value="Restaurant">
-                                <label class="form-check-label" for="categoryRestaurant">Restaurant</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="categoryExcursion"
-                                    value="Excursion">
-                                <label class="form-check-label" for="categoryExcursion">Excursion</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="categoryAdventure"
-                                    value="Adventure">
-                                <label class="form-check-label" for="categoryAdventure">Adventure</label>
+                            <div class="loadCategories">
+                                <!-- This section is dynmaically filled with the categories from the backend -->
                             </div>
                         </div>
-                        <iframe src="third-party-apis/weather.html" frameborder="1" width="100%"
-                            height="400px"></iframe>
-
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="addThread()">Add Thread</button>
+                    <button type="button" class="btn btn-primary" onClick="addThread()">Add Thread</button>
                 </div>
             </div>
         </div>
