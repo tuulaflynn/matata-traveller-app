@@ -5,8 +5,7 @@ USE matata_traveller;
 CREATE TABLE city_details(
 city_id INT AUTO_INCREMENT PRIMARY KEY,
 city_name VARCHAR (30) NOT NULL,
-city_country VARCHAR (30) NOT NULL,
-city_currency VARCHAR (30) NOT NULL
+city_country VARCHAR (30) NOT NULL
 );
 
 CREATE TABLE thread_details(

@@ -22,8 +22,6 @@ public class CityDto {
     private String cityName;
     @NotNull //input validation
     private String cityCountry;
-    private String cityImg;
-    private String cityCurrency;
 
     //corresponding to the City entity object (Many to Many - one city has many threads)
     private List<ThreadDto> allThreads;
