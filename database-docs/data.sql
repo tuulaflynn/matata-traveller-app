@@ -1,10 +1,11 @@
 -- insert data in the city_details table
-INSERT INTO city_details(city_name, city_country) VALUES
-("Paris", "France"),
-("London", "United Kingdom"),
-("New York City", "United States"),
-("Tokyo", "Japan"),
-("Sydney", "Australia");
+INSERT INTO city_details(city_name, city_country, city_currency) VALUES
+("Paris", "France" , "EURO"),
+("London", "United Kingdom", "GBP"),
+("New York City", "United States", "USD"),
+("Tokyo", "Japan", "JPY"),
+("Sydney", "Australia", "AUD");
+
 
 -- insert data in the attraction_details table
 INSERT INTO attraction_details (attraction_name, attraction_description,attraction_image, city_id) VALUES
