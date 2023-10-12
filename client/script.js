@@ -22,10 +22,14 @@ function loadCitys() {
     let content = `<option value="" disabled selected>Select</option> `
     fetch('http://localhost:8080/api/cities').then(response => response.json())
         .then(data => {
+        //traverse the array
             for (let eachData of data) {
-                content += `<option value=${eachData.cityId}>${eachData.cityName}</option>`;
+            //+= -- append the content
+                content += `<option value=${eachData.cityId} > ${eachData.cityName}</option>`;
             }
-            document.getElementById("cityOption").innerHTML = content;
+            //use JS to manipulate the DOM
+            //the innerHTML of the element with id "cityOption" should be content
+            document.getElementById("cityOption").innerHTML = content; //get me the element with id cityOption , and that element innerHTML property has to be content
         });
 }
 
@@ -42,6 +46,10 @@ function navigateToCity() {
         .then(data => {
             userCityName = data.cityName;
             sessionStorage.setItem("userCityName", userCityName);
+
+             //for the currency
+             userCityCurrency = data.cityCurrency;
+             sessionStorage.setItem("userCityCurrency", userCityCurrency);
         })
         // Then once the sessionStorage variables have both been set, nagivate to city.html page
         .then(() => window.location.href = "city.html");
@@ -189,6 +197,9 @@ document.addEventListener('DOMContentLoaded', function () {
         // Set the global variables to equal the city id and name (to fetch content throughout the page)
         userCityChoiceId = sessionStorage.getItem("userCityChoiceId");
         userCityName = sessionStorage.getItem("userCityName");
+
+        //set the city's currency
+        userCityCurrency=sessionStorage.getItem("userCityCurrency");
 
         // Set the header to include the city name
         document.getElementById("cityExplore").innerHTML = `Explore ` + userCityName;
