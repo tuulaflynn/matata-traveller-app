@@ -59,7 +59,7 @@ public class ThreadServiceImpl implements ThreadService {
                 eachCategoryDtoList.add(eachCategoryDto);
             });
             // Set the categories composite property which is a list of categoryDto
-            eachThreadDto.setAllCategoriesDto(eachCategoryDtoList);
+            eachThreadDto.setAllCategories(eachCategoryDtoList);
 
             // Add the dto to the collection allThreadsDto
             allThreadsDto.add(eachThreadDto);
@@ -93,7 +93,7 @@ public class ThreadServiceImpl implements ThreadService {
                 categoryDtoList.add(eachCategoryDto);
             });
             // Set the categories composite property which is a list of categoryDto
-            threadDto.setAllCategoriesDto(categoryDtoList);
+            threadDto.setAllCategories(categoryDtoList);
 
             return threadDto;
         } else {
@@ -121,11 +121,12 @@ public class ThreadServiceImpl implements ThreadService {
         newThreadEntity.setCityEntity(newCityEntity);
 
         // Copy into a list of category entities
-        newThreadDto.getAllCategoriesDto().forEach(eachCategoryDao -> {
+        List<CategoryDto> allCategoryDto = newThreadDto.getAllCategories();
+        for (CategoryDto eachCategoryDto : allCategoryDto) {
             CategoryEntity eachCategoryEntity = new CategoryEntity();
-            BeanUtils.copyProperties(eachCategoryDao, eachCategoryEntity);
+            BeanUtils.copyProperties(eachCategoryDto, eachCategoryEntity);
             categoryEntityList.add(eachCategoryEntity);
-        });
+        }
         // Set the list of categories entities to the newThreadEntity object
         newThreadEntity.setAllCategoriesEntity(categoryEntityList);
 
@@ -171,7 +172,7 @@ public class ThreadServiceImpl implements ThreadService {
                 eachCategoryDtoList.add(eachCategoryDto);
             });
             // Set the categories composite property which is a list of categoryDto
-            eachThreadDto.setAllCategoriesDto(eachCategoryDtoList);
+            eachThreadDto.setAllCategories(eachCategoryDtoList);
 
             // Add the dto to the collection allThreadsDto
             allThreadsDto.add(eachThreadDto);
@@ -196,10 +197,10 @@ public class ThreadServiceImpl implements ThreadService {
         // Copy and set the city composite entity too
         BeanUtils.copyProperties(updateThreadDto.getCityDto(), updateCityEntity);
         updateThreadEntity.setCityEntity(updateCityEntity);
-        // Copy and set the category list from the entity to the dao
-        updateThreadDto.getAllCategoriesDto().forEach(eachCategoryDao -> {
+        // Copy and set the category list from the entity to the dto
+        updateThreadDto.getAllCategories().forEach(eachCategoryDto -> {
             CategoryEntity eachCategoryEntity = new CategoryEntity();
-            BeanUtils.copyProperties(eachCategoryDao, eachCategoryEntity);
+            BeanUtils.copyProperties(eachCategoryDto, eachCategoryEntity);
             updateCategoryEntityList.add(eachCategoryEntity);
         });
         // Set the list of categories entities to the updateThreadEntity object
@@ -207,7 +208,7 @@ public class ThreadServiceImpl implements ThreadService {
 
         // update the entity in the database. N.B. if the primary key is unique, it will add a new record with this entity
         threadDao.saveAndFlush(updateThreadEntity);
-        updateThreadDto.setThreadId(updateThreadEntity.getThreadId());
+//        updateThreadDto.setThreadId(updateThreadEntity.getThreadId()); -- not required
         return updateThreadDto;
     }
 
@@ -259,7 +260,7 @@ public class ThreadServiceImpl implements ThreadService {
             });
 
             // set the Categories collection list
-            eachThreadDto.setAllCategoriesDto(allCategories);
+            eachThreadDto.setAllCategories(allCategories);
 
             // add each threadDto object (containing the categories) to the collection of ThreadDto
             allThreadDto.add(eachThreadDto);
@@ -305,7 +306,7 @@ public class ThreadServiceImpl implements ThreadService {
             });
 
             // set the Categories collection list
-            eachThreadDto.setAllCategoriesDto(allCategories);
+            eachThreadDto.setAllCategories(allCategories);
 
             //also copy the City entity / DTO
             CityDto cityDto = new CityDto();
@@ -348,3 +349,12 @@ public class ThreadServiceImpl implements ThreadService {
         return allThreadsByCityAndCategory;
     }
 }
+
+
+//  int categoryId = eachCategoryDto.getCategoryId();
+// CategoryDto eachCatDto = categoryService.fetchACategory(categoryId);
+// eachCatDto.getAllThreads().add(newThreadDto);
+//eachCategoryEntity.setCategoryId(categoryId);
+//eachCategoryDto.getAllThreads().add(newThreadDto);
+//  eachCategoryDto.setAllThreads(List.of(newThreadDto));
+//  eachCategoryEntity.setAllThreads(List.of(newThreadEntity));

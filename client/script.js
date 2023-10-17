@@ -108,7 +108,7 @@ function loadThreads() {
                 let threadCategories = ``;
 
                 // Loop to obtains all the category names for a single thread
-                thread.allCategoriesDto.forEach(category => {
+                thread.allCategories.forEach(category => {
                     threadCategories += category.categoryName + `    `;
                 });
 

@@ -32,9 +32,12 @@ public class ThreadEntity {
     @JoinColumn(name = "city_id")
     private CityEntity cityEntity;
 
-    // I think this bidirectional mapping is unnecessary
-    @ManyToMany(mappedBy = "allThreads")  // As the uni-directional mapping has already been made in CategoryEntity, this annotation makes it bidirectional
+    //implement the ManyToMany relationship between the Categories and Threads
+    //JoinColumn/ inverseJoinColumn - on the FK column, which connects with the 3rd table
+    @ManyToMany
+    @JoinTable (name="thread_category_details",     //the table that connects these 2 tables (thread_details becomes the owner)
+            joinColumns = @JoinColumn (name = "thread_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")) //the category_details is the inverse
     private List<CategoryEntity> allCategoriesEntity;
-    // this returns a list of all categories for threads
 
 }

@@ -25,14 +25,13 @@ public class CategoryEntity {
     @Column (name= "category_name")
     private String categoryName;
 
-    //implement the ManyToMany relationship between the Categories and Threads
-    //joinTable name specifies the table that connects these 2 tables, and therefore category_details becomes the owner
-    //the thread_details is the inverse
-    //JoinColumn/ inverseJoinColumn - on the FK column, which connects with the 3rd table
+    // Threads will be the owner instead (as this reflect on POST/PUT endpoints)
+    /*
     @ManyToMany
     @JoinTable (name="thread_category_details",
                 joinColumns = @JoinColumn (name = "category_id"),
-                inverseJoinColumns = @JoinColumn(name = "thread_id"))
+                inverseJoinColumns = @JoinColumn(name = "thread_id"))*/
 
+    @ManyToMany(mappedBy = "allCategoriesEntity")
     private List<ThreadEntity> allThreads; //collection of Threads (for each category)
 }
