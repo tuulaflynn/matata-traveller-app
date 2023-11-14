@@ -10,3 +10,13 @@ This project involves designing and developing a full stack application. A trave
 - On the frontend, the application was constructed with the use of HTML, CSS, Bootstrap, and JavaScript.
 - The deployment was facilitated by VS Code Live Server, enhancing the user experience.
 - The application leverages third-party APIs for added functionality, including services for weather forecasting, currency exchange, and language translation.
+
+
+## How to Install and Run the Project
+The project is currently not cloud-hosted so to run the project you must: 
+- clone the repository
+- run the database server
+- add an application.properties file in src/resources folder
+    * application.properites is the configuration file for Spring Boot, it should include settings for database connection, server port and Hibernate (configure the Hibernate dialect for your database)
++ run the application in an IDE (to run backend server)
++ in VSCode open index.html with Live Server
