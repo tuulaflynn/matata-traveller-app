@@ -22,10 +22,14 @@ function loadCitys() {
     let content = `<option value="" disabled selected>Select</option> `
     fetch('http://localhost:8080/api/cities').then(response => response.json())
         .then(data => {
+        //traverse the array
             for (let eachData of data) {
-                content += `<option value=${eachData.cityId}>${eachData.cityName}</option>`;
+            //+= -- append the content
+                content += `<option value=${eachData.cityId} > ${eachData.cityName}</option>`;
             }
-            document.getElementById("cityOption").innerHTML = content;
+            //use JS to manipulate the DOM
+            //the innerHTML of the element with id "cityOption" should be content
+            document.getElementById("cityOption").innerHTML = content; //get me the element with id cityOption , and that element innerHTML property has to be content
         });
 }
 
@@ -42,8 +46,12 @@ function navigateToCity() {
         .then(data => {
             userCityName = data.cityName;
             sessionStorage.setItem("userCityName", userCityName);
+
+             //for the currency
+             userCityCurrency = data.cityCurrency;
+             sessionStorage.setItem("userCityCurrency", userCityCurrency);
         })
-        // Then once the sessionStorage variables have both been set, nagivate to city.html page
+        // Then once the sessionStorage variables have both been set, navigate to city.html page
         .then(() => window.location.href = "city.html");
 }
 
@@ -100,7 +108,7 @@ function loadThreads() {
                 let threadCategories = ``;
 
                 // Loop to obtains all the category names for a single thread
-                thread.allCategoriesDto.forEach(category => {
+                thread.allCategories.forEach(category => {
                     threadCategories += category.categoryName + `    `;
                 });
 
@@ -123,10 +131,9 @@ function loadThreads() {
         });
 }
 
-/* 
-Functional to add a thread, not currently working so commented out for now
+
 function addThread() {
-    // Code taken from the internet to get the current date
+   // Code taken from the internet to get the current date
     let today = new Date();
     let year = today.getFullYear();
     let month = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed, so we add 1
@@ -135,10 +142,10 @@ function addThread() {
 
     let cityDtoFromCurrentCity = null;
     let categoriesDtoList = [];
+    let categoryIdList=[];
     let checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
 
-
-    fetch("http://localhost:8080/api/cities/" + userCityChoiceId)
+   fetch("http://localhost:8080/api/cities/" + userCityChoiceId)
         .then(response => response.json())
         .then(data => {
             console.log(data);
@@ -149,34 +156,41 @@ function addThread() {
                 fetch("http://localhost:8080/api/categories/" + checkbox.value)
                     .then(response => response.json())
                     .then(data => {
-                        console.log(data);
-                        categoriesDtoList.push(data)
+                      categoriesDtoList.push(data)
+
+        //store the categoryId attributes into a collection
+         categoryIdList = categoriesDtoList.map(obj => obj.categoryId);
+         console.log(categoryIdList);
                     });
             })
         });
 
-    console.log("cityDtoFromCurrentCity:  " + cityDtoFromCurrentCity);
-    console.log("categoriesDtoList:  " + categoriesDtoList);
-
     // Construct the javascript object for the request body as the object goes through to the backend it will get copied into a java object.
     let newThread = {
         threadId: 0,
-        threadContent: document.getElementById("addThreadTitle").value,
+        threadContent: document.getElementById("addThreadContent").value,
         threadDate: formattedDate,
-        cityDto: cityDtoFromCurrentCity,
-        allCategoriesDto: categoriesDtoList,
-    }
+        cityDto: {cityId: sessionStorage.getItem("userCityChoiceId")},
+        allCategories: categoriesDtoList
+       // allCategories: {categoryId: categoriesDtoList.map(obj => obj.categoryId)} // take out the IDs instead
+      // [{categoryId: categoriesDtoList.map(obj => obj.categoryId)}]
+                //allCategories: {categoryId: categoriesDtoList.getItem.getCategoryId} // take out the IDs instead
+        }
 
-    // Use fetch api with post method to add the book
+    console.log(newThread);
+
+    // Use fetch api with post method to add the thread
     fetch('http://localhost:8080/api/threads', {
         method: 'POST',
-        body: JSON.stringify(newThread),   // JSON.stringify() will convert javascript object to JSON, which is the needed format for requests and responses
+        body: JSON.stringify(newThread),   // convert javascript object to JSON
         headers: { "Content-type": "application/json; charset=UTF-8" }
     })
-        .then((response) => { response.json })
-        .then((data) => console.log(data));
+        .then((response) => { response.json });
+
+    //load the threads again
+    loadThreads();
+
 }
-*/
 
 
 // Event which calls the functions needs for each page after the DOM has loaded
@@ -189,6 +203,9 @@ document.addEventListener('DOMContentLoaded', function () {
         // Set the global variables to equal the city id and name (to fetch content throughout the page)
         userCityChoiceId = sessionStorage.getItem("userCityChoiceId");
         userCityName = sessionStorage.getItem("userCityName");
+
+        //set the city's currency
+        userCityCurrency=sessionStorage.getItem("userCityCurrency");
 
         // Set the header to include the city name
         document.getElementById("cityExplore").innerHTML = `Explore ` + userCityName;

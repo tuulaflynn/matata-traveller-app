@@ -7,7 +7,8 @@ const rateEl = document.getElementById('rate');
 const swap = document.getElementById('swap');
 
 function convert() {
-    const currencyOneForConversion = currencyOne.value;
+    const currencyOneForConversion = sessionStorage.getItem("userCityCurrency"); //set the city's currency as default currency
+    //const currencyOneForConversion = currencyOne.value;
     const currencyTwoForConversion = currencyTwo.value;
 
     //fetch url (Api KEY from the exchangerate api), the path variable is set to currency_one value

@@ -80,7 +80,7 @@ attractionDto
 Third party APIs
 —---------------
 weather - OpenWeatherApi https://openweathermap.org/api
-currency -
+currency - https:/exchangerate-api.com
 language - https://libretranslate.de/translate
 
 

@@ -28,6 +28,9 @@ public class CityEntity {
     @Column(name = "city_country")
     private String cityCountry;
 
+    @Column(name = "city_currency")
+    private String cityCurrency;
+
     //OneToMany relation with Threads
     @OneToMany(mappedBy = "cityEntity")        // this creates the bidirectional mapping
     private List<ThreadEntity> allThreads;     //collection of Threads for a city can be obtained through this field

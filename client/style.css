@@ -162,7 +162,7 @@ footer {
     /* Add padding around the footer */
     text-align: center;
     /* Center-align footer text */
-    position: fixed;
+    /*position: fixed; */
     /* Fix the footer to the bottom */
     bottom: 0;
     /* Position at the bottom of the viewport */

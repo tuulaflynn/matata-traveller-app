@@ -24,7 +24,7 @@ public class ThreadDto {
     private CityDto cityDto;
 
     @NotNull
-    private List<CategoryDto> allCategoriesDto;
+    private List<CategoryDto> allCategories;
 
 
 }
