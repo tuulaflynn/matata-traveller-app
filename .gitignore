@@ -33,4 +33,4 @@ build/
 .vscode/
 
 ### Configuration file for Spring ###
-application.properites
+application.properties
