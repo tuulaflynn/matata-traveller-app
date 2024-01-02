@@ -31,7 +31,7 @@ public class CategoryServiceImpl implements CategoryService {
         //call findAll(), which will return a collection of entities, stored in allCategoryEntity
         List<CategoryEntity> allCategoryEntity = categoryDao.findAll();
 
-        //copy the entities into CategoryDto objects and store them in a collection(which the method will return)
+        //copy the entities into CategoryDto objects and store them in a collection (which the method will return)
         List<CategoryDto> allCategoryDto = new ArrayList<CategoryDto>();
 
         //traverse the collection, using a forEach loop
@@ -167,7 +167,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void removeCategory(int categoryId) {
 
-        //if Id exists, remove the entity object with that PK
+        //if id exists, remove the entity object with that PK
         if (categoryDao.existsById(categoryId)) {
             categoryDao.deleteById(categoryId);
         }
@@ -175,6 +175,6 @@ public class CategoryServiceImpl implements CategoryService {
         else {
             throw new InvalidIdException();
         }
-        categoryDao.deleteById(categoryId);
+
     }
 }

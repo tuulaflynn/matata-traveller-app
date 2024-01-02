@@ -47,7 +47,7 @@ public class CityServiceImpl implements CityService {
             List<ThreadDto> allThreadDto = new ArrayList<ThreadDto>();
             for (ThreadEntity eachThreadEntity : eachCityEntity.getAllThreads()) {
                 ThreadDto eachThreadDto = new ThreadDto();
-                //copy each ThreadEntity inti ThreadDto object
+                //copy each ThreadEntity into ThreadDto object
                 BeanUtils.copyProperties(eachThreadEntity, eachThreadDto);
                 //add the ThreadDto to the collection
                 allThreadDto.add(eachThreadDto);

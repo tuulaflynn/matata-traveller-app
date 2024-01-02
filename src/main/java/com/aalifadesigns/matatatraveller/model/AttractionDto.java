@@ -1,7 +1,6 @@
 package com.aalifadesigns.matatatraveller.model;
 
 import lombok.*;
-import org.hibernate.type.descriptor.jdbc.VarcharJdbcType;
 
 //Using LOMBOK
 @NoArgsConstructor //empty constructor

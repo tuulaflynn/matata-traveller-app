@@ -16,7 +16,7 @@ import java.util.Optional;
 @Service
 public class AttractionServiceImpl implements AttractionService {
 
-    AttractionDao attractionDao;
+    private AttractionDao attractionDao;
     private CityService cityService; // service to service operation needed to fetch attractions by city
 
     @Autowired
@@ -42,8 +42,7 @@ public class AttractionServiceImpl implements AttractionService {
             AttractionDto eachAttractionDto = new AttractionDto();
             BeanUtils.copyProperties(eachAttractionEntity, eachAttractionDto);
 
-            // copy the collection of city entity(inside eachAttractionEntity) into a collection of city dto
-            List<CityDto> allCitiesDto = new ArrayList<CityDto>();
+            // copy the city entity (inside each AttractionEntity) into a city dto
             CityDto eachCityDto = new CityDto();
             BeanUtils.copyProperties(eachAttractionEntity.getCityEntity(), eachCityDto);
 
@@ -66,9 +65,6 @@ public class AttractionServiceImpl implements AttractionService {
         if (optionalAttractionEntity.isPresent()) {
             attractionDto = new AttractionDto();
             CityDto cityDto = new CityDto();
-
-            // Copy properties from the optionalAttractionEntity to the attractionDto.
-            BeanUtils.copyProperties(optionalAttractionEntity, attractionDto);
 
             // Copy properties from the optionalAttractionEntity's data (AttractionEntity) to the attractionDto.
             BeanUtils.copyProperties(optionalAttractionEntity.get(), attractionDto);
@@ -104,7 +100,7 @@ public class AttractionServiceImpl implements AttractionService {
 
     @Override
     public AttractionDto updateAttraction(AttractionDto updateAttractionDto) {
-        //Create new AttractionEntity and CityEntity instances
+        // Create new AttractionEntity and CityEntity instances
         AttractionEntity updateAttractionEntity = new AttractionEntity();
         CityEntity updateCityEntity = new CityEntity();
 
@@ -122,27 +118,28 @@ public class AttractionServiceImpl implements AttractionService {
         updateAttractionEntity.setCityEntity(updateCityEntity);
 
 
-        //Save and flush the updated AttractionEntity to the database
-        // N.B. If the primary key is unique, this will either update the existing record or add a new one
+        // Save and flush the updated AttractionEntity to the database
+        // N.B. if the primary key exists in the database, its record will be updated. If PK doesn't exist in the
+        // database (the if structure flow at the start prevents this case) a new record i added.
         attractionDao.saveAndFlush(updateAttractionEntity);
 
         // Update the attraction ID in the updateAttractionDto
         updateAttractionDto.setAttractionId(updateAttractionEntity.getAttractionId());
 
-        //Return the updated AttractionDto
+        // Return the updated AttractionDto
         return updateAttractionDto;
     }
 
     @Override
     public void removeAttraction(int attractionId) {
-        //Attempt to find the AttractionEntity by its ID in the database
+        // Attempt to find the AttractionEntity by its ID in the database
         Optional<AttractionEntity> deleteAttractionEntityOptional = attractionDao.findById(attractionId);
-        //Check if the AttractionEntity with the given ID exists
+        // Check if the AttractionEntity with the given ID exists
        if (deleteAttractionEntityOptional.isPresent()){
-           //If it exists, delete the AttractionEntity from the database
+           // If it exists, delete the AttractionEntity from the database
            attractionDao.deleteById(attractionId);
        } else {
-           //If the AttractionEntity does not exist, throw an InvalidIdException
+           // If the AttractionEntity does not exist, throw an InvalidIdException
            throw new InvalidIdException();
        }
     }
@@ -150,22 +147,22 @@ public class AttractionServiceImpl implements AttractionService {
     @Override
     public List<AttractionDto> fetchByCity(int cityId) {
 
-        //fetch CityDto using cityService
+        // fetch CityDto using cityService
         CityDto cityDto = cityService.fetchACity(cityId);
 
-        //if the city does not exist, throw custom exception referring to DataAccess
+        // if the city does not exist, throw custom exception referring to DataAccess
         if (cityDto == null) {
             throw new InvalidIdException();
         }
 
-        //copy the CityDto into a city entity
+        // copy the CityDto into a city entity
         CityEntity cityEntity = new CityEntity();
         BeanUtils.copyProperties(cityDto, cityEntity);
 
-        //call the finder method declared in the AttractionDao
+        // call the finder method declared in the AttractionDao
         List<AttractionEntity> allAttractionEntity = attractionDao.findByCityEntity(cityEntity);
 
-        //the AttractionEntity collection needs be copied into a DTO collection
+        // the AttractionEntity collection needs be copied into a DTO collection
         List<AttractionDto> allAttractionDto = new ArrayList<AttractionDto>();
 
         // traverse the collection and copy each entity into a AttractionDto object
@@ -176,7 +173,7 @@ public class AttractionServiceImpl implements AttractionService {
             // add each AttractionDto object to the collection of AttractionDto
             allAttractionDto.add(eachAttractionDto);
         });
-        //return the collection
+        // return the collection
         return allAttractionDto;
     }
 }
